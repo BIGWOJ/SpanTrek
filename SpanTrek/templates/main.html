@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {%block styles%}
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>SpanTrek</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        {%endblock styles%}
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: Arial, sans-serif;
+            }
+        </style>
+    </head>
+
+    <body>
+        {%include 'navbar.html'%}
+
+        <!-- Flash messages -->
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        <!-- block content can be described as wrapper in which will be dynamically rendered site content  -->
+
+        {%block content%}
+        <!--  Content of specific site -->
+        {%endblock%}
+    </body>
+</html>

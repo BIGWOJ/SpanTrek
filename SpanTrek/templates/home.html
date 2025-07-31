@@ -1,0 +1,85 @@
+<style>
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f8f9fa;
+    }
+    .center-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        flex: 1;
+        margin-top: 40px;
+    }
+    .traveler-img {
+        width: 180px;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 50%;
+        margin-bottom: 32px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    }
+    .button-group {
+        display: flex;
+        gap: 24px;
+        margin-top: 32px;
+    }
+    .btn {
+        padding: 12px 32px;
+        font-size: 1.1rem;
+        border: 2px solid #28a745;
+        border-radius: 6px;
+        background: #23272b;
+        color: #28a745;
+        cursor: pointer;
+        transition: background 0.2s, color 0.2s;
+        text-decoration: none;
+    }
+    .btn:hover {
+        background: #28a745;
+        color: #fff;
+    }
+    .footer {
+        text-align: center;
+        padding: 18px 0 10px 0;
+        font-weight: bold;
+        color: white;
+        letter-spacing: 2px;
+        font-size: 1.2rem;
+        background: transparent;
+    }
+    body {
+        background: #23272b;
+    }
+</style>
+<div class="center-content">
+    <div style="display: flex; flex-direction: column; align-items: center">
+        <div
+            style="
+                width: 180px;
+                height: 180px;
+                border-radius: 50%;
+                background: #444;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 32px;
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            "
+        >
+            <span style="color: #fff; font-size: 1.1rem; text-align: center"
+                >Zdjęcie krętej drogi która symbolizuje Trek z SpanTrek i jakiś
+                slogan</span
+            >
+        </div>
+    </div>
+    <div class="button-group">
+        <a href="{%url 'login_page'%}" class="btn">Login</a>
+        <a class="btn">Register</a>
+    </div>
+</div>
+<div class="footer">SpanTrek</div>
