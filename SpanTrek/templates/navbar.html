@@ -1,1 +1,19 @@
 {%load static%}
+
+<link
+    rel="stylesheet"
+    type="text/css"
+    href="{% static 'styles/navbar.css' %}"
+/>
+<script src="{% static 'scripts/navbar.js' %}"></script>
+
+<header>
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <a href="{% url 'home_page' %}">SpanTrek</a>
+        </div>
+        <ul class="navbar-links">
+            <li><a href="{% url 'home_page' %}">Home</a></li>
+        </ul>
+    </nav>
+</header>

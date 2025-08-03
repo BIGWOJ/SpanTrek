@@ -1,40 +1,71 @@
-{% extends 'main.html'%} {% block content %} {%if page == 'login'%}
-<div>
-    <form method="POST" action="">
-        {%csrf_token%}
+{% extends 'main.html'%} {% block styles %} {{ block.super }} {% load static %}
+<link
+    rel="stylesheet"
+    type="text/css"
+    href="{% static 'styles/login_register.css' %}"
+/>
+<script src="{% static 'scripts/login_register.js' %}"></script>
+{% endblock styles %} {% block content %}
 
-        <label>Email</label>
-        <input type="text" id="username" name="email" />
+<div class="center-content">
+    <div class="content-wrapper">
+        <div class="logo-circle">
+            <span class="logo-text">SpanTrek</span>
+        </div>
 
-        <label>Hasło</label>
-        <input
-            id="password"
-            name="password"
-            type="password"
-            placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
-        />
-        <input type="submit" value="Zaloguj się" />
-    </form>
+        {%if page == 'login'%}
+        <form method="POST" action="" class="login-form">
+            {%csrf_token%}
+            <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                required
+                class="form-input"
+            />
+            <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                required
+                class="form-input"
+            />
+            <button type="submit" class="btn" style="width: 100%">Login</button>
+        </form>
 
-    <a href="{%url 'register_page'%}">
-        <p>Nie masz konta? Zarejestruj się</p>
-    </a>
+        <div class="button-group">
+            <div class="register-prompt">
+                <span class="register-text">Don't have an account yet?</span>
+                <a href="{%url 'register_page'%}" class="btn">Register</a>
+            </div>
+        </div>
+
+        {%else%}
+        <form method="POST" action="" class="login-form">
+            {%csrf_token%} {%for field in register_form%}
+            <input
+                type="{% if 'password' in field.name %}password{% elif 'email' in field.name %}email{% else %}text{% endif %}"
+                name="{{field.name}}"
+                placeholder="{{field.label}}"
+                required
+                class="form-input"
+            />
+            {%endfor%}
+            <button type="submit" class="btn" style="width: 100%">
+                Register
+            </button>
+        </form>
+
+        <div class="button-group">
+            <div class="register-prompt">
+                <span class="register-text">Already have an account?</span>
+                <a href="{%url 'login_page'%}" class="btn">Login</a>
+            </div>
+        </div>
+        {%endif%}
+    </div>
 </div>
 
-{%else%}
-<div>
-    <form method="POST" action="">
-        {%csrf_token%} {%for field in register_form%}
-        <label>{{field.label}}</label>
-        {{field}}<br />
-        {%endfor%}
+<div class="footer">SpanTrek</div>
 
-        <input type="submit" value="Zarejestruj się" />
-    </form>
-
-    <a href="{%url 'login_page'%}">
-        <p>Już masz konto? Zaloguj się</p>
-    </a>
-</div>
-
-{%endif%} {%endblock content%}
+{%endblock content%}
