@@ -1,4 +1,3 @@
-/* Home Page Styles - Spanish Learning App */
 body {
     background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
     min-height: 100vh;
@@ -7,7 +6,6 @@ body {
 }
 
 .hero-section {
-    padding: 20px;
     margin-bottom: 30px;
 }
 
@@ -77,16 +75,10 @@ body {
     font-weight: bold;
 }
 
-.welcome-subtitle {
-    font-size: 1.2rem;
-    color: #2d2d2d;
-    margin-bottom: 0;
-}
-
 .main-content {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0;
 }
 
 .progress-section {
@@ -166,11 +158,57 @@ body {
     color: #2d2d2d;
 }
 
+/* Section titles */
+.section-title {
+    color: #f5f5f5;
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Main Course Section */
+.main-course-section {
+    margin-bottom: 50px;
+}
+
+.main-course-card {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.main-lesson {
+    max-width: 400px;
+    background: linear-gradient(135deg, #f5f5f5 0%, rgba(255, 165, 31, 0.05) 100%);
+    border: 2px solid #ffa51f;
+    box-shadow: 0 8px 25px rgba(255, 165, 31, 0.2);
+}
+
+.main-lesson .lesson-icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+}
+
+.main-lesson h4 {
+    font-size: 1.5rem;
+    color: #1a1a1a;
+}
+
+.main-lesson .continue-btn {
+    font-size: 1.2rem;
+    padding: 12px 25px;
+}
+
 .lessons-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
     gap: 20px;
     margin-bottom: 40px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .lesson-card {
@@ -253,6 +291,10 @@ body {
     font-weight: bold;
     cursor: pointer;
     transition: transform 0.2s ease;
+    min-width: 140px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .continue-btn:hover {
@@ -266,7 +308,7 @@ body {
 }
 
 .daily-challenge {
-    margin-bottom: 40px;
+    margin-bottom: 0;
 }
 
 .challenge-card {
@@ -330,65 +372,6 @@ body {
     opacity: 0.8;
 }
 
-.quick-actions {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 15px;
-    margin-bottom: 40px;
-}
-
-.action-btn {
-    background: #f5f5f5;
-    border: none;
-    border-radius: 15px;
-    padding: 20px;
-    text-align: center;
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-}
-
-.action-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-}
-
-.action-icon {
-    font-size: 2rem;
-    margin-bottom: 10px;
-    display: block;
-}
-
-.action-btn span {
-    color: #1a1a1a;
-    font-weight: bold;
-}
-
-.action-btn.practice { border-top: 3px solid #ffa51f; }
-.action-btn.stories { border-top: 3px solid #ffa51f; }
-.action-btn.vocabulary { border-top: 3px solid #ffa51f; }
-.action-btn.speaking { border-top: 3px solid #ffa51f; }
-
-.logout-section {
-    text-align: center;
-    padding: 20px;
-}
-
-.logout-btn {
-    background: #2d2d2d;
-    color: #f5f5f5;
-    padding: 12px 25px;
-    border-radius: 25px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: background 0.3s ease;
-}
-
-.logout-btn:hover {
-    background: #1a1a1a;
-    color: #ffa51f;
-}
-
 /* Responsive Design */
 @media (max-width: 768px) {
     .welcome-title {
@@ -406,10 +389,7 @@ body {
     
     .lessons-grid {
         grid-template-columns: 1fr;
-    }
-    
-    .quick-actions {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
     }
 }
 
@@ -422,7 +402,4 @@ body {
         padding: 20px;
     }
     
-    .quick-actions {
-        grid-template-columns: 1fr;
-    }
 }

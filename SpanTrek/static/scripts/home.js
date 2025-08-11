@@ -46,7 +46,15 @@ document.addEventListener("DOMContentLoaded", function () {
     // Animate progress bars on page load
     const progressBars = document.querySelectorAll(".progress-fill");
     progressBars.forEach((bar) => {
-        const targetWidth = bar.style.width;
+        // Get user experience from the XP text
+        const xpText = document.querySelector(".xp-text");
+        const userExperience = parseInt(
+            xpText.textContent.replace(" XP", "").replace(",", "")
+        );
+
+        // Calculate target width as modulo 100 (experience % 100)
+        const targetWidth = (userExperience % 100) + "%";
+
         bar.style.width = "0%";
         setTimeout(() => {
             bar.style.width = targetWidth;
@@ -82,24 +90,32 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Continue button functionality
-    const continueBtn = document.querySelector(".continue-btn");
-    if (continueBtn) {
-        continueBtn.addEventListener("click", function (e) {
-            e.stopPropagation(); // Prevent card click
-            showNotification(
-                "Continuing with Family Members lesson! ¡Vamos! 👨‍👩‍👧‍👦"
-            );
+    const continueButtons = document.querySelectorAll(".continue-btn");
+    continueButtons.forEach((continueBtn) => {
+        if (continueBtn) {
+            continueBtn.addEventListener("click", function (e) {
+                e.stopPropagation(); // Prevent card click
 
-            // Simulate lesson loading
-            this.textContent = "Loading...";
-            this.disabled = true;
+                // Store the original width before changing text
+                const computedStyle = window.getComputedStyle(this);
+                const currentWidth = computedStyle.width;
+                this.style.width = currentWidth; // Fix the width
+                this.style.minWidth = currentWidth; // Ensure it doesn't shrink
 
-            setTimeout(() => {
-                this.textContent = "Continue";
-                this.disabled = false;
-            }, 2000);
-        });
-    }
+                showNotification("Continuing with lesson! ¡Vamos! 🚀");
+
+                // Simulate lesson loading
+                this.textContent = "¡Vaaamos!...";
+                this.disabled = true;
+
+                setTimeout(() => {
+                    this.textContent = "Continue adventure";
+                    this.disabled = false;
+                    // Keep the fixed width even after text changes back
+                }, 2000);
+            });
+        }
+    });
 
     // Add XP counter animation
     const xpText = document.querySelector(".xp-text");

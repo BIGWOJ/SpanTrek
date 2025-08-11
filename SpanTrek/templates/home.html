@@ -7,14 +7,18 @@
     <div class="hero-content">
         <div class="welcome-card">
             <div class="streak-info">
+                {% if user.days_streak != 0 %}
                 <div class="streak-flame">🔥</div>
-                <span class="streak-count">7</span>
-                <span class="streak-text">day streak</span>
+                <span class="streak-count">{{ user.days_streak }}</span>
+                <span class="streak-text">
+                    {% if user.days_streak > 1 %} days streak {% else %} day
+                    streak {% endif %}
+                </span>
+                {% else %}
+                <span class="streak-count">Start your daily streak!</span>
+                {% endif %}
             </div>
             <h1 class="welcome-title">¡Hola, {{ user.username }}!</h1>
-            <p class="welcome-subtitle">
-                Ready to continue your Spanish journey?
-            </p>
         </div>
     </div>
 </div>
@@ -23,121 +27,98 @@
     <div class="progress-section">
         <div class="level-card">
             <div class="level-info">
-                <h3>Current Level</h3>
+                <h3>Current level</h3>
                 <div class="level-badge">
-                    <span class="level-number">A2</span>
-                    <span class="level-name">Elementary</span>
+                    <span class="level-number">{{user.level}}</span>
+                    <span class="level-name">//level name//</span>
                 </div>
             </div>
             <div class="xp-info">
-                <span class="xp-text">2,450 XP</span>
+                <span class="xp-text">{{user.experience}} XP</span>
                 <div class="progress-bar">
                     <div class="progress-fill" style="width: 65%"></div>
                 </div>
-                <span class="next-level">550 XP to A2+</span>
+                <span class="next-level"
+                    >XXX levels to //next level name//</span
+                >
             </div>
         </div>
     </div>
 
-    <div class="lessons-grid">
-        <div class="lesson-card completed">
-            <div class="lesson-icon">📚</div>
-            <h4>Basic Greetings</h4>
-            <div class="lesson-progress">
-                <div class="stars">⭐⭐⭐</div>
-                <span class="completion">Completed</span>
-            </div>
-        </div>
-
-        <div class="lesson-card completed">
-            <div class="lesson-icon">🍽️</div>
-            <h4>Food & Drinks</h4>
-            <div class="lesson-progress">
-                <div class="stars">⭐⭐⭐</div>
-                <span class="completion">Completed</span>
-            </div>
-        </div>
-
-        <div class="lesson-card current">
-            <div class="lesson-icon active">👨‍👩‍👧‍👦</div>
-            <h4>Family Members</h4>
-            <div class="lesson-progress">
-                <div class="stars">⭐⭐☆</div>
-                <span class="completion">2/3 completed</span>
-            </div>
-            <button class="continue-btn">Continue</button>
-        </div>
-
-        <div class="lesson-card locked">
-            <div class="lesson-icon">🏠</div>
-            <h4>Home & House</h4>
-            <div class="lesson-progress">
-                <div class="lock-icon">🔒</div>
-                <span class="completion">Locked</span>
-            </div>
-        </div>
-
-        <div class="lesson-card locked">
-            <div class="lesson-icon">🌍</div>
-            <h4>Travel & Places</h4>
-            <div class="lesson-progress">
-                <div class="lock-icon">🔒</div>
-                <span class="completion">Locked</span>
-            </div>
-        </div>
-
-        <div class="lesson-card locked">
-            <div class="lesson-icon">💼</div>
-            <h4>Work & Career</h4>
-            <div class="lesson-progress">
-                <div class="lock-icon">🔒</div>
-                <span class="completion">Locked</span>
-            </div>
-        </div>
-    </div>
-
-    <div class="daily-challenge">
-        <div class="challenge-card">
-            <div class="challenge-header">
-                <h3>Daily Challenge</h3>
-                <div class="challenge-reward">+50 XP</div>
-            </div>
-            <p class="challenge-text">
-                Complete 3 lessons today to earn bonus XP!
-            </p>
-            <div class="challenge-progress">
-                <div class="challenge-steps">
-                    <div class="step completed">1</div>
-                    <div class="step completed">2</div>
-                    <div class="step">3</div>
+    <div class="main-course-section">
+        <h2 class="section-title">Spanish Trek</h2>
+        <div class="main-course-card">
+            <div class="lesson-card current main-lesson">
+                <div class="lesson-icon active">🗺️</div>
+                <h4>Main adventure</h4>
+                <div class="lesson-progress">
+                    <div class="stars">⭐⭐☆</div>
+                    <span class="completion"
+                        >{{ user.adventure_progress }}/XXX completed</span
+                    >
                 </div>
-                <span class="challenge-status">2/3 completed</span>
+                <button class="continue-btn">Continue adventure</button>
             </div>
         </div>
     </div>
 
-    <div class="quick-actions">
-        <button class="action-btn practice">
-            <div class="action-icon">🎯</div>
-            <span>Practice</span>
-        </button>
-        <button class="action-btn stories">
-            <div class="action-icon">📖</div>
-            <span>Stories</span>
-        </button>
-        <button class="action-btn vocabulary">
-            <div class="action-icon">📝</div>
-            <span>Vocabulary</span>
-        </button>
-        <button class="action-btn speaking">
-            <div class="action-icon">🎤</div>
-            <span>Speaking</span>
-        </button>
+    <div class="review-section">
+        <h2 class="section-title">Review & practice</h2>
+        <div class="lessons-grid">
+            <div class="lesson-card completed">
+                <div class="lesson-icon">🎲</div>
+                <h4>Random</h4>
+                <div class="lesson-progress">
+                    <span class="completion">Completed</span>
+                </div>
+            </div>
+
+            <div class="lesson-card locked">
+                <div class="lesson-icon">📚</div>
+                <h4>Vocabulary</h4>
+                <div class="lesson-progress">
+                    <div class="lock-icon">🔒</div>
+                    <span class="completion">Locked</span>
+                </div>
+            </div>
+
+            <div class="lesson-card completed">
+                <div class="lesson-icon">📖</div>
+                <h4>Reading</h4>
+                <div class="lesson-progress">
+                    <span class="completion">Completed</span>
+                </div>
+            </div>
+
+            <div class="lesson-card current">
+                <div class="lesson-icon active">👂🏻</div>
+                <h4>Listening</h4>
+                <div class="lesson-progress">
+                    <span class="completion">2/3 completed</span>
+                </div>
+                <button class="continue-btn">Continue</button>
+            </div>
+        </div>
+
+        <div class="daily-challenge">
+            <div class="challenge-card">
+                <div class="challenge-header">
+                    <h3>Daily challenge</h3>
+                    <div class="challenge-reward">+50 XP</div>
+                </div>
+                <p class="challenge-text">
+                    Complete 3 lessons today to earn bonus XP!
+                </p>
+                <div class="challenge-progress">
+                    <div class="challenge-steps">
+                        <div class="step completed">1</div>
+                        <div class="step completed">2</div>
+                        <div class="step">3</div>
+                    </div>
+                    <span class="challenge-status">2/3 completed</span>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-
-<div class="logout-section">
-    <a href="{% url 'logout_user' %}" class="logout-btn">Logout</a>
-</div>
-
 {%endblock content%}

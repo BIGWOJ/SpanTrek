@@ -1,0 +1,285 @@
+{%extends 'base.html'%} {%load static%} {% block styles %} {{ block.super }}
+<link
+    rel="stylesheet"
+    type="text/css"
+    href="{% static 'styles/user_page.css' %}"
+/>
+<script src="{% static 'scripts/user_page.js' %}"></script>
+{% endblock styles %} {%block content%}
+
+<div class="hero-section">
+    <div class="hero-content">
+        <div class="profile-header">
+            <div class="avatar-section">
+                <div class="avatar-circle">
+                    <span class="avatar-initial"
+                        >{{ user.username|first|upper }}</span
+                    >
+                </div>
+                <div class="profile-info">
+                    <h1 class="username">{{ user.username }}</h1>
+                    <p class="join-date">Member since 2024</p>
+                    <div class="streak-badge">
+                        {% if user.days_streak != 0 %}
+                        <div class="streak-flame">🔥</div>
+                        <span class="streak-count">{{ user.days_streak }}</span>
+                        <span class="streak-text"
+                            >day{% if user.days_streak > 1 %}s{% endif %}
+                            streak</span
+                        >
+                        {% else %}
+                        <span class="streak-text"
+                            >Start your streak today!</span
+                        >
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="level-section">
+                <div class="level-badge">
+                    <span class="level-number">{{ user.level }}</span>
+                    <span class="level-name">Beginner Explorer</span>
+                </div>
+                <div class="xp-progress">
+                    <span class="xp-text">{{ user.experience }} XP</span>
+                    <div class="progress-bar">
+                        <div
+                            class="progress-fill"
+                            style="width: {{ progress_percentage }}%"
+                        ></div>
+                    </div>
+                    <span class="next-level"
+                        >{{ xp_needed }} XP to level {{ user.level|add:1
+                        }}</span
+                    >
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="main-content">
+    <!-- Statistics Section -->
+    <div class="stats-section">
+        <h2 class="section-title">Your Progress</h2>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">🎯</div>
+                <div class="stat-value">{{ user.adventure_progress }}%</div>
+                <div class="stat-label">Course Progress</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⚡</div>
+                <div class="stat-value">{{ user.days_streak }}</div>
+                <div class="stat-label">Current Streak</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🏆</div>
+                <div class="stat-value">12</div>
+                <div class="stat-label">Achievements</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📚</div>
+                <div class="stat-value">156</div>
+                <div class="stat-label">Words Learned</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Achievements Section -->
+    <div class="achievements-section">
+        <h2 class="section-title">Achievements</h2>
+        <div class="achievements-grid">
+            {% for achievement in achievements %}
+            <div
+                class="achievement-card {% if achievement.earned %}earned{% else %}locked{% endif %}"
+            >
+                <div class="achievement-badge">{{ achievement.icon }}</div>
+                <div class="achievement-info">
+                    <h4>{{ achievement.name }}</h4>
+                    <p>{{ achievement.description }}</p>
+                </div>
+                <div class="achievement-status">
+                    {% if achievement.earned %}Earned{% else %}Locked{% endif %}
+                </div>
+            </div>
+            {% endfor %}
+            <div class="achievement-card locked">
+                <div class="achievement-badge">📖</div>
+                <div class="achievement-info">
+                    <h4>Word Master</h4>
+                    <p>Learn 200 words</p>
+                </div>
+                <div class="achievement-status">44/200</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Activity Section -->
+    <div class="activity-section">
+        <h2 class="section-title">Recent Activity</h2>
+        <div class="activity-calendar">
+            <div class="calendar-header">
+                <button class="nav-btn" id="prev-month">&larr;</button>
+                <h3 id="current-month">August 2025</h3>
+                <button class="nav-btn" id="next-month">&rarr;</button>
+            </div>
+            <div class="calendar-grid" id="calendar-grid">
+                <!-- Calendar will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <div class="activity-list">
+            <div class="activity-item">
+                <div class="activity-date">Today</div>
+                <div class="activity-content">
+                    <div class="activity-icon">📝</div>
+                    <div class="activity-text">
+                        Completed lesson: <strong>Basic Greetings</strong>
+                    </div>
+                    <div class="activity-xp">+15 XP</div>
+                </div>
+            </div>
+            <div class="activity-item">
+                <div class="activity-date">Yesterday</div>
+                <div class="activity-content">
+                    <div class="activity-icon">🔥</div>
+                    <div class="activity-text">
+                        Extended streak to
+                        <strong>{{ user.days_streak }} days</strong>
+                    </div>
+                    <div class="activity-xp">+5 XP</div>
+                </div>
+            </div>
+            <div class="activity-item">
+                <div class="activity-date">2 days ago</div>
+                <div class="activity-content">
+                    <div class="activity-icon">🏆</div>
+                    <div class="activity-text">
+                        Earned achievement: <strong>Streak Master</strong>
+                    </div>
+                    <div class="activity-xp">+25 XP</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Section -->
+    <div class="settings-section">
+        <h2 class="section-title">Account Settings</h2>
+        <div class="settings-grid">
+            <div class="settings-card">
+                <div class="settings-header">
+                    <h3>Profile Information</h3>
+                    <button class="edit-btn" onclick="toggleEdit('profile')">
+                        Edit
+                    </button>
+                </div>
+                <div class="settings-content" id="profile-content">
+                    <div class="info-row">
+                        <label>Username:</label>
+                        <span>{{ user.username }}</span>
+                    </div>
+                    <div class="info-row">
+                        <label>Email:</label>
+                        <span>{{ user.email }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="settings-card">
+                <div class="settings-header">
+                    <h3>Learning Preferences</h3>
+                    <button
+                        class="edit-btn"
+                        onclick="toggleEdit('preferences')"
+                    >
+                        Edit
+                    </button>
+                </div>
+                <div class="settings-content" id="preferences-content">
+                    <div class="info-row">
+                        <label>Daily Goal:</label>
+                        <span>20 minutes</span>
+                    </div>
+                    <div class="info-row">
+                        <label>Reminder Time:</label>
+                        <span>7:00 PM</span>
+                    </div>
+                    <div class="info-row">
+                        <label>Difficulty Level:</label>
+                        <span>Beginner</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="settings-card">
+                <div class="settings-header">
+                    <h3>Notifications</h3>
+                    <button
+                        class="edit-btn"
+                        onclick="toggleEdit('notifications')"
+                    >
+                        Edit
+                    </button>
+                </div>
+                <div class="settings-content" id="notifications-content">
+                    <div class="toggle-row">
+                        <label>Daily Reminders:</label>
+                        <div class="toggle-switch">
+                            <input
+                                type="checkbox"
+                                id="daily-reminders"
+                                checked
+                            />
+                            <label for="daily-reminders" class="slider"></label>
+                        </div>
+                    </div>
+                    <div class="toggle-row">
+                        <label>Achievement Alerts:</label>
+                        <div class="toggle-switch">
+                            <input
+                                type="checkbox"
+                                id="achievement-alerts"
+                                checked
+                            />
+                            <label
+                                for="achievement-alerts"
+                                class="slider"
+                            ></label>
+                        </div>
+                    </div>
+                    <div class="toggle-row">
+                        <label>Streak Reminders:</label>
+                        <div class="toggle-switch">
+                            <input
+                                type="checkbox"
+                                id="streak-reminders"
+                                checked
+                            />
+                            <label
+                                for="streak-reminders"
+                                class="slider"
+                            ></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+        <a href="/" class="action-btn primary">
+            <span class="btn-icon">🏠</span>
+            Continue Learning
+        </a>
+        <a href="/logout" class="action-btn secondary">
+            <span class="btn-icon">🚪</span>
+            Logout
+        </a>
+    </div>
+</div>
+
+{%endblock content%}
