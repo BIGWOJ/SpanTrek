@@ -37,10 +37,10 @@
                             style="width: {{ progress_percentage }}%"
                         ></div>
                     </div>
-                    <span class="next-level"
-                        >{{ xp_needed }} XP to level {{ user.level|add:1
-                        }}</span
-                    >
+                    <span class="next-level">
+                        {{ xp_needed_next_lvl }} XP to level {{ user.level|add:1
+                        }}
+                    </span>
                 </div>
             </div>
         </div>
@@ -265,5 +265,10 @@
         </a>
     </div>
 </div>
+
+<script>
+    // Pass Django data to JavaScript
+    window.userActivityDays = {{ user.activity_days|safe }};
+</script>
 
 {%endblock content%}

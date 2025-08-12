@@ -5,7 +5,8 @@ class ActivityCalendar {
     constructor() {
         this.currentDate = new Date();
         this.today = new Date();
-        this.activeDays = [1, 3, 5, 8, 10, 11]; // Example active days for current month
+        // Use actual activity days from Django model instead of hardcoded values
+        this.activeDays = window.userActivityDays || [];
         this.init();
     }
 
@@ -103,11 +104,9 @@ class ActivityCalendar {
                 dayElement.classList.add("today");
             }
 
-            // Check if this day has activity
-            if (
-                this.activeDays.includes(day) &&
-                this.currentDate.getMonth() === this.today.getMonth()
-            ) {
+            // Check if this day has activity using DD-MM-YYYY date format
+            const dayDateISO = this.formatDateToISO(dayDate);
+            if (this.activeDays.includes(dayDateISO)) {
                 dayElement.classList.add("active");
                 dayElement.title = "Completed lesson this day";
             }
@@ -122,6 +121,13 @@ class ActivityCalendar {
             date1.getMonth() === date2.getMonth() &&
             date1.getFullYear() === date2.getFullYear()
         );
+    }
+
+    formatDateToISO(date) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        return `${day}-${month}-${year}`;
     }
 }
 
@@ -273,6 +279,7 @@ function animateValue(element, start, end, duration) {
 }
 
 // Achievement hover effects
+// To ensure compatibility with the calendar, store activity_days as strings in DD-MM-YYYY format: "DD-MM-YYYY" (e.g., "10-06-2024").
 function initAchievements() {
     const achievementCards = document.querySelectorAll(".achievement-card");
 
@@ -295,23 +302,23 @@ function initAchievements() {
 // Progress bar animation
 function animateProgressBars() {
     const progressBars = document.querySelectorAll(".progress-fill");
+    progressBars.forEach((bar) => {
+        // Get user experience from the XP text
+        const xpText = document.querySelector(".xp-text");
+        if (xpText) {
+            const userExperience = parseInt(
+                xpText.textContent.replace(" XP", "").replace(",", "")
+            );
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                const progressBar = entry.target;
-                const width = progressBar.style.width;
-                progressBar.style.width = "0%";
-                progressBar.style.transition = "width 1.5s ease-in-out";
+            // Calculate target width as modulo 100 (experience % 100)
+            const targetWidth = (userExperience % 100) + "%";
 
-                setTimeout(() => {
-                    progressBar.style.width = width;
-                }, 100);
-            }
-        });
+            bar.style.width = "0%";
+            setTimeout(() => {
+                bar.style.width = targetWidth;
+            }, 500);
+        }
     });
-
-    progressBars.forEach((bar) => observer.observe(bar));
 }
 
 // Toggle switch functionality
