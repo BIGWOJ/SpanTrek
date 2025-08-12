@@ -18,21 +18,9 @@
                 </div>
                 <div class="profile-info">
                     <h1 class="username">{{ user.username }}</h1>
-                    <p class="join-date">Member since 2024</p>
-                    <div class="streak-badge">
-                        {% if user.days_streak != 0 %}
-                        <div class="streak-flame">🔥</div>
-                        <span class="streak-count">{{ user.days_streak }}</span>
-                        <span class="streak-text"
-                            >day{% if user.days_streak > 1 %}s{% endif %}
-                            streak</span
-                        >
-                        {% else %}
-                        <span class="streak-text"
-                            >Start your streak today!</span
-                        >
-                        {% endif %}
-                    </div>
+                    <p class="join-date">
+                        Member since {{user.date_joined|date:"E Y"}}
+                    </p>
                 </div>
             </div>
 
@@ -76,12 +64,12 @@
             </div>
             <div class="stat-card">
                 <div class="stat-icon">🏆</div>
-                <div class="stat-value">12</div>
+                <div class="stat-value">{{ user.achievements.count }}</div>
                 <div class="stat-label">Achievements</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">📚</div>
-                <div class="stat-value">156</div>
+                <div class="stat-value">{{ user.words_learned }}</div>
                 <div class="stat-label">Words Learned</div>
             </div>
         </div>
@@ -95,24 +83,18 @@
             <div
                 class="achievement-card {% if achievement.earned %}earned{% else %}locked{% endif %}"
             >
-                <div class="achievement-badge">{{ achievement.icon }}</div>
+                <div class="achievement-badge">
+                    {{ achievement.achievement.icon }}
+                </div>
                 <div class="achievement-info">
-                    <h4>{{ achievement.name }}</h4>
-                    <p>{{ achievement.description }}</p>
+                    <h4>{{ achievement.achievement.name }}</h4>
+                    <p>{{ achievement.achievement.description }}</p>
                 </div>
                 <div class="achievement-status">
                     {% if achievement.earned %}Earned{% else %}Locked{% endif %}
                 </div>
             </div>
             {% endfor %}
-            <div class="achievement-card locked">
-                <div class="achievement-badge">📖</div>
-                <div class="achievement-info">
-                    <h4>Word Master</h4>
-                    <p>Learn 200 words</p>
-                </div>
-                <div class="achievement-status">44/200</div>
-            </div>
         </div>
     </div>
 
@@ -165,6 +147,7 @@
         </div>
     </div>
 
+    {% if request.user.id == user.id %}
     <!-- Settings Section -->
     <div class="settings-section">
         <h2 class="section-title">Account Settings</h2>
@@ -268,6 +251,7 @@
             </div>
         </div>
     </div>
+    {% endif %}
 
     <!-- Quick Actions -->
     <div class="quick-actions">

@@ -375,11 +375,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     });
-
-    // Welcome message
-    setTimeout(() => {
-        showNotification("Welcome to your profile!", "info");
-    }, 500);
 });
 
 // Export functions for potential external use

@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
+from django.utils.text import slugify
+from datetime import date
+import json
 
 class User(AbstractUser):
     username = models.CharField(max_length=150, unique=True, blank=False, null=False)
@@ -10,105 +13,122 @@ class User(AbstractUser):
     level = models.IntegerField(default=1)
     experience = models.IntegerField(default=0)
     adventure_progress = models.IntegerField(default=0)
-
+    words_learned = models.IntegerField(default=0)
+    activity_days = models.JSONField(default=list, blank=True)  # Store list of active dates as strings
+    last_activity_date = models.DateField(null=True, blank=True)  # Track last activity for streak calculation 
+    
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 
     def __str__(self):
         return self.username
 
-    def get_user_achievements(self):
-        """Get all achievements earned by this user"""
-        return UserAchievement.objects.filter(user=self).select_related('achievement')
+    def has_achievement(self, achievement_name):
+        """Check if user has earned a specific achievement by name"""
+        return self.earned_achievements.filter(achievement__name=achievement_name).exists()
 
-    def has_achievement(self, achievement_id):
-        """Check if user has a specific achievement"""
-        return UserAchievement.objects.filter(user=self, achievement_id=achievement_id).exists()
-
-    def award_achievement(self, achievement):
+    def award_achievement(self, achievement_name):
         """Award an achievement to the user if they don't already have it"""
-        user_achievement, created = UserAchievement.objects.get_or_create(
-            user=self,
-            achievement=achievement
-        )
-        return created  # Returns True if achievement was newly awarded
+        try:
+            achievement = Achievement.objects.get(name=achievement_name)
+            user_achievement, created = UserAchievement.objects.get_or_create(
+                user=self,
+                achievement=achievement
+            )
+            if created:
+                # Award experience points
+                self.experience += achievement.experience_award
+                self.save()
+                return True
+        except Achievement.DoesNotExist:
+            pass
+        return False
 
-    def check_and_award_achievements(self):
-        """Check all achievements and award any that the user qualifies for"""
-        achievements_to_check = Achievement.objects.all()
-        newly_awarded = []
+    def mark_activity_today(self):
+        """Mark today as an active day and update streak"""
+        today = date.today()
+        today_str = today.isoformat()
         
-        for achievement in achievements_to_check:
-            if not self.has_achievement(achievement.id) and achievement.check_condition(self):
-                if self.award_achievement(achievement):
-                    newly_awarded.append(achievement)
-        
-        return newly_awarded
+        # Don't add duplicate entries for the same day
+        if today_str not in self.activity_days:
+            self.activity_days.append(today_str)
+            self.last_activity_date = today
+            self._calculate_streak()
+            self.save()
+            return True
+        return False
 
+    def _calculate_streak(self):
+        """Calculate current streak based on activity_days"""
+        if not self.activity_days:
+            self.days_streak = 0
+            return
+        
+        # Sort dates and convert to date objects
+        sorted_dates = sorted([date.fromisoformat(d) for d in self.activity_days])
+        today = date.today()
+        
+        # Start from today and count backwards
+        current_streak = 0
+        current_date = today
+        
+        # Check if today is in the activity list
+        if today.isoformat() in self.activity_days:
+            current_streak = 1
+            current_date = today
+        elif len(sorted_dates) > 0 and sorted_dates[-1] == today - timezone.timedelta(days=1):
+            # If last activity was yesterday, start streak from yesterday
+            current_date = sorted_dates[-1]
+            current_streak = 1
+        else:
+            # No recent activity, streak is 0
+            self.days_streak = 0
+            return
+        
+        # Count backwards from current_date
+        for i in range(len(sorted_dates) - 1, -1, -1):
+            expected_date = current_date - timezone.timedelta(days=current_streak - 1)
+            if sorted_dates[i] == expected_date:
+                if i == 0:  # First element, no more to check
+                    break
+                # Check if previous day exists
+                prev_expected = expected_date - timezone.timedelta(days=1)
+                if i > 0 and sorted_dates[i - 1] == prev_expected:
+                    current_streak += 1
+                else:
+                    break
+            else:
+                break
+        
+        self.days_streak = current_streak
 
 class Achievement(models.Model):
-    CONDITION_TYPES = [
-        ('experience', 'Experience Points'),
-        ('level', 'Level'),
-        ('streak', 'Days Streak'),
-        ('adventure_progress', 'Adventure Progress'),
-        ('custom', 'Custom Logic'),
-    ]
-    
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)  # Use name as unique identifier
     description = models.TextField()
-    icon = models.CharField(max_length=10, default='⭐')  # Unicode emoji or icon
-    
-    # Condition settings
-    condition_type = models.CharField(max_length=20, choices=CONDITION_TYPES)
-    condition_value = models.IntegerField(help_text="Target value for the condition")
-    
-    # Achievement metadata
-    points_reward = models.IntegerField(default=10, help_text="XP bonus for earning this achievement")
-    is_hidden = models.BooleanField(default=False, help_text="Hidden until earned")
- 
+    icon = models.CharField(max_length=50)
+    experience_award = models.IntegerField(default=0)
+    is_active = models.BooleanField(default=True)  # To enable/disable achievements
+
+    # Many-to-many relationship with User through UserAchievement
+    users = models.ManyToManyField(User, through='UserAchievement', related_name='achievements')
+
     class Meta:
-        ordering = ['condition_value', 'name']
+        ordering = ['name']
 
     def __str__(self):
         return self.name
 
-    def check_condition(self, user):
-        """Check if user meets the condition for this achievement"""
-        if self.condition_type == 'experience':
-            return user.experience >= self.condition_value
-        elif self.condition_type == 'level':
-            return user.level >= self.condition_value
-        elif self.condition_type == 'streak':
-            return user.days_streak >= self.condition_value
-        elif self.condition_type == 'adventure_progress':
-            return user.adventure_progress >= self.condition_value
-        elif self.condition_type == 'custom':
-            # For custom achievements, you can add specific logic here
-            return self._check_custom_condition(user)
-        return False
-
-    def _check_custom_condition(self, user):
-        """Override this method for custom achievement logic"""
-        # Example custom conditions:
-        if self.name == "Well Rounded":
-            # Requires user to have at least level 3 AND 5+ day streak
-            return user.level >= 3 and user.days_streak >= 5
-        elif self.name == "Perfectionist":
-            # Requires user to have exactly matching level and streak
-            return user.level == user.days_streak and user.level >= 10
-        
-        return False
-
+    @property
+    def slug(self):
+        """Generate slug from name for compatibility"""
+        return slugify(self.name)
 
 class UserAchievement(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='achievements')
-    achievement = models.ForeignKey(Achievement, on_delete=models.CASCADE)
-    earned_at = models.DateTimeField(auto_now_add=True)
-    
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='earned_achievements')
+    achievement = models.ForeignKey(Achievement, on_delete=models.CASCADE, related_name='earned_by')
+ 
     class Meta:
-        unique_together = ('user', 'achievement')
-        ordering = ['-earned_at']
+        unique_together = ('user', 'achievement')  # Prevent duplicate achievements
 
     def __str__(self):
         return f"{self.user.username} - {self.achievement.name}"
