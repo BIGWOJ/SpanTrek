@@ -1,0 +1,97 @@
+{% extends 'base.html' %} {% block title %}Lessons - SpanTrek{% endblock %} {%
+block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1>Spanish Lessons</h1>
+            <p class="lead">
+                Choose a lesson to continue your Spanish learning journey!
+            </p>
+        </div>
+    </div>
+
+    {% if recommended_lesson %}
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card border-success">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">📚 Recommended Next Lesson</h5>
+                </div>
+                <div class="card-body">
+                    <h6 class="card-title">{{ recommended_lesson.title }}</h6>
+                    <p class="card-text">
+                        {{ recommended_lesson.description }}
+                    </p>
+                    <a
+                        href="{% url 'lessons:lesson_detail' recommended_lesson.id %}"
+                        class="btn btn-success float-right"
+                        >Start Lesson</a
+                    >
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="row">
+        {% for lesson in lessons %}
+        <div class="col-md-6 col-lg-4 mb-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{ lesson.title }}</h5>
+                    <p class="card-text">
+                        {{ lesson.description|truncatewords:15 }}
+                    </p>
+                    <div class="mb-2">
+                        {% if lesson.user_progress %} {% if
+                        lesson.user_progress.is_completed %}
+                        <span class="badge badge-success">✓ Completed</span>
+                        {% if lesson.user_progress.score %}
+                        <small class="text-muted"
+                            >({{ lesson.user_progress.score|floatformat:0
+                            }}%)</small
+                        >
+                        {% endif %} {% else %}
+                        <span class="badge badge-warning">In Progress</span>
+                        {% endif %} {% else %}
+                        <span class="badge badge-light">Not Started</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a
+                        href="{% url 'lessons:lesson_detail' lesson.id %}"
+                        class="btn btn-primary btn-sm"
+                    >
+                        {% if lesson.user_progress %} {% if
+                        lesson.user_progress.is_completed %} Review Lesson {%
+                        else %} Continue {% endif %} {% else %} Start Lesson {%
+                        endif %}
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-info">
+                <h4>No lessons available yet!</h4>
+                <p>Check back soon for new Spanish lessons.</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    .badge-beginner {
+        background-color: #28a745;
+    }
+    .badge-intermediate {
+        background-color: #ffc107;
+        color: #212529;
+    }
+    .badge-advanced {
+        background-color: #dc3545;
+    }
+</style>
+{% endblock %}
