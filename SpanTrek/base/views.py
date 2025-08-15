@@ -10,7 +10,7 @@ def home_page(request):
     if not request.user.is_authenticated:
         return redirect('login_page')
     
-    return render(request, 'home.html')
+    return render(request, 'base/home.html')
 
 
 def login_page(request):
@@ -42,7 +42,7 @@ def login_page(request):
                 messages.error(request, 'Password or email is incorrect')
 
     context = {'page': page}
-    return render(request, 'login_register.html', context)
+    return render(request, 'base/login_register.html', context)
 
 def register_page(request):
     page = 'register'
@@ -61,7 +61,7 @@ def register_page(request):
             messages.error(request, 'Coś poszło nie tak. Spróbuj ponownie')
 
     context = {'register_form': form, 'page': page}
-    return render(request, 'login_register.html', context)
+    return render(request, 'base/login_register.html', context)
 
 def logout_user(request):
     logout(request)
@@ -89,4 +89,4 @@ def user_page(request, pk):
         'earned_count': earned_count,
     }
 
-    return render(request, 'user_page.html', context)
+    return render(request, 'base/user_page.html', context)

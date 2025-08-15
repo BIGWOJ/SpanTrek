@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import User
 from django.conf import settings
 from django.utils import timezone
 
@@ -96,17 +95,14 @@ class UserLessonProgress(models.Model):
     # Progress tracking
     is_started = models.BooleanField(default=False)
     is_completed = models.BooleanField(default=False)
-    current_exercise = models.IntegerField(default=0)  # Track which exercise user is on
     
     # Scoring
     score = models.IntegerField(default=0)  # Total points earned
     max_score = models.IntegerField(default=0)  # Maximum possible points
-    attempts = models.IntegerField(default=0)
-    
+ 
     # Timestamps
     started_at = models.DateTimeField(null=True, blank=True)
-    completed_at = models.DateTimeField(null=True, blank=True)
-    last_accessed = models.DateTimeField(auto_now=True)
+    time_spent = models.DurationField(null=True, blank=True)
     
     class Meta:
         unique_together = ('user', 'lesson')
@@ -132,8 +128,8 @@ class UserLessonProgress(models.Model):
         """Mark lesson as completed if score meets requirement"""
         if not self.is_completed and self.percentage_score >= self.lesson.required_score:
             self.is_completed = True
-            self.completed_at = timezone.now()
-            
+            self.time_spent = timezone.now() - self.started_at
+
             # Award experience points to user
             self.user.experience += self.lesson.experience_points
             self.user.save()
@@ -143,28 +139,6 @@ class UserLessonProgress(models.Model):
         return False
 
 
-class UserExerciseAttempt(models.Model):
-    """Track individual exercise attempts"""
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE, related_name='attempts')
-    
-    # Attempt data
-    user_answer = models.JSONField()  # User's answer - format depends on exercise type
-    is_correct = models.BooleanField(default=False)
-    points_earned = models.IntegerField(default=0)
-    
-    # Metadata
-    attempt_number = models.IntegerField(default=1)
-    time_taken = models.IntegerField(default=0, help_text="Time taken in seconds")
-    attempted_at = models.DateTimeField(auto_now_add=True)
-    
-    class Meta:
-        ordering = ['-attempted_at']
-    
-    def __str__(self):
-        return f"{self.user.username} - {self.exercise} - Attempt {self.attempt_number}"
-
-
 class Vocabulary(models.Model):
     """Vocabulary words introduced in lessons"""
     word = models.CharField(max_length=100)
@@ -172,50 +146,15 @@ class Vocabulary(models.Model):
     pronunciation = models.CharField(max_length=150, blank=True)
     definition = models.TextField(blank=True)
     example_sentence = models.TextField(blank=True)
-    lesson = models.ForeignKey(AdventureLesson, on_delete=models.CASCADE, related_name='vocabulary')
     
     # Audio
     audio_url = models.URLField(blank=True)
     
-    # Metadata
-    difficulty_level = models.IntegerField(default=1)
-    created_at = models.DateTimeField(auto_now_add=True)
-    
     class Meta:
         verbose_name_plural = "Vocabulary"
-        ordering = ['lesson', 'word']
-    
+        ordering = ['word']
+
     def __str__(self):
         return f"{self.word} - {self.translation}"
 
 
-class UserVocabularyProgress(models.Model):
-    """Track user's vocabulary learning progress"""
-    MASTERY_LEVELS = [
-        ('learning', 'Learning'),
-        ('practiced', 'Practiced'),
-        ('mastered', 'Mastered'),
-    ]
-    
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    vocabulary = models.ForeignKey(Vocabulary, on_delete=models.CASCADE)
-    mastery_level = models.CharField(max_length=20, choices=MASTERY_LEVELS, default='learning')
-    
-    # Progress tracking
-    times_seen = models.IntegerField(default=0)
-    times_correct = models.IntegerField(default=0)
-    last_seen = models.DateTimeField(null=True, blank=True)
-    
-    class Meta:
-        unique_together = ('user', 'vocabulary')
-        verbose_name_plural = "User Vocabulary Progress"
-    
-    def __str__(self):
-        return f"{self.user.username} - {self.vocabulary.word}"
-    
-    @property
-    def accuracy_rate(self):
-        """Calculate accuracy rate"""
-        if self.times_seen == 0:
-            return 0
-        return round((self.times_correct / self.times_seen) * 100)
