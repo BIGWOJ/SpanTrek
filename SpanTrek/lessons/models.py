@@ -1,219 +1,221 @@
 from django.db import models
-from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
+from django.conf import settings
 from django.utils import timezone
 
-User = get_user_model()
 
-# Enums for different content types
+class Country(models.Model):
+    """Countries for organizing lessons (e.g., Spain, Peru, Chile)"""
+    name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.name
+
+
+class AdventureLesson(models.Model):
+    """Main lesson model"""
+    
+    lesson_id = models.AutoField(primary_key=True, help_text="Auto-incrementing lesson identifier")
+    country = models.ForeignKey(Country, on_delete=models.CASCADE)
+    order = models.IntegerField(default=1)
+    
+    # Gamification
+    experience_points = models.IntegerField(default=10)
+    required_score = models.IntegerField(default=75, help_text="Minimum score to pass (percentage)")
+
+    class Meta:
+        ordering = ['country', 'order']
+
+    def __str__(self):
+        return f"Lesson {self.lesson_id}: {self.country.name} - Order {self.order}"
+
+
 class ContentType(models.TextChoices):
-    VOCABULARY = 'vocabulary', 'Vocabulary'
-    LISTENING = 'listening', 'Listening'
-    READING = 'reading', 'Reading'
-
-# Core content models
-class Lesson(models.Model):
-    """Main lesson container"""
-    title = models.CharField(max_length=200)
-    description = models.TextField()
-    order = models.PositiveIntegerField(default=0)  # For lesson ordering
-    is_active = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        ordering = ['order', 'created_at']
-
-    def __str__(self):
-        return self.title
-
-class Word(models.Model):
-    """Individual vocabulary words"""
-    spanish_word = models.CharField(max_length=200)
-    english_translation = models.CharField(max_length=200)
-    pronunciation = models.CharField(max_length=200, blank=True)  # IPA or phonetic
-    example_sentence_spanish = models.TextField(blank=True)
-    example_sentence_english = models.TextField(blank=True)
-    audio_file = models.FileField(upload_to='words/audio/', blank=True, null=True)
-    image = models.ImageField(upload_to='words/images/', blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        unique_together = ['spanish_word', 'english_translation']
-        ordering = ['spanish_word']
-
-    def __str__(self):
-        return f"{self.spanish_word} - {self.english_translation}"
-
-class ListeningExercise(models.Model):
-    """Listening comprehension exercises"""
-    title = models.CharField(max_length=200)
-    description = models.TextField(blank=True)
-    audio_file = models.FileField(upload_to='listening/audio/')
-    transcript = models.TextField()  # Full transcript for reference
-    duration_seconds = models.PositiveIntegerField(null=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        ordering = ['title']
-
-    def __str__(self):
-        return self.title
-
-class ReadingPassage(models.Model):
-    """Reading comprehension passages"""
-    title = models.CharField(max_length=200)
-    content = models.TextField()  # The text to read
-    word_count = models.PositiveIntegerField(null=True, blank=True)
-    created_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        ordering = ['title']
-
-    def __str__(self):
-        return self.title
-
-# Junction models connecting lessons to content
-class LessonWord(models.Model):
-    """Words included in a lesson"""
-    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, related_name='lesson_words')
-    word = models.ForeignKey(Word, on_delete=models.CASCADE, related_name='word_lessons')
-    order = models.PositiveIntegerField(default=0)
-
-    class Meta:
-        unique_together = ['lesson', 'word']
-        ordering = ['order']
-
-class LessonListening(models.Model):
-    """Listening exercises in a lesson"""
-    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, related_name='lesson_listenings')
-    listening_exercise = models.ForeignKey(ListeningExercise, on_delete=models.CASCADE, related_name='listening_lessons')
-    order = models.PositiveIntegerField(default=0)
-
-    class Meta:
-        unique_together = ['lesson', 'listening_exercise']
-        ordering = ['order']
-
-class LessonReading(models.Model):
-    """Reading passages in a lesson"""
-    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, related_name='lesson_readings')
-    reading_passage = models.ForeignKey(ReadingPassage, on_delete=models.CASCADE, related_name='reading_lessons')
-    order = models.PositiveIntegerField(default=0)
-
-    class Meta:
-        unique_together = ['lesson', 'reading_passage']
-        ordering = ['order']
-
-# User progress tracking models
-class UserProgress(models.Model):
-    """Overall user progress in lessons"""
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='lesson_progress')
-    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, related_name='user_progress')
-    is_completed = models.BooleanField(default=False)
-    completion_date = models.DateTimeField(null=True, blank=True)
-    score = models.FloatField(null=True, blank=True)  # Overall lesson score (0-100)
-    started_at = models.DateTimeField(auto_now_add=True)
-    last_accessed = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        unique_together = ['user', 'lesson']
-
-    def __str__(self):
-        status = "Completed" if self.is_completed else "In Progress"
-        return f"{self.user.username} - {self.lesson.title} ({status})"
-
-class UserWordKnowledge(models.Model):
-    """Track which words a user knows"""
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='word_knowledge')
-    word = models.ForeignKey(Word, on_delete=models.CASCADE, related_name='user_knowledge')
+    """Content types for adventure lesson content blocks"""
+    TEXT = 'text', 'Text'
+    IMAGE = 'image', 'Image'
+    VIDEO = 'video', 'Video'
+    AUDIO = 'audio', 'Audio'
     
-    # Knowledge levels
-    KNOWLEDGE_CHOICES = [
-        ('unknown', 'Unknown'),
-        ('learning', 'Learning'),
-        ('familiar', 'Familiar'),
-        ('known', 'Known'),
-        ('mastered', 'Mastered'),
+
+class AdventureLessonContent(models.Model):
+    """Individual content blocks within a adventure lesson"""
+
+    lesson = models.ForeignKey(AdventureLesson, on_delete=models.CASCADE, related_name='content_blocks')
+    content_id = models.AutoField(primary_key=True, help_text="Unique content block identifier")
+    content_type = models.CharField(max_length=20, choices=ContentType.choices, default='text')
+    title = models.CharField(max_length=200, blank=True)
+    content_text = models.TextField(null=True, blank=True, help_text="Main content text for the lesson")
+    media_url = models.URLField(blank=True, null=True, help_text="URL for images, audio, or video")
+    order = models.IntegerField(default=0)
+    
+    class Meta:
+        ordering = ['lesson', 'order']
+    
+    def __str__(self):
+        return f"{self.lesson.lesson_id} - {self.content_id}: {self.content_type.title()}"
+
+
+class Exercise(models.Model):
+    """Exercises within lessons"""
+    EXERCISE_TYPES = [
+        ('single_choice', 'Single Choice'),
+        ('multiple_choice', 'Multiple Choice'),
+        ('fill_blank', 'Fill in the Blank'),
+        ('matching', 'Matching'),
+        ('translation', 'Translation'),
+        ('audio_comprehension', 'Audio Comprehension'),
+        ('speaking', 'Speaking Practice'),
     ]
-    knowledge_level = models.CharField(max_length=20, choices=KNOWLEDGE_CHOICES, default='unknown')
     
-    # Spaced repetition data
-    next_review_date = models.DateTimeField(default=timezone.now)
-    review_count = models.PositiveIntegerField(default=0)
-    correct_streak = models.PositiveIntegerField(default=0)
-    last_reviewed = models.DateTimeField(null=True, blank=True)
+    lesson = models.ForeignKey(AdventureLesson, on_delete=models.CASCADE, related_name='exercises')
+    exercise_type = models.CharField(max_length=30, choices=EXERCISE_TYPES)
+    question = models.TextField()
+    instructions = models.TextField(blank=True)
     
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
+    # Answer data (stored as JSON for flexibility)
+    correct_answers = models.JSONField(help_text="Correct answer(s) - format depends on exercise type")
+    choices = models.JSONField(default=list, blank=True, help_text="Multiple choice options")
+    
+    # Metadata
+    points = models.IntegerField(default=1)
+    order = models.IntegerField(default=1)
+ 
     class Meta:
-        unique_together = ['user', 'word']
-
+        ordering = ['lesson', 'order']
+    
     def __str__(self):
-        return f"{self.user.username} - {self.word.spanish_word} ({self.knowledge_level})"
+        return f"Lesson {self.lesson.lesson_id} - Exercise {self.order}"
 
-class UserListeningProgress(models.Model):
-    """Track user's listening exercise completions"""
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='listening_progress')
-    listening_exercise = models.ForeignKey(ListeningExercise, on_delete=models.CASCADE, related_name='user_progress')
+
+class UserLessonProgress(models.Model):
+    """Track user progress through lessons"""
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='lesson_progress')
+    lesson = models.ForeignKey(AdventureLesson, on_delete=models.CASCADE, related_name='user_progress')
+    
+    # Progress tracking
+    is_started = models.BooleanField(default=False)
     is_completed = models.BooleanField(default=False)
-    completion_date = models.DateTimeField(null=True, blank=True)
-    score = models.FloatField(null=True, blank=True)  # Score (0-100)
-    times_attempted = models.PositiveIntegerField(default=0)
-    best_score = models.FloatField(null=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        unique_together = ['user', 'listening_exercise']
-
-    def __str__(self):
-        return f"{self.user.username} - {self.listening_exercise.title}"
-
-class UserReadingProgress(models.Model):
-    """Track user's reading passage completions"""
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reading_progress')
-    reading_passage = models.ForeignKey(ReadingPassage, on_delete=models.CASCADE, related_name='user_progress')
-    is_completed = models.BooleanField(default=False)
-    completion_date = models.DateTimeField(null=True, blank=True)
-    score = models.FloatField(null=True, blank=True)  # Score (0-100)
-    times_read = models.PositiveIntegerField(default=0)
-    reading_time_seconds = models.PositiveIntegerField(null=True, blank=True)  # Track reading speed
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        unique_together = ['user', 'reading_passage']
-
-    def __str__(self):
-        return f"{self.user.username} - {self.reading_passage.title}"
-
-# Review and practice session models
-class ReviewSession(models.Model):
-    """Track review sessions for spaced repetition"""
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='review_sessions')
-    session_type = models.CharField(max_length=20, choices=ContentType.choices)
-    started_at = models.DateTimeField(auto_now_add=True)
+    current_exercise = models.IntegerField(default=0)  # Track which exercise user is on
+    
+    # Scoring
+    score = models.IntegerField(default=0)  # Total points earned
+    max_score = models.IntegerField(default=0)  # Maximum possible points
+    attempts = models.IntegerField(default=0)
+    
+    # Timestamps
+    started_at = models.DateTimeField(null=True, blank=True)
     completed_at = models.DateTimeField(null=True, blank=True)
-    total_items = models.PositiveIntegerField(default=0)
-    correct_answers = models.PositiveIntegerField(default=0)
+    last_accessed = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        unique_together = ('user', 'lesson')
+    
+    def __str__(self):
+        return f"{self.user.username} - Lesson {self.lesson.lesson_id}"
     
     @property
-    def accuracy(self):
-        if self.total_items == 0:
+    def percentage_score(self):
+        """Calculate percentage score"""
+        if self.max_score == 0:
             return 0
-        return (self.correct_answers / self.total_items) * 100
+        return round((self.score / self.max_score) * 100)
+    
+    def mark_started(self):
+        """Mark lesson as started"""
+        if not self.is_started:
+            self.is_started = True
+            self.started_at = timezone.now()
+            self.save()
+    
+    def mark_completed(self):
+        """Mark lesson as completed if score meets requirement"""
+        if not self.is_completed and self.percentage_score >= self.lesson.required_score:
+            self.is_completed = True
+            self.completed_at = timezone.now()
+            
+            # Award experience points to user
+            self.user.experience += self.lesson.experience_points
+            self.user.save()
+            
+            self.save()
+            return True
+        return False
 
+
+class UserExerciseAttempt(models.Model):
+    """Track individual exercise attempts"""
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE, related_name='attempts')
+    
+    # Attempt data
+    user_answer = models.JSONField()  # User's answer - format depends on exercise type
+    is_correct = models.BooleanField(default=False)
+    points_earned = models.IntegerField(default=0)
+    
+    # Metadata
+    attempt_number = models.IntegerField(default=1)
+    time_taken = models.IntegerField(default=0, help_text="Time taken in seconds")
+    attempted_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        ordering = ['-attempted_at']
+    
     def __str__(self):
-        return f"{self.user.username} - {self.session_type} review ({self.started_at.date()})"
+        return f"{self.user.username} - {self.exercise} - Attempt {self.attempt_number}"
 
-class WordReview(models.Model):
-    """Individual word review within a session"""
-    session = models.ForeignKey(ReviewSession, on_delete=models.CASCADE, related_name='word_reviews')
-    word_knowledge = models.ForeignKey(UserWordKnowledge, on_delete=models.CASCADE)
-    is_correct = models.BooleanField()
-    response_time_ms = models.PositiveIntegerField(null=True, blank=True)
-    reviewed_at = models.DateTimeField(auto_now_add=True)
 
+class Vocabulary(models.Model):
+    """Vocabulary words introduced in lessons"""
+    word = models.CharField(max_length=100)
+    translation = models.CharField(max_length=100)
+    pronunciation = models.CharField(max_length=150, blank=True)
+    definition = models.TextField(blank=True)
+    example_sentence = models.TextField(blank=True)
+    lesson = models.ForeignKey(AdventureLesson, on_delete=models.CASCADE, related_name='vocabulary')
+    
+    # Audio
+    audio_url = models.URLField(blank=True)
+    
+    # Metadata
+    difficulty_level = models.IntegerField(default=1)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        verbose_name_plural = "Vocabulary"
+        ordering = ['lesson', 'word']
+    
     def __str__(self):
-        result = "✓" if self.is_correct else "✗"
-        return f"{result} {self.word_knowledge.word.spanish_word}"
+        return f"{self.word} - {self.translation}"
+
+
+class UserVocabularyProgress(models.Model):
+    """Track user's vocabulary learning progress"""
+    MASTERY_LEVELS = [
+        ('learning', 'Learning'),
+        ('practiced', 'Practiced'),
+        ('mastered', 'Mastered'),
+    ]
+    
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    vocabulary = models.ForeignKey(Vocabulary, on_delete=models.CASCADE)
+    mastery_level = models.CharField(max_length=20, choices=MASTERY_LEVELS, default='learning')
+    
+    # Progress tracking
+    times_seen = models.IntegerField(default=0)
+    times_correct = models.IntegerField(default=0)
+    last_seen = models.DateTimeField(null=True, blank=True)
+    
+    class Meta:
+        unique_together = ('user', 'vocabulary')
+        verbose_name_plural = "User Vocabulary Progress"
+    
+    def __str__(self):
+        return f"{self.user.username} - {self.vocabulary.word}"
+    
+    @property
+    def accuracy_rate(self):
+        """Calculate accuracy rate"""
+        if self.times_seen == 0:
+            return 0
+        return round((self.times_correct / self.times_seen) * 100)
