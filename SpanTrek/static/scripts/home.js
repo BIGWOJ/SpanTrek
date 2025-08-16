@@ -89,34 +89,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Continue button functionality
-    const continueButtons = document.querySelectorAll(".continue-btn");
-    continueButtons.forEach((continueBtn) => {
-        if (continueBtn) {
-            continueBtn.addEventListener("click", function (e) {
-                e.stopPropagation(); // Prevent card click
-
-                // Store the original width before changing text
-                const computedStyle = window.getComputedStyle(this);
-                const currentWidth = computedStyle.width;
-                this.style.width = currentWidth; // Fix the width
-                this.style.minWidth = currentWidth; // Ensure it doesn't shrink
-
-                showNotification("Continuing with lesson! ¡Vamos! 🚀");
-
-                // Simulate lesson loading
-                this.textContent = "¡Vaaamos!...";
-                this.disabled = true;
-
-                setTimeout(() => {
-                    this.textContent = "Continue adventure";
-                    this.disabled = false;
-                    // Keep the fixed width even after text changes back
-                }, 2000);
-            });
-        }
-    });
-
     // Add XP counter animation
     const xpText = document.querySelector(".xp-text");
     if (xpText) {

@@ -3,15 +3,31 @@ body {
     min-height: 100vh;
     font-family: 'Arial', sans-serif;
     color: #f5f5f5;
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Make main content grow to fill space, pushing footer down */
+body > *:not(footer) {
+    flex-shrink: 0;
 }
 
 .hero-section {
     margin-bottom: 30px;
+    width: 100%;
+    overflow: hidden;
+    flex-shrink: 0;
 }
 
 .hero-content {
     max-width: 1200px;
     margin: 0 auto;
+    padding: 0 20px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .welcome-card {
@@ -22,6 +38,8 @@ body {
     text-align: center;
     position: relative;
     overflow: hidden;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .welcome-card::before {
@@ -78,7 +96,11 @@ body {
 .main-content {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0;
+    padding: 0 20px;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    flex: 1;
 }
 
 .progress-section {
@@ -396,10 +418,13 @@ body {
 @media (max-width: 480px) {
     .hero-section, .main-content {
         padding: 0 15px;
+        width: 100%;
+        overflow: hidden;
     }
     
     .welcome-card {
         padding: 20px;
+        width: 100%;
+        box-sizing: border-box;
     }
-    
 }

@@ -57,7 +57,9 @@
                         >{{ user.adventure_progress }}/XXX completed</span
                     >
                 </div>
-                <button class="continue-btn">Continue adventure</button>
+                <a href="{% url 'lessons:world_map' %}" class="continue-btn"
+                    >Continue adventure</a
+                >
             </div>
         </div>
     </div>
