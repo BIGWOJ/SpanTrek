@@ -3,6 +3,17 @@ body {
     min-height: 100vh;
     font-family: 'Arial', sans-serif;
     color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    display: flex;             /* make body flex container */
+    flex-direction: column;    /* stack elements vertically */
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
+}
+
+body > *:not(footer) {
+    flex-shrink: 0;
 }
 
 .hero-section {
@@ -148,6 +159,7 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
+    flex: 1;
 }
 
 .section-title {
@@ -165,17 +177,18 @@ body {
 
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 20px;
 }
 
 .stat-card {
     background: #f5f5f5;
     border-radius: 15px;
-    padding: 25px;
+    padding: 35px;
     text-align: center;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease;
+    min-width: 220px;
 }
 
 .stat-card:hover {
@@ -405,7 +418,7 @@ body {
 
 .settings-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 30px;
 }
 
