@@ -132,6 +132,15 @@ body > *:not(footer) {
     transition: all 0.3s ease;
 }
 
+/* Link styles for clickable countries */
+.map-wrapper svg a {
+    cursor: pointer;
+}
+
+.map-wrapper svg a:focus {
+    outline: none;
+}
+
 .spanish-country:hover {
     fill: #ffa51f;
     opacity: 1;
