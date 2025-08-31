@@ -1,0 +1,32 @@
+.continue-button-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-top: 40px;
+    }
+
+.continue-button {
+    background: #ff8c00;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 20px 60px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-decoration: none;
+}
+
+.continue-button:hover {
+    background: #ffa51f;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 140, 0, 0.4);
+}
+
+.continue-button:active {
+    transform: translateY(1px);
+}
