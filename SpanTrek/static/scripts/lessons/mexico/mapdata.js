@@ -17,8 +17,8 @@ var simplemaps_countrymap_mapdata = {
         location_url: "",
         location_color: "#ffa51f",
         location_opacity: 0.8,
-        location_size: 25,
-        location_type: "square",
+        location_size: 50,
+        location_type: "image",
         location_image_source: "frog.png",
         location_border_color: "#FFFFFF",
         location_border: 2,
@@ -79,6 +79,7 @@ var simplemaps_countrymap_mapdata = {
             lng: "-99.1332",
             description: "Capital of Mexico",
             url: "/",
+            image_url: "/static/images/map_pins/pin1.svg",
         },
         1: {
             name: "Cancún",
@@ -86,6 +87,7 @@ var simplemaps_countrymap_mapdata = {
             lng: "-86.8515",
             description: "Famous Caribbean beach resort",
             url: "/",
+            image_url: "/static/images/map_pins/pin2.svg",
         },
         2: {
             name: "Chichen Itza",
@@ -93,6 +95,7 @@ var simplemaps_countrymap_mapdata = {
             lng: "-88.5678",
             description: "Ancient Mayan city",
             url: "/",
+            image_url: "/static/images/map_pins/pin3.svg",
         },
         3: {
             name: "Guadalajara",
@@ -100,6 +103,7 @@ var simplemaps_countrymap_mapdata = {
             lng: "-103.3496",
             description: "Birthplace of mariachi music",
             url: "/",
+            image_url: "/static/images/map_pins/pin4.svg",
         },
         4: {
             name: "Tulum",
@@ -107,6 +111,7 @@ var simplemaps_countrymap_mapdata = {
             lng: "-87.4654",
             description: "Coastal Mayan ruins",
             url: "/",
+            image_url: "/static/images/map_pins/pin5.svg",
         },
         5: {
             name: "Puerto Vallarta",
@@ -114,6 +119,7 @@ var simplemaps_countrymap_mapdata = {
             lng: "-105.2253",
             description: "Pacific coast resort city",
             url: "/",
+            image_url: "/static/images/map_pins/pin6.svg",
         },
         6: {
             name: "Oaxaca",
@@ -121,6 +127,7 @@ var simplemaps_countrymap_mapdata = {
             lng: "-96.7266",
             description: "Cultural and culinary capital",
             url: "/",
+            image_url: "/static/images/map_pins/pin7.svg",
         },
     },
     labels: {

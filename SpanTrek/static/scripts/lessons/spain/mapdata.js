@@ -17,8 +17,8 @@ var simplemaps_countrymap_mapdata = {
         location_url: "",
         location_color: "#ffa51f",
         location_opacity: 0.8,
-        location_size: 25,
-        location_type: "square",
+        location_size: 50,
+        location_type: "image",
         location_image_source: "frog.png",
         location_border_color: "#FFFFFF",
         location_border: 2,
@@ -79,6 +79,7 @@ var simplemaps_countrymap_mapdata = {
             lng: "-3.6947",
             description: "Capital of Spain",
             url: "/",
+            image_url: "/static/images/map_pins/pin1.svg",
         },
         1: {
             name: "Barcelona",
@@ -86,6 +87,7 @@ var simplemaps_countrymap_mapdata = {
             lng: "2.1734",
             description: "Capital of Catalonia",
             url: "/",
+            image_url: "/static/images/map_pins/pin2.svg",
         },
         2: {
             name: "Valencia",
@@ -93,6 +95,7 @@ var simplemaps_countrymap_mapdata = {
             lng: "-0.3763",
             description: "Home of paella",
             url: "/",
+            image_url: "/static/images/map_pins/pin3.svg",
         },
         3: {
             name: "Seville",
@@ -100,6 +103,7 @@ var simplemaps_countrymap_mapdata = {
             lng: "-5.9845",
             description: "Capital of Andalusia",
             url: "/",
+            image_url: "/static/images/map_pins/pin4.svg",
         },
         4: {
             name: "Bilbao",
@@ -107,6 +111,7 @@ var simplemaps_countrymap_mapdata = {
             lng: "-2.9350",
             description: "Basque Country's largest city",
             url: "/",
+            image_url: "/static/images/map_pins/pin5.svg",
         },
         5: {
             name: "Málaga",
@@ -114,6 +119,7 @@ var simplemaps_countrymap_mapdata = {
             lng: "-4.4217",
             description: "Picasso's birthplace",
             url: "/",
+            image_url: "/static/images/map_pins/pin6.svg",
         },
         6: {
             name: "Ibiza",
@@ -121,6 +127,7 @@ var simplemaps_countrymap_mapdata = {
             lng: "1.4206",
             description: "Famous party island in the Balearics",
             url: "/",
+            image_url: "/static/images/map_pins/pin7.svg",
         },
         7: {
             name: "Palma de Mallorca",
@@ -128,6 +135,7 @@ var simplemaps_countrymap_mapdata = {
             lng: "2.6502",
             description: "Capital of the Balearic Islands",
             url: "/",
+            image_url: "/static/images/map_pins/pin8.svg",
         },
         8: {
             name: "Santa Cruz de Tenerife",
@@ -135,6 +143,7 @@ var simplemaps_countrymap_mapdata = {
             lng: "-16.2546",
             description: "Capital of the Canary Islands",
             url: "/",
+            image_url: "/static/images/map_pins/pin9.svg",
         },
     },
     labels: {

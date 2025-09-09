@@ -17,8 +17,8 @@ var simplemaps_countrymap_mapdata = {
         location_url: "",
         location_color: "#ffa51f",
         location_opacity: 0.8,
-        location_size: 25,
-        location_type: "square",
+        location_size: 50,
+        location_type: "image",
         location_image_source: "frog.png",
         location_border_color: "#FFFFFF",
         location_border: 2,
@@ -79,6 +79,7 @@ var simplemaps_countrymap_mapdata = {
             lng: "-77.0428",
             description: "Capital of Peru",
             url: "/",
+            image_url: "/static/images/map_pins/pin1.svg",
         },
         1: {
             name: "Cusco",
@@ -86,6 +87,7 @@ var simplemaps_countrymap_mapdata = {
             lng: "-71.9675",
             description: "Gateway to Machu Picchu",
             url: "/",
+            image_url: "/static/images/map_pins/pin2.svg",
         },
         2: {
             name: "Machu Picchu",
@@ -93,6 +95,7 @@ var simplemaps_countrymap_mapdata = {
             lng: "-72.5450",
             description: "Ancient Inca citadel",
             url: "/",
+            image_url: "/static/images/map_pins/pin3.svg",
         },
         3: {
             name: "Arequipa",
@@ -100,6 +103,7 @@ var simplemaps_countrymap_mapdata = {
             lng: "-71.5375",
             description: "The White City",
             url: "/",
+            image_url: "/static/images/map_pins/pin4.svg",
         },
         4: {
             name: "Iquitos",
@@ -107,6 +111,7 @@ var simplemaps_countrymap_mapdata = {
             lng: "-73.2516",
             description: "Gateway to the Amazon",
             url: "/",
+            image_url: "/static/images/map_pins/pin5.svg",
         },
         5: {
             name: "Nazca",
@@ -114,6 +119,7 @@ var simplemaps_countrymap_mapdata = {
             lng: "-74.9381",
             description: "Home of the Nazca Lines",
             url: "/",
+            image_url: "/static/images/map_pins/pin6.svg",
         },
         6: {
             name: "Huacachina",
@@ -121,6 +127,7 @@ var simplemaps_countrymap_mapdata = {
             lng: "-75.7626",
             description: "Desert oasis near Ica",
             url: "/",
+            image_url: "/static/images/map_pins/pin7.svg",
         },
     },
     labels: {
