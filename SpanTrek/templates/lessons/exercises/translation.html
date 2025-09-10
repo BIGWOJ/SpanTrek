@@ -1,0 +1,25 @@
+<!-- Translation Exercise Template -->
+<div class="exercise translation" data-exercise-id="{{ exercise_id }}">
+    <h3 class="exercise-title">{{ title }}</h3>
+
+    <div class="translation-content">
+        <div class="original-text">
+            <p>{{ original_text }}</p>
+        </div>
+
+        <textarea
+            class="translation-input"
+            placeholder="Type your translation here..."
+        ></textarea>
+    </div>
+
+    <div class="feedback hidden">
+        <p class="feedback-text"></p>
+        <div class="correct-translation hidden">
+            <h4>Sample Translation:</h4>
+            <p>{{ correct_translation }}</p>
+        </div>
+    </div>
+
+    <button class="check-answer">Check Translation</button>
+</div>

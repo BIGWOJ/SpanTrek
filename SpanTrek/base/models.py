@@ -3,7 +3,6 @@ from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
 from django.utils.text import slugify
 from datetime import date
-import json
 
 class User(AbstractUser):
     username = models.CharField(max_length=150, unique=True, blank=False, null=False)
@@ -16,6 +15,9 @@ class User(AbstractUser):
     words_learned = models.IntegerField(default=0)
     activity_days = models.JSONField(default=list, blank=True)  # Store list of active dates as strings
     last_activity_date = models.DateField(null=True, blank=True)  # Track last activity for streak calculation 
+
+    # Country lessons progress tracking
+    country_lessons_progress = models.JSONField(default=dict, blank=True)  # e.g., {"Spain": 3, "Mexico": 5}
     
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
@@ -102,6 +104,7 @@ class User(AbstractUser):
         
         self.days_streak = current_streak
 
+
 class Achievement(models.Model):
     name = models.CharField(max_length=100, unique=True)  # Use name as unique identifier
     description = models.TextField()
@@ -123,6 +126,7 @@ class Achievement(models.Model):
         """Generate slug from name for compatibility"""
         return slugify(self.name)
 
+
 class UserAchievement(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='earned_achievements')
     achievement = models.ForeignKey(Achievement, on_delete=models.CASCADE, related_name='earned_by')
@@ -132,3 +136,4 @@ class UserAchievement(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.achievement.name}"
+

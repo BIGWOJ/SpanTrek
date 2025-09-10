@@ -1,7 +1,7 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
-const pinsDir = path.join(__dirname, 'static', 'images', 'map_pins');
+const pinsDir = path.join(__dirname, "static", "images", "map_pins");
 
 // Create directory if it doesn't exist
 if (!fs.existsSync(pinsDir)) {

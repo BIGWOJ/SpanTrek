@@ -5,7 +5,7 @@ from .models import User, Achievement, UserAchievement
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ['username', 'email', 'level', 'experience', 'days_streak']
+    list_display = ['username', 'email', 'level', 'experience', 'days_streak', 'country_lessons_progress']
     list_filter = ['level', 'days_streak']
     search_fields = ['username', 'email']
 

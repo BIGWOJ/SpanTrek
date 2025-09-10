@@ -1,0 +1,19 @@
+{% extends 'lessons/lesson_base.html' %} {% block content %} {{ block.super }}
+
+<!-- Navigation between lessons -->
+<div class="lesson-navigation">
+    {% if prev_lesson %}
+    <a
+        href="{% url 'lessons:city_lesson' 'poland' city prev_lesson %}"
+        class="prev-lesson"
+        >Previous Lesson</a
+    >
+    {% endif %} {% if next_lesson %}
+    <a
+        href="{% url 'lessons:city_lesson' 'poland' city next_lesson %}"
+        class="next-lesson"
+        >Next Lesson</a
+    >
+    {% endif %}
+</div>
+{% endblock %}

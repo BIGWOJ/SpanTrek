@@ -5,7 +5,10 @@ app_name = 'lessons'
 
 urlpatterns = [
     path('world_map/', views.world_map, name='world_map'),
-    path('spain/', views.spain_view, name='spain'),
-    path('peru/', views.peru_view, name='peru'),
-    path('mexico/', views.mexico_view, name='mexico'),
+    path('spain/', views.country_view, {'country': 'spain'}, name='spain'),
+    path('peru/', views.country_view, {'country': 'peru'}, name='peru'),
+    path('mexico/', views.country_view, {'country': 'mexico'}, name='mexico'),
+    path('poland/', views.country_view, {'country': 'poland'}, name='poland'),
+    # City-specific lesson URLs
+    path('poland/<str:city>/<int:lesson_number>/', views.city_lesson_view, name='city_lesson'),
 ]

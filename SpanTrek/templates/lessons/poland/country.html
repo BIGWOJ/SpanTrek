@@ -1,0 +1,27 @@
+{%extends 'base/base.html'%} {%load static%} {% block styles %} {{ block.super}}
+<link
+    rel="stylesheet"
+    type="text/css"
+    href="{% static 'styles/lessons/country_map.css' %}"
+/>
+
+<script
+    type="text/javascript"
+    src="{% static 'scripts/lessons/poland/mapdata.js' %}"
+></script>
+<script
+    type="text/javascript"
+    src="{% static 'scripts/lessons/poland/countrymap.js' %}"
+></script>
+
+{% endblock styles %} {%block content%}
+{% include 'lessons/back_to_world_map.html' %}
+{% include 'lessons/progress_bar.html' %}
+<div class="map-wrapper">
+    <!--********* Copyright (c) 2024 Pareto Software, LLC DBA Simplemaps.com ***************************************
+************* Free for Commercial Use, full terms at  https://simplemaps.com/resources/svg-license ************
+************* Attribution is appreciated! https://simplemaps.com *******************************************-->
+
+    <div id="map"></div>
+</div>
+{%endblock content%}

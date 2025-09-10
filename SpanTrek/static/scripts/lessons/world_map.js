@@ -7,8 +7,15 @@ document.addEventListener("DOMContentLoaded", function () {
     // Get all Spanish country elements
     const spanishCountries = document.querySelectorAll(".spanish-country");
 
+    const startingCountries = document.querySelectorAll(".starting-country");
+
     // Add event listeners to each country
     spanishCountries.forEach((country) => {
+        country.addEventListener("mousemove", showTooltip);
+        country.addEventListener("mouseleave", hideTooltip);
+    });
+
+    startingCountries.forEach((country) => {
         country.addEventListener("mousemove", showTooltip);
         country.addEventListener("mouseleave", hideTooltip);
     });
@@ -21,18 +28,30 @@ document.addEventListener("DOMContentLoaded", function () {
                 '{"completed": 0, "total": 0, "name": "Unknown"}'
         );
 
+        // Check if this is a starting country
+        const isStartingCountry =
+            country.classList.contains("starting-country");
+
         // Calculate completion percentage
         const percentage =
             countryData.total > 0
                 ? Math.round((countryData.completed / countryData.total) * 100)
                 : 0;
 
-        // Update tooltip content
-        tooltip.innerHTML = `
-            <strong style="color: #ff8c00">${countryData.name}</strong><br>
-            Progress: ${percentage}%<br>
-            Completed: ${countryData.completed}/${countryData.total} lessons
-        `;
+        // Update tooltip content based on country type
+        if (isStartingCountry) {
+            tooltip.innerHTML = `
+                <strong style="color: #ff8c00">Poland</strong><br>
+                <span style="color: #4CAF50">Start your journey here!</span><br>
+                Basic lessons available
+            `;
+        } else {
+            tooltip.innerHTML = `
+                <strong style="color: #ff8c00">${countryData.name}</strong><br>
+                Progress: ${percentage}%<br>
+                Completed: ${countryData.completed}/${countryData.total} lessons
+            `;
+        }
 
         // Position tooltip
         const rect = country.getBoundingClientRect();

@@ -1,0 +1,71 @@
+{% extends 'base/base.html' %} {% load static %} {% block styles %}
+<link
+    rel="stylesheet"
+    type="text/css"
+    href="{% static 'styles/lessons/lesson_base.css' %}"
+/>
+{% endblock %} {% block content %}
+<div class="lesson-container">
+    <!-- Progress Bar -->
+    <div class="lesson-header">
+        {% include 'lessons/progress_bar.html' %}
+
+        <h1 class="lesson-title">
+            {% block lesson_title %}Lesson Title{% endblock %}
+        </h1>
+        <div class="lesson-meta">
+            <span class="difficulty"
+                >{% block lesson_difficulty %}Beginner{% endblock %}</span
+            >
+            <span class="estimated-time"
+                >{% block lesson_time %}15 min{% endblock %}</span
+            >
+        </div>
+    </div>
+
+    <!-- Main Lesson Content -->
+    <div class="lesson-content">
+        <!-- Introduction Section -->
+        <section class="lesson-section">
+            <h2>{% block intro_title %}Introduction{% endblock %}</h2>
+            <div class="intro-content">
+                {% block intro_content %}
+                <!-- Introduction content goes here -->
+                {% endblock %}
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="lesson-section">
+            {% block exercises %}
+            <!-- Individual exercises will be included here -->
+            {% endblock %}
+        </section>
+
+        <!-- Summary Section -->
+        <section class="lesson-section">
+            <h2>Summary</h2>
+            <div class="summary-content">
+                {% block summary_content %}
+                <!-- Summary content goes here -->
+                {% endblock %}
+            </div>
+        </section>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="lesson-navigation">
+        {% if prev_lesson %}
+        <a href="{{ prev_lesson.url }}" class="nav-button prev-lesson">
+            <span class="arrow">←</span> Previous Lesson
+        </a>
+        {% endif %} {% if next_lesson %}
+        <a href="{{ next_lesson.url }}" class="nav-button next-lesson">
+            Next Lesson <span class="arrow">→</span>
+        </a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %} {% block scripts %}
+<script src="{% static 'scripts/lessons/lesson_base.js' %}"></script>
+{% endblock %}

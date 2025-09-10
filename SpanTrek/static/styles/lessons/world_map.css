@@ -133,6 +133,12 @@ body > *:not(footer) {
     transition: all 0.3s ease;
 }
 
+.starting-country {
+    fill: hsl(33, 100%, 75%);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
 /* Link styles for clickable countries */
 .map-wrapper svg a {
     cursor: pointer;
