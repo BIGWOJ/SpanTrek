@@ -14,58 +14,59 @@
             {% block lesson_title %}Lesson Title{% endblock %}
         </h1>
         <div class="lesson-meta">
-            <span class="difficulty"
-                >{% block lesson_difficulty %}Beginner{% endblock %}</span
+            <span class="country-name"> {{ country|title }}</span>
+            <span class="city-name"> - {{ city|title }},</span>
+            <span class="lesson-number">lesson {{ lesson_number }}</span>
+        </div>
+
+        <!-- Main Lesson Content -->
+        <div class="lesson-content">
+            <!-- Introduction Section -->
+            <section class="lesson-section">
+                <h2>{% block intro_title %}Introduction{% endblock %}</h2>
+                <div class="intro-content">
+                    {% block intro_content %}
+                    <!-- Introduction content goes here -->
+                    {% endblock %}
+                </div>
+            </section>
+
+            <!-- Exercise Section -->
+            <section class="lesson-section">
+                {% block exercises %}
+                <!-- Individual exercises will be included here -->
+                {% endblock %}
+            </section>
+
+            <!-- Learned words Section -->
+            <section class="lesson-section">
+                <h2>Learned words</h2>
+                <div class="learned_words-content">
+                    {% block learned_words_content %}
+                    <!-- Learned words content goes here -->
+                    {% endblock %}
+                </div>
+            </section>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="lesson-navigation">
+            {% if prev_lesson_number %}
+            <a
+                href="{% url 'lessons:city_lesson_with_number' country=country city=city lesson_number=prev_lesson_number %}"
+                class="nav-button prev-lesson"
             >
-            <span class="estimated-time"
-                >{% block lesson_time %}15 min{% endblock %}</span
+                <span class="arrow">←</span> Previous Lesson
+            </a>
+            {% endif %} {% if next_lesson_number %}
+            <a
+                href="{% url 'lessons:city_lesson_with_number' country=country city=city lesson_number=next_lesson_number %}"
+                class="nav-button next-lesson"
             >
+                Next Lesson <span class="arrow">→</span>
+            </a>
+            {% endif %}
         </div>
     </div>
-
-    <!-- Main Lesson Content -->
-    <div class="lesson-content">
-        <!-- Introduction Section -->
-        <section class="lesson-section">
-            <h2>{% block intro_title %}Introduction{% endblock %}</h2>
-            <div class="intro-content">
-                {% block intro_content %}
-                <!-- Introduction content goes here -->
-                {% endblock %}
-            </div>
-        </section>
-
-        <!-- Exercise Section -->
-        <section class="lesson-section">
-            {% block exercises %}
-            <!-- Individual exercises will be included here -->
-            {% endblock %}
-        </section>
-
-        <!-- Summary Section -->
-        <section class="lesson-section">
-            <h2>Summary</h2>
-            <div class="summary-content">
-                {% block summary_content %}
-                <!-- Summary content goes here -->
-                {% endblock %}
-            </div>
-        </section>
-    </div>
-
-    <!-- Navigation Buttons -->
-    <div class="lesson-navigation">
-        {% if prev_lesson %}
-        <a href="{{ prev_lesson.url }}" class="nav-button prev-lesson">
-            <span class="arrow">←</span> Previous Lesson
-        </a>
-        {% endif %} {% if next_lesson %}
-        <a href="{{ next_lesson.url }}" class="nav-button next-lesson">
-            Next Lesson <span class="arrow">→</span>
-        </a>
-        {% endif %}
-    </div>
+    {% endblock %} {% block scripts %}{% endblock %}
 </div>
-{% endblock %} {% block scripts %}
-<script src="{% static 'scripts/lessons/lesson_base.js' %}"></script>
-{% endblock %}

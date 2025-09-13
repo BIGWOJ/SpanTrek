@@ -19,6 +19,8 @@ class User(AbstractUser):
     # Country lessons progress tracking
     country_lessons_progress = models.JSONField(default=dict, blank=True)  # e.g., {"Spain": 3, "Mexico": 5}
     
+    city_lessons_progress = models.JSONField(default=dict, blank=True)  # e.g., {"Madrid": 2, "Warsaw": 4}
+    
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 

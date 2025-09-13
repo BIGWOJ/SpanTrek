@@ -74,15 +74,15 @@ var simplemaps_countrymap_mapdata = {
     },
     locations: {
         0: {
-            name: "Warszawa",
+            name: "Warsaw",
             lat: "52.2297",
             lng: "21.0122",
             description: "Capital of Poland",
-            url: "/",
+            url: "/lessons/poland/warsaw/",
             image_url: "/static/images/map_pins/pin1.svg",
         },
         1: {
-            name: "Kraków",
+            name: "Cracow",
             lat: "50.0647",
             lng: "19.9450",
             description: "Historical capital and cultural center",
@@ -90,7 +90,7 @@ var simplemaps_countrymap_mapdata = {
             image_url: "/static/images/map_pins/pin2.svg",
         },
         2: {
-            name: "Gdańsk",
+            name: "Gdansk",
             lat: "54.3520",
             lng: "18.6466",
             description: "Port city on the Baltic Sea",
@@ -98,7 +98,7 @@ var simplemaps_countrymap_mapdata = {
             image_url: "/static/images/map_pins/pin3.svg",
         },
         3: {
-            name: "Poznań",
+            name: "Poznan",
             lat: "52.4064",
             lng: "16.9252",
             description: "Historical trade center",

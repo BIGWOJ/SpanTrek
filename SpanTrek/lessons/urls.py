@@ -10,5 +10,6 @@ urlpatterns = [
     path('mexico/', views.country_view, {'country': 'mexico'}, name='mexico'),
     path('poland/', views.country_view, {'country': 'poland'}, name='poland'),
     # City-specific lesson URLs
-    path('poland/<str:city>/<int:lesson_number>/', views.city_lesson_view, name='city_lesson'),
+    path('<str:country>/<str:city>/', views.country_city_lesson, name='country_city_lesson'),
+    path('<str:country>/<str:city>/<int:lesson_number>/', views.country_city_lesson, name='city_lesson_with_number'),
 ]
