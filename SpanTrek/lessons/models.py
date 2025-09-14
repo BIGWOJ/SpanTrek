@@ -11,6 +11,19 @@ class Country(models.Model):
         return self.name
 
 
+class Landmark(models.Model):
+    """Places within countries (e.g., Madrid, Warsaw, Macchu Picchu)"""
+    country = models.ForeignKey(Country, on_delete=models.CASCADE, related_name='landmarks')
+    name = models.CharField(max_length=100)
+
+    class Meta:
+        unique_together = ('country', 'name')
+        ordering = ['country', 'name']
+
+    def __str__(self):
+        return f"{self.name}, {self.country.name}"
+
+
 class AdventureLesson(models.Model):
     """Main lesson model"""
     
@@ -29,20 +42,38 @@ class AdventureLesson(models.Model):
         return f"Lesson {self.lesson_id}: {self.country.name} - Order {self.order}"
 
 
-class ContentType(models.TextChoices):
+class ContentTypeChoices(models.TextChoices):
     """Content types for adventure lesson content blocks"""
     TEXT = 'text', 'Text'
     IMAGE = 'image', 'Image'
     VIDEO = 'video', 'Video'
     AUDIO = 'audio', 'Audio'
-    
+
+
+class Lesson(models.Model):
+    """Spanish lessons organized by city"""
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    order = models.IntegerField()
+    city = models.CharField(max_length=50)  # e.g., szczecin, krakow, etc.
+    country = models.ForeignKey(Country, on_delete=models.CASCADE, null=True, blank=True)
+    vocabularies = models.ManyToManyField('Vocabulary', blank=True, related_name='lessons')
+    sentences = models.ManyToManyField('Sentence', blank=True, related_name='lessons')
+
+    class Meta:
+        ordering = ['city', 'order']
+        unique_together = ('city', 'order')
+
+    def __str__(self):
+        return f"{self.city.title()} - {self.title}"
+
 
 class AdventureLessonContent(models.Model):
     """Individual content blocks within a adventure lesson"""
 
     lesson = models.ForeignKey(AdventureLesson, on_delete=models.CASCADE, related_name='content_blocks')
     content_id = models.AutoField(primary_key=True, help_text="Unique content block identifier")
-    content_type = models.CharField(max_length=20, choices=ContentType.choices, default='text')
+    content_type = models.CharField(max_length=20, choices=ContentTypeChoices.choices, default='text')
     title = models.CharField(max_length=200, blank=True)
     content_text = models.TextField(null=True, blank=True, help_text="Main content text for the lesson")
     media_url = models.URLField(blank=True, null=True, help_text="URL for images, audio, or video")
@@ -144,8 +175,8 @@ class Vocabulary(models.Model):
     word = models.CharField(max_length=100)
     translation = models.CharField(max_length=100)
     pronunciation = models.CharField(max_length=150, blank=True)
-    definition = models.TextField(blank=True)
     example_sentence = models.TextField(blank=True)
+    conjugation = models.TextField(blank=True)
     
     # Audio
     audio_url = models.URLField(blank=True)
@@ -156,5 +187,17 @@ class Vocabulary(models.Model):
 
     def __str__(self):
         return f"{self.word} - {self.translation}"
+    
+    
+class Sentence(models.Model):
+    """Example sentences"""
+    sentence = models.TextField()
+    translation = models.TextField()
+
+    class Meta:
+        ordering = ['sentence']
+
+    def __str__(self):
+        return f"{self.sentence} - {self.translation}"
 
 

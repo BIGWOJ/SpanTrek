@@ -1,0 +1,511 @@
+[
+    {
+        "word": "hola",
+        "translation": "hello",
+        "pronunciation": "OH-lah",
+        "example_sentence": "¡Hola! ¿Cómo estás?"
+    },
+    {
+        "word": "adiós",
+        "translation": "goodbye",
+        "pronunciation": "ah-dee-OHS",
+        "example_sentence": "¡Adiós! Hasta mañana."
+    },
+    {
+        "word": "gracias",
+        "translation": "thank you",
+        "pronunciation": "GRAH-see-ahs",
+        "example_sentence": "Muchas gracias por tu ayuda."
+    },
+    {
+        "word": "por favor",
+        "translation": "please",
+        "pronunciation": "pohr fah-VOHR",
+        "example_sentence": "Por favor, pásame el pan."
+    },
+    {
+        "word": "ser",
+        "translation": "to be (permanent)",
+        "pronunciation": "sehr",
+        "example_sentence": "Soy estudiante.",
+        "conjugation": "yo soy\ntú eres\nél/ella/usted es\nnosotros somos\nvosotros sois\nellos/ellas/ustedes son"
+    },
+    {
+        "word": "estar",
+        "translation": "to be (temporary)",
+        "pronunciation": "ehs-TAHR",
+        "example_sentence": "Estoy cansado.",
+        "conjugation": "yo estoy\ntú estás\nél/ella/usted está\nnosotros estamos\nvosotros estáis\nellos/ellas/ustedes están"
+    },
+    {
+        "word": "tener",
+        "translation": "to have",
+        "pronunciation": "teh-NEHR",
+        "example_sentence": "Tengo dos hermanos.",
+        "conjugation": "yo tengo\ntú tienes\nél/ella/usted tiene\nnosotros tenemos\nvosotros tenéis\nellos/ellas/ustedes tienen"
+    },
+    {
+        "word": "ir",
+        "translation": "to go",
+        "pronunciation": "eer",
+        "example_sentence": "Voy al mercado.",
+        "conjugation": "yo voy\ntú vas\nél/ella/usted va\nnosotros vamos\nvosotros vais\nellos/ellas/ustedes van"
+    },
+    {
+        "word": "hacer",
+        "translation": "to do/make",
+        "pronunciation": "ah-SEHR",
+        "example_sentence": "Hago mi tarea.",
+        "conjugation": "yo hago\ntú haces\nél/ella/usted hace\nnosotros hacemos\nvosotros hacéis\nellos/ellas/ustedes hacen"
+    },
+    {
+        "word": "uno",
+        "translation": "one",
+        "pronunciation": "OO-noh",
+        "example_sentence": "Tengo un perro."
+    },
+    {
+        "word": "dos",
+        "translation": "two",
+        "pronunciation": "dohs",
+        "example_sentence": "Hay dos libros."
+    },
+    {
+        "word": "tres",
+        "translation": "three",
+        "pronunciation": "trehs",
+        "example_sentence": "Tengo tres hermanas."
+    },
+    {
+        "word": "madre",
+        "translation": "mother",
+        "pronunciation": "MAH-dreh",
+        "example_sentence": "Mi madre cocina bien."
+    },
+    {
+        "word": "padre",
+        "translation": "father",
+        "pronunciation": "PAH-dreh",
+        "example_sentence": "Mi padre trabaja mucho."
+    },
+    {
+        "word": "hermano",
+        "translation": "brother",
+        "pronunciation": "ehr-MAH-noh",
+        "example_sentence": "Mi hermano es mayor."
+    },
+    {
+        "word": "hermana",
+        "translation": "sister",
+        "pronunciation": "ehr-MAH-nah",
+        "example_sentence": "Mi hermana estudia medicina."
+    },
+    {
+        "word": "agua",
+        "translation": "water",
+        "pronunciation": "AH-gwah",
+        "example_sentence": "Quiero un vaso de agua."
+    },
+    {
+        "word": "pan",
+        "translation": "bread",
+        "pronunciation": "pahn",
+        "example_sentence": "Me gusta el pan fresco."
+    },
+    {
+        "word": "leche",
+        "translation": "milk",
+        "pronunciation": "LEH-cheh",
+        "example_sentence": "Bebo leche cada mañana."
+    },
+    {
+        "word": "café",
+        "translation": "coffee",
+        "pronunciation": "kah-FEH",
+        "example_sentence": "Me gusta el café negro."
+    },
+    {
+        "word": "rojo",
+        "translation": "red",
+        "pronunciation": "ROH-hoh",
+        "example_sentence": "Mi coche es rojo."
+    },
+    {
+        "word": "azul",
+        "translation": "blue",
+        "pronunciation": "ah-SOOL",
+        "example_sentence": "El cielo es azul."
+    },
+    {
+        "word": "verde",
+        "translation": "green",
+        "pronunciation": "VEHR-deh",
+        "example_sentence": "Me gusta el color verde."
+    },
+    {
+        "word": "amarillo",
+        "translation": "yellow",
+        "pronunciation": "ah-mah-REE-yoh",
+        "example_sentence": "El sol es amarillo."
+    },
+    {
+        "word": "hoy",
+        "translation": "today",
+        "pronunciation": "oy",
+        "example_sentence": "Hoy hace calor."
+    },
+    {
+        "word": "mañana",
+        "translation": "tomorrow",
+        "pronunciation": "mah-NYAH-nah",
+        "example_sentence": "Hasta mañana."
+    },
+    {
+        "word": "ayer",
+        "translation": "yesterday",
+        "pronunciation": "ah-YEHR",
+        "example_sentence": "Ayer llovió mucho."
+    },
+    {
+        "word": "ahora",
+        "translation": "now",
+        "pronunciation": "ah-OH-rah",
+        "example_sentence": "Necesito ayuda ahora."
+    },
+    {
+        "word": "bueno",
+        "translation": "good",
+        "pronunciation": "BWEH-noh",
+        "example_sentence": "La comida está buena."
+    },
+    {
+        "word": "malo",
+        "translation": "bad",
+        "pronunciation": "MAH-loh",
+        "example_sentence": "El tiempo está malo."
+    },
+    {
+        "word": "grande",
+        "translation": "big",
+        "pronunciation": "GRAHN-deh",
+        "example_sentence": "Tengo una casa grande."
+    },
+    {
+        "word": "pequeño",
+        "translation": "small",
+        "pronunciation": "peh-KEH-nyoh",
+        "example_sentence": "Es un perro pequeño."
+    },
+    {
+        "word": "sol",
+        "translation": "sun",
+        "pronunciation": "sohl",
+        "example_sentence": "El sol brilla mucho."
+    },
+    {
+        "word": "lluvia",
+        "translation": "rain",
+        "pronunciation": "YOO-vee-ah",
+        "example_sentence": "Me gusta la lluvia."
+    },
+    {
+        "word": "calor",
+        "translation": "heat",
+        "pronunciation": "kah-LOHR",
+        "example_sentence": "Hace mucho calor."
+    },
+    {
+        "word": "frío",
+        "translation": "cold",
+        "pronunciation": "FREE-oh",
+        "example_sentence": "Tengo frío."
+    },
+    {
+        "word": "mesa",
+        "translation": "table",
+        "pronunciation": "MEH-sah",
+        "example_sentence": "El libro está en la mesa."
+    },
+    {
+        "word": "silla",
+        "translation": "chair",
+        "pronunciation": "SEE-yah",
+        "example_sentence": "Siéntate en la silla."
+    },
+    {
+        "word": "puerta",
+        "translation": "door",
+        "pronunciation": "PWEHR-tah",
+        "example_sentence": "Cierra la puerta."
+    },
+    {
+        "word": "ventana",
+        "translation": "window",
+        "pronunciation": "vehn-TAH-nah",
+        "example_sentence": "Abre la ventana."
+    },
+    {
+        "word": "comer",
+        "translation": "to eat",
+        "pronunciation": "koh-MEHR",
+        "example_sentence": "Me gusta comer paella.",
+        "conjugation": "yo como\ntú comes\nél/ella/usted come\nnosotros comemos\nvosotros coméis\nellos/ellas/ustedes comen"
+    },
+    {
+        "word": "beber",
+        "translation": "to drink",
+        "pronunciation": "beh-BEHR",
+        "example_sentence": "Quiero beber agua.",
+        "conjugation": "yo bebo\ntú bebes\nél/ella/usted bebe\nnosotros bebemos\nvosotros bebéis\nellos/ellas/ustedes beben"
+    },
+    {
+        "word": "dormir",
+        "translation": "to sleep",
+        "pronunciation": "dohr-MEER",
+        "example_sentence": "Necesito dormir más.",
+        "conjugation": "yo duermo\ntú duermes\nél/ella/usted duerme\nnosotros dormimos\nvosotros dormís\nellos/ellas/ustedes duermen"
+    },
+    {
+        "word": "trabajar",
+        "translation": "to work",
+        "pronunciation": "trah-bah-HAR",
+        "example_sentence": "Trabajo en una oficina.",
+        "conjugation": "yo trabajo\ntú trabajas\nél/ella/usted trabaja\nnosotros trabajamos\nvosotros trabajáis\nellos/ellas/ustedes trabajan"
+    },
+    {
+        "word": "estudiar",
+        "translation": "to study",
+        "pronunciation": "ehs-too-dee-AHR",
+        "example_sentence": "Estudio español todos los días.",
+        "conjugation": "yo estudio\ntú estudias\nél/ella/usted estudia\nnosotros estudiamos\nvosotros estudiáis\nellos/ellas/ustedes estudian"
+    },
+    {
+        "word": "libro",
+        "translation": "book",
+        "pronunciation": "LEE-broh",
+        "example_sentence": "Este libro es interesante."
+    },
+    {
+        "word": "coche",
+        "translation": "car",
+        "pronunciation": "KOH-cheh",
+        "example_sentence": "Mi coche es azul."
+    },
+    {
+        "word": "casa",
+        "translation": "house",
+        "pronunciation": "KAH-sah",
+        "example_sentence": "Mi casa es grande."
+    },
+    {
+        "word": "escuela",
+        "translation": "school",
+        "pronunciation": "ehs-KWEH-lah",
+        "example_sentence": "La escuela está cerca."
+    },
+    {
+        "word": "hospital",
+        "translation": "hospital",
+        "pronunciation": "ohs-pee-TAHL",
+        "example_sentence": "El hospital está lejos."
+    },
+    {
+        "word": "profesor",
+        "translation": "teacher",
+        "pronunciation": "proh-feh-SOHR",
+        "example_sentence": "El profesor explica bien."
+    },
+    {
+        "word": "médico",
+        "translation": "doctor",
+        "pronunciation": "MEH-dee-koh",
+        "example_sentence": "El médico me ayudó."
+    },
+    {
+        "word": "estudiante",
+        "translation": "student",
+        "pronunciation": "ehs-too-dee-AHN-teh",
+        "example_sentence": "Soy estudiante de español."
+    },
+    {
+        "word": "amigo",
+        "translation": "friend",
+        "pronunciation": "ah-MEE-goh",
+        "example_sentence": "Es mi mejor amigo."
+    },
+    {
+        "word": "perro",
+        "translation": "dog",
+        "pronunciation": "PEH-rroh",
+        "example_sentence": "Tengo un perro negro."
+    },
+    {
+        "word": "gato",
+        "translation": "cat",
+        "pronunciation": "GAH-toh",
+        "example_sentence": "El gato duerme mucho."
+    },
+    {
+        "word": "computadora",
+        "translation": "computer",
+        "pronunciation": "kohm-poo-tah-DOHR-ah",
+        "example_sentence": "Trabajo en mi computadora."
+    },
+    {
+        "word": "teléfono",
+        "translation": "phone",
+        "pronunciation": "teh-LEH-foh-noh",
+        "example_sentence": "Mi teléfono es nuevo."
+    },
+    {
+        "word": "jardín",
+        "translation": "garden",
+        "pronunciation": "har-DEEN",
+        "example_sentence": "El jardín tiene flores."
+    },
+    {
+        "word": "playa",
+        "translation": "beach",
+        "pronunciation": "PLAH-yah",
+        "example_sentence": "Me encanta la playa."
+    },
+    {
+        "word": "montaña",
+        "translation": "mountain",
+        "pronunciation": "mohn-TAN-yah",
+        "example_sentence": "Las montañas son altas."
+    },
+    {
+        "word": "río",
+        "translation": "river",
+        "pronunciation": "REE-oh",
+        "example_sentence": "El río es largo."
+    },
+    {
+        "word": "ciudad",
+        "translation": "city",
+        "pronunciation": "see-oo-DAHD",
+        "example_sentence": "Madrid es una ciudad grande."
+    },
+    {
+        "word": "calle",
+        "translation": "street",
+        "pronunciation": "KAH-yeh",
+        "example_sentence": "Vivo en esta calle."
+    },
+    {
+        "word": "oficina",
+        "translation": "office",
+        "pronunciation": "oh-fee-SEE-nah",
+        "example_sentence": "Trabajo en una oficina."
+    },
+    {
+        "word": "restaurante",
+        "translation": "restaurant",
+        "pronunciation": "rehs-tow-RAHN-teh",
+        "example_sentence": "El restaurante está lleno."
+    },
+    {
+        "word": "tienda",
+        "translation": "shop",
+        "pronunciation": "tee-EHN-dah",
+        "example_sentence": "La tienda está cerrada."
+    },
+    {
+        "word": "mercado",
+        "translation": "market",
+        "pronunciation": "mehr-KAH-doh",
+        "example_sentence": "Voy al mercado."
+    },
+    {
+        "word": "dinero",
+        "translation": "money",
+        "pronunciation": "dee-NEH-roh",
+        "example_sentence": "Necesito más dinero."
+    },
+    {
+        "word": "tiempo",
+        "translation": "time/weather",
+        "pronunciation": "tee-EHM-poh",
+        "example_sentence": "No tengo tiempo."
+    },
+    {
+        "word": "reloj",
+        "translation": "clock/watch",
+        "pronunciation": "reh-LOH",
+        "example_sentence": "¿Qué hora marca tu reloj?"
+    },
+    {
+        "word": "familia",
+        "translation": "family",
+        "pronunciation": "fah-MEE-lee-ah",
+        "example_sentence": "Mi familia es grande."
+    },
+    {
+        "word": "trabajo",
+        "translation": "work/job",
+        "pronunciation": "trah-BAH-hoh",
+        "example_sentence": "Me gusta mi trabajo.",
+        "conjugation": "yo trabajo\ntú trabajas\nél/ella/usted trabaja\nnosotros trabajamos\nvosotros trabajáis\nellos/ellas/ustedes trabajan"
+    },
+    {
+        "word": "vida",
+        "translation": "life",
+        "pronunciation": "VEE-dah",
+        "example_sentence": "La vida es bella."
+    },
+    {
+        "word": "mundo",
+        "translation": "world",
+        "pronunciation": "MOON-doh",
+        "example_sentence": "El mundo es pequeño."
+    },
+    {
+        "word": "país",
+        "translation": "country",
+        "pronunciation": "pah-EES",
+        "example_sentence": "España es un país bonito."
+    },
+    {
+        "word": "idioma",
+        "translation": "language",
+        "pronunciation": "ee-dee-OH-mah",
+        "example_sentence": "El español es un idioma bonito."
+    },
+    {
+        "word": "nombre",
+        "translation": "name",
+        "pronunciation": "NOHM-breh",
+        "example_sentence": "¿Cuál es tu nombre?"
+    },
+    {
+        "word": "año",
+        "translation": "year",
+        "pronunciation": "AHN-yoh",
+        "example_sentence": "Feliz año nuevo."
+    },
+    {
+        "word": "mes",
+        "translation": "month",
+        "pronunciation": "mehs",
+        "example_sentence": "El mes pasado."
+    },
+    {
+        "word": "semana",
+        "translation": "week",
+        "pronunciation": "seh-MAH-nah",
+        "example_sentence": "Hasta la próxima semana."
+    },
+    {
+        "word": "día",
+        "translation": "day",
+        "pronunciation": "DEE-ah",
+        "example_sentence": "Que tengas un buen día."
+    },
+    {
+        "word": "noche",
+        "translation": "night",
+        "pronunciation": "NOH-cheh",
+        "example_sentence": "Buenas noches."
+    }
+]

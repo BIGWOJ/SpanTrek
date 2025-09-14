@@ -12,10 +12,6 @@ def country_view(request, country):
     template_name = f'lessons/{country}/country.html'
     return render(request, template_name)
 
-@login_required
-def lesson_view(request, country, lesson):
-    template_name = f'lessons/{country}/{lesson}.html'
-    return render(request, template_name)
 
 @login_required
 def country_city_lesson(request, country, city, lesson_number=None):
@@ -31,8 +27,9 @@ def country_city_lesson(request, country, city, lesson_number=None):
         'lesson_number': current_lesson,
         'prev_lesson_number': current_lesson - 1 if current_lesson >= 1 else None,
         'next_lesson_number': current_lesson + 1 if current_lesson < 3 else None,
+        
     }
-    
+    print(request.GET)
     template_name = f'lessons/{country}/{city}/lesson_{current_lesson}.html'
-    print(context)
-    return render(request, template_name, context)
+
+    return render(request, 'lessons/lesson_base.html', context)
