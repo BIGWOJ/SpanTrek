@@ -8,10 +8,29 @@
 <div class="lesson-container">
     <!-- Progress Bar -->
     <div class="lesson-header">
+        <!-- Navigation Buttons -->
+        <div class="lesson-navigation">
+            {% if prev_lesson_number %}
+            <a
+                href="{% url 'lessons:city_lesson_with_number' country=country city=city lesson_number=prev_lesson_number %}"
+                class="nav-button prev-lesson"
+            >
+                <span class="arrow">←</span> Previous Lesson
+            </a>
+            {% endif %} {% if next_lesson_number %}
+            <a
+                href="{% url 'lessons:city_lesson_with_number' country=country city=city lesson_number=next_lesson_number %}"
+                class="nav-button next-lesson"
+            >
+                Next Lesson <span class="arrow">→</span>
+            </a>
+            {% endif %}
+        </div>
+
         {% include 'lessons/progress_bar.html' %}
 
         <h1 class="lesson-title">
-            {% block lesson_title %}Lesson Title{% endblock %}
+            {% block lesson_title %}{{lesson.title}}{% endblock %}
         </h1>
         <div class="lesson-meta">
             <span class="country-name"> {{ country|title }}</span>
@@ -42,30 +61,23 @@
             <section class="lesson-section">
                 <h2>Learned words</h2>
                 <div class="learned_words-content">
-                    {% block learned_words_content %}
-                    <!-- Learned words content goes here -->
-                    {% endblock %}
+                    {% block learned_words_content %} 
+                    {% for vocab in lesson_vocabularies %}
+                    <h1>{{vocab}}</h1>
+                    {% endfor %} {% endblock %}
                 </div>
             </section>
-        </div>
 
-        <!-- Navigation Buttons -->
-        <div class="lesson-navigation">
-            {% if prev_lesson_number %}
-            <a
-                href="{% url 'lessons:city_lesson_with_number' country=country city=city lesson_number=prev_lesson_number %}"
-                class="nav-button prev-lesson"
-            >
-                <span class="arrow">←</span> Previous Lesson
-            </a>
-            {% endif %} {% if next_lesson_number %}
-            <a
-                href="{% url 'lessons:city_lesson_with_number' country=country city=city lesson_number=next_lesson_number %}"
-                class="nav-button next-lesson"
-            >
-                Next Lesson <span class="arrow">→</span>
-            </a>
-            {% endif %}
+            <!-- Learned sentences Section -->
+            <section class="lesson-section">
+                <h2>Learned sentences</h2>
+                <div class="learned_sentences-content">
+                    {% block learned_sentences_content %} 
+                    {% for sentence in lesson_sentences %}
+                    <h1>{{sentence}}</h1>
+                    {% endfor %} {% endblock %}
+                </div>
+            </section>
         </div>
     </div>
     {% endblock %} {% block scripts %}{% endblock %}
