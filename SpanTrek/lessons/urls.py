@@ -9,7 +9,7 @@ urlpatterns = [
     path('peru/', views.country_view, {'country': 'peru'}, name='peru'),
     path('mexico/', views.country_view, {'country': 'mexico'}, name='mexico'),
     path('poland/', views.country_view, {'country': 'poland'}, name='poland'),
-    # City-specific lesson URLs
-    path('<str:country>/<str:city>/', views.country_city_lesson, name='country_city_lesson'),
-    path('<str:country>/<str:city>/<int:lesson_number>/', views.country_city_lesson, name='city_lesson_with_number'),
+    # landmark-specific lesson URLs
+    path('<str:country>/<str:landmark>/', views.country_landmark_lesson, name='country_landmark_lesson'),
+    path('<str:country>/<str:landmark>/<int:lesson_number>/', views.country_landmark_lesson, name='landmark_lesson_with_number'),
 ]

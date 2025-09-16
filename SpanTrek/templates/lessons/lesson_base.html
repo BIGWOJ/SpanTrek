@@ -12,14 +12,14 @@
         <div class="lesson-navigation">
             {% if prev_lesson_number %}
             <a
-                href="{% url 'lessons:city_lesson_with_number' country=country city=city lesson_number=prev_lesson_number %}"
+                href="{% url 'lessons:landmark_lesson_with_number' country=country landmark=landmark lesson_number=prev_lesson_number %}"
                 class="nav-button prev-lesson"
             >
                 <span class="arrow">←</span> Previous Lesson
             </a>
             {% endif %} {% if next_lesson_number %}
             <a
-                href="{% url 'lessons:city_lesson_with_number' country=country city=city lesson_number=next_lesson_number %}"
+                href="{% url 'lessons:landmark_lesson_with_number' country=country landmark=landmark lesson_number=next_lesson_number %}"
                 class="nav-button next-lesson"
             >
                 Next Lesson <span class="arrow">→</span>
@@ -34,7 +34,7 @@
         </h1>
         <div class="lesson-meta">
             <span class="country-name"> {{ country|title }}</span>
-            <span class="city-name"> - {{ city|title }},</span>
+            <span class="landmark-name"> - {{ landmark|title }},</span>
             <span class="lesson-number">lesson {{ lesson_number }}</span>
         </div>
 

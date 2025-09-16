@@ -23,10 +23,10 @@ class AdventureLessonAdmin(admin.ModelAdmin):
     
 @admin.register(Lesson)
 class LessonAdmin(admin.ModelAdmin):
-    list_display = ['title', 'order', 'city', 'country']
-    list_filter = ['city', 'country']
+    list_display = ['title', 'order', 'landmark', 'country']
+    list_filter = ['landmark', 'country']
     search_fields = ['title', 'content']
-    ordering = ['city', 'order']
+    ordering = ['landmark', 'order']
 
 
 @admin.register(AdventureLessonContent)

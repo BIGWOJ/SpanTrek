@@ -31,13 +31,13 @@ class Command(BaseCommand):
         total_skipped = 0
         processed_cities = 0
 
-        for city in cities:
-            self.stdout.write(f'\nProcessing Spanish lessons for {city.title()}...')
+        for landmark in cities:
+            self.stdout.write(f'\nProcessing Spanish lessons for {landmark.title()}...')
             try:
-                # Capture output from create_city_lessons command
+                # Capture output from create_landmark_lessons command
                 output = StringIO()
                 with redirect_stdout(output):
-                    call_command('create_city_lessons', city)
+                    call_command('create_landmark_lessons', landmark)
                 
                 # Print the captured output
                 output_str = output.getvalue()
@@ -52,7 +52,7 @@ class Command(BaseCommand):
 
             except Exception as e:
                 self.stdout.write(
-                    self.style.ERROR(f'Error processing lessons for {city}: {str(e)}')
+                    self.style.ERROR(f'Error processing lessons for {landmark}: {str(e)}')
                 )
                 raise
 

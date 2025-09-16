@@ -4,20 +4,20 @@ import json
 import os
 
 class Command(BaseCommand):
-    help = 'Creates Spanish lessons for a specific city'
+    help = 'Creates Spanish lessons for a specific landmark'
 
     def add_arguments(self, parser):
-        parser.add_argument('city', type=str, help='Name of the city')
+        parser.add_argument('landmark', type=str, help='Name of the landmark')
 
     def handle(self, *args, **options):
-        city = options['city'].lower()
+        landmark = options['landmark'].lower()
         
         # Get the path to the lesson data file
         base_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-        lesson_json_data = os.path.join(base_dir, 'data', 'poland', f'{city}.json')
+        lesson_json_data = os.path.join(base_dir, 'data', 'poland', f'{landmark}.json')
 
         if not os.path.exists(lesson_json_data):
-            self.stdout.write(self.style.ERROR(f'No lesson data found for {city}'))
+            self.stdout.write(self.style.ERROR(f'No lesson data found for {landmark}'))
             return
 
         try:
@@ -31,9 +31,9 @@ class Command(BaseCommand):
 
             for lesson_data in lessons_data:
                 try:
-                    # Try to get existing lesson by city and order
+                    # Try to get existing lesson by landmark and order
                     lesson, created = Lesson.objects.get_or_create(
-                        city=city,
+                        landmark=landmark,
                         order=lesson_data['order'],
                         defaults=lesson_data
                     )
@@ -66,8 +66,8 @@ class Command(BaseCommand):
                         self.style.ERROR(f'Error processing lesson (Order: {lesson_data.get("order")}): {str(e)}')
                     )
 
-            # Print summary for this city
-            self.stdout.write(f'\nLesson import summary for {city.title()}:')
+            # Print summary for this landmark
+            self.stdout.write(f'\nLesson import summary for {landmark.title()}:')
             self.stdout.write(self.style.SUCCESS(f'Created: {created_count}'))
             self.stdout.write(self.style.WARNING(f'Updated: {updated_count}'))
             self.stdout.write(f'Skipped: {skipped_count}')
@@ -77,6 +77,6 @@ class Command(BaseCommand):
 
         except Exception as e:
             self.stdout.write(
-                self.style.ERROR(f'Error creating lessons for {city}: {str(e)}')
+                self.style.ERROR(f'Error creating lessons for {landmark}: {str(e)}')
             )
             raise

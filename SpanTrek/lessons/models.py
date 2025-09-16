@@ -51,21 +51,21 @@ class ContentTypeChoices(models.TextChoices):
 
 
 class Lesson(models.Model):
-    """Spanish lessons organized by city"""
+    """Spanish lessons organized by landmark"""
     title = models.CharField(max_length=200)
     content = models.TextField()
     order = models.IntegerField()
-    city = models.CharField(max_length=50)  # e.g., szczecin, krakow, etc.
+    landmark = models.CharField(max_length=50)  # e.g., szczecin, krakow, etc.
     country = models.ForeignKey(Country, on_delete=models.CASCADE, null=True, blank=True)
     vocabularies = models.ManyToManyField('Vocabulary', blank=True, related_name='lessons')
     sentences = models.ManyToManyField('Sentence', blank=True, related_name='lessons')
 
     class Meta:
-        ordering = ['city', 'order']
-        unique_together = ('city', 'order')
+        ordering = ['landmark', 'order']
+        unique_together = ('landmark', 'order')
 
     def __str__(self):
-        return f"{self.city.title()} - {self.title}"
+        return f"{self.landmark.title()} - {self.title}"
 
 
 class AdventureLessonContent(models.Model):
