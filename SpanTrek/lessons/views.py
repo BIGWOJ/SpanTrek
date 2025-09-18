@@ -18,10 +18,20 @@ def country_view(request, country):
 def country_landmark_lesson(request, country, landmark, lesson_number=None):
     # Get the current progress for this landmark from the user's profile
     landmark_progress = request.user.landmark_lessons_progress.get(landmark, 1)
-    
-    # If lesson_number is not provided, use the current progress
-    current_lesson = lesson_number if lesson_number is not None else landmark_progress
+    print("aaaa")
+    # If lesson_number is not provided, show intro page first
+    if lesson_number is None:
+        lesson = Lesson.objects.filter(landmark=landmark, order=landmark_progress).first()
+        context = {
+            'landmark': landmark,
+            'country': country,
+            'lesson': lesson,
+            'start_lesson_url': f"/{country}/{landmark}/{landmark_progress}/",
+        }
+        return render(request, 'lessons/lesson_intro.html', context)
 
+    # Otherwise, show the actual lesson page
+    current_lesson = lesson_number
     lesson = Lesson.objects.filter(landmark=landmark, order=current_lesson).first()
 
     context = {
@@ -35,7 +45,6 @@ def country_landmark_lesson(request, country, landmark, lesson_number=None):
         'next_lesson_number': current_lesson + 1 if current_lesson < 3 else None,
     }
 
-    template_name = f'lessons/{country}/{landmark}/lesson_{current_lesson}.html'
-
     return render(request, 'lessons/lesson_base.html', context)
+
 

@@ -1,0 +1,15 @@
+{% extends 'base/base.html' %} {% load static %} {% block styles %}
+<link
+    rel="stylesheet"
+    type="text/css"
+    href="{% static 'styles/lessons/lessons_exercise_base.css' %}"
+/>
+
+{% block content %}
+<form method="post">
+    {% csrf_token %} {% block exercise_type %}
+    <!-- Exercise type content will be injected here -->
+    {% endblock %}
+    <button type="submit">Submit</button>
+</form>
+{% endblock %}

@@ -31,20 +31,23 @@ class Command(BaseCommand):
 
             for lesson_data in lessons_data:
                 try:
+                    # Remove ManyToMany fields from defaults
+                    defaults = {k: v for k, v in lesson_data.items() if k not in ['vocabularies', 'sentences']}
                     # Try to get existing lesson by landmark and order
                     lesson, created = Lesson.objects.get_or_create(
                         landmark=landmark,
                         order=lesson_data['order'],
-                        defaults=lesson_data
+                        defaults=defaults
                     )
 
                     if not created:
                         # Check if any data needs updating
                         update_needed = False
                         for key, value in lesson_data.items():
-                            if getattr(lesson, key) != value:
-                                setattr(lesson, key, value)
-                                update_needed = True
+                                if key not in ['vocabularies', 'sentences']:
+                                    if getattr(lesson, key) != value:
+                                        setattr(lesson, key, value)
+                                        update_needed = True
 
                         if update_needed:
                             lesson.save()
@@ -61,6 +64,33 @@ class Command(BaseCommand):
                             self.style.SUCCESS(f'Created lesson: {lesson.title} (Order: {lesson.order})')
                         )
 
+                        # Assign vocabularies ManyToMany
+                        vocab_objs = []
+                        for vocab in lesson_data.get('vocabularies', []):
+                            vocab_obj, _ = lesson.vocabularies.model.objects.get_or_create(
+                                word=vocab['word'],
+                                defaults={
+                                    'translation': vocab.get('translation', ''),
+                                    'pronunciation': vocab.get('pronunciation', ''),
+                                    'example_sentence': vocab.get('example_sentence', ''),
+                                    'conjugation': vocab.get('conjugation', ''),
+                                    'audio_url': vocab.get('audio_url', '')
+                                }
+                            )
+                            vocab_objs.append(vocab_obj)
+                        lesson.vocabularies.set(vocab_objs)
+
+                        # Assign sentences ManyToMany
+                        sentence_objs = []
+                        for sent in lesson_data.get('sentences', []):
+                            sent_obj, _ = lesson.sentences.model.objects.get_or_create(
+                                sentence=sent['sentence'],
+                                defaults={
+                                    'translation': sent.get('translation', '')
+                                }
+                            )
+                            sentence_objs.append(sent_obj)
+                        lesson.sentences.set(sentence_objs)
                 except Exception as e:
                     self.stdout.write(
                         self.style.ERROR(f'Error processing lesson (Order: {lesson_data.get("order")}): {str(e)}')

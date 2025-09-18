@@ -1,0 +1,8 @@
+{% extends 'lessons/lesson_base.html' %} {% block content %}
+<div class="lesson-intro">
+    <h1>{{ lesson.name }}</h1>
+    <a href="{{ start_lesson_url }}"
+        ><button type="button">Start lesson</button></a
+    >
+</div>
+{% endblock %}
