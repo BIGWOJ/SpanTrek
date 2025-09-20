@@ -6,7 +6,10 @@
 />
 
 <div class="continue-button-container">
-    <a href="{% url 'lessons:world_map' %}" class="continue-button">
-        Back to world map
+    <a
+        href="{% url 'lessons:country_map' country=country %}"
+        class="continue-button"
+    >
+        Back to {{ country }} map
     </a>
 </div>

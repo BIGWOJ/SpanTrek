@@ -78,7 +78,7 @@ var simplemaps_countrymap_mapdata = {
             lat: "40.4178",
             lng: "-3.6947",
             description: "Capital of Spain",
-            url: "/",
+            url: "/lessons/spain/madrid/",
             image_url: "/static/images/map_pins/pin1.svg",
         },
         1: {

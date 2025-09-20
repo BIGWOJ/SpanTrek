@@ -10,6 +10,8 @@
     <div class="lesson-header">
         <!-- Navigation Buttons -->
         <div class="lesson-navigation">
+            {% include 'lessons/back_to_country_map.html' with country=country %}
+            
             {% if prev_lesson_number %}
             <a
                 href="{% url 'lessons:landmark_lesson_with_number' country=country landmark=landmark lesson_number=prev_lesson_number %}"
