@@ -1,5 +1,10 @@
-{%extends 'base/base.html'%} {%load static%} {% block styles %} {{ block.super }}
-<link rel="stylesheet" type="text/css" href="{% static 'styles/base/home.css' %}" />
+{%extends 'base/base.html'%} {%load static%} {% block styles %} {{ block.super
+}}
+<link
+    rel="stylesheet"
+    type="text/css"
+    href="{% static 'styles/base/home.css' %}"
+/>
 <script src="{% static 'scripts/base/home.js' %}"></script>
 {% endblock styles %} {%block content%}
 
@@ -48,19 +53,19 @@
     <div class="main-course-section">
         <h2 class="section-title">Spanish Trek</h2>
         <div class="main-course-card">
-            <div class="lesson-card current main-lesson">
-                <div class="lesson-icon active">🗺️</div>
-                <h4>Main adventure</h4>
-                <div class="lesson-progress">
-                    <div class="stars">⭐⭐☆</div>
-                    <span class="completion"
-                        >{{ user.adventure_progress }}/XXX completed</span
-                    >
+            <a href="{% url 'lessons:world_map' %}" class="lesson-card-link">
+                <div class="lesson-card current main-lesson">
+                    <div class="lesson-icon active">🗺️</div>
+                    <h4>Main adventure</h4>
+                    <div class="lesson-progress">
+                        <div class="stars">⭐⭐☆</div>
+                        <span class="completion"
+                            >{{ user.adventure_progress }}/XXX completed</span
+                        >
+                    </div>
+                    <span class="continue-btn">Continue adventure</span>
                 </div>
-                <a href="{% url 'lessons:world_map' %}" class="continue-btn"
-                    >Continue adventure</a
-                >
-            </div>
+            </a>
         </div>
     </div>
 

@@ -88,5 +88,5 @@ def user_page(request, pk):
         'achievements': achievements,
         'earned_count': earned_count,
     }
-
+    print('aaa')
     return render(request, 'base/user_page.html', context)

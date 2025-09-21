@@ -5,8 +5,9 @@
         {{lesson.country}} - {{lesson.landmark}}<br />
         {{lesson.title}}
     </h1>
-    <a href="{{ start_lesson_url }}"
-        ><button type="button">Start lesson</button></a
+    <a
+        href="{% url 'lessons:landmark_lesson_with_number' country=country landmark=landmark lesson_number=1 %}"
+        >Start lesson</a
     >
 </div>
 {% endblock %}

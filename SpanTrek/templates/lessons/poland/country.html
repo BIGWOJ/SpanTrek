@@ -5,6 +5,10 @@
     href="{% static 'styles/lessons/country_map.css' %}"
 />
 
+<script>
+    var landmark_lessons_progress = {{ request.user.landmark_lessons_progress|default:'{}'|safe }};
+</script>
+
 <script
     type="text/javascript"
     src="{% static 'scripts/lessons/poland/mapdata.js' %}"

@@ -233,6 +233,12 @@ body > *:not(footer) {
     margin-right: auto;
 }
 
+.lesson-card-link {
+    text-decoration: none !important;
+    color: inherit;
+    display: block;
+}
+
 .lesson-card {
     background: #f5f5f5;
     border-radius: 15px;

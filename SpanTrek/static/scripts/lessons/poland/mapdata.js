@@ -1,3 +1,28 @@
+var szczecin_pin_image =
+    landmark_lessons_progress["szczecin"] === 3
+        ? "/static/images/map_pins/pin1_done.svg"
+        : "/static/images/map_pins/pin1.svg";
+
+var krakow_pin_image =
+    landmark_lessons_progress["krakow"] === 3
+        ? "/static/images/map_pins/pin2_done.svg"
+        : "/static/images/map_pins/pin2.svg";
+
+var gdansk_pin_image =
+    landmark_lessons_progress["gdansk"] === 3
+        ? "/static/images/map_pins/pin3_done.svg"
+        : "/static/images/map_pins/pin3.svg";
+
+var poznan_pin_image =
+    landmark_lessons_progress["poznan"] === 3
+        ? "/static/images/map_pins/pin4_done.svg"
+        : "/static/images/map_pins/pin4.svg";
+
+var warsaw_pin_image =
+    landmark_lessons_progress["warsaw"] === 3
+        ? "/static/images/map_pins/pin5_done.svg"
+        : "/static/images/map_pins/pin5.svg";
+
 var simplemaps_countrymap_mapdata = {
     main_settings: {
         //General settings
@@ -79,7 +104,7 @@ var simplemaps_countrymap_mapdata = {
             lng: "14.5528",
             description: "Major seaport city",
             url: "/lessons/poland/szczecin/",
-            image_url: "/static/images/map_pins/pin1.svg",
+            image_url: szczecin_pin_image,
         },
         1: {
             name: "Krakow",
@@ -87,7 +112,7 @@ var simplemaps_countrymap_mapdata = {
             lng: "19.9450",
             description: "Historical capital and cultural center",
             url: "/lessons/poland/krakow/",
-            image_url: "/static/images/map_pins/pin2.svg",
+            image_url: krakow_pin_image,
         },
         2: {
             name: "Gdansk",
@@ -95,7 +120,7 @@ var simplemaps_countrymap_mapdata = {
             lng: "18.6466",
             description: "Port city on the Baltic Sea",
             url: "/lessons/poland/gdansk/",
-            image_url: "/static/images/map_pins/pin3.svg",
+            image_url: gdansk_pin_image,
         },
         3: {
             name: "Poznan",
@@ -103,7 +128,7 @@ var simplemaps_countrymap_mapdata = {
             lng: "16.9252",
             description: "Historical trade center",
             url: "/lessons/poland/poznan/",
-            image_url: "/static/images/map_pins/pin4.svg",
+            image_url: poznan_pin_image,
         },
         4: {
             name: "Warsaw",
@@ -111,7 +136,7 @@ var simplemaps_countrymap_mapdata = {
             lng: "21.0122",
             description: "Capital of Poland",
             url: "/lessons/poland/warsaw/",
-            image_url: "/static/images/map_pins/pin5.svg",
+            image_url: warsaw_pin_image,
         },
     },
     labels: {
