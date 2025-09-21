@@ -1,5 +1,6 @@
 // Home page JavaScript functionality for SpanTrek
 document.addEventListener("DOMContentLoaded", function () {
+    
     // Add click animations to lesson cards
     const lessonCards = document.querySelectorAll(".lesson-card");
     lessonCards.forEach((card) => {

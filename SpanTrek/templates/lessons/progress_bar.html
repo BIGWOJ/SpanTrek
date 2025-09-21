@@ -4,7 +4,15 @@
     type="text/css"
     href="{% static 'styles/lessons/progress_bar.css' %}"
 />
+<script src="{% static 'scripts/lessons/progress_bar.js' %}"></script>
 
-<p>
-    {{ user_country_progress }} / {{ country_lessons_count }} lessons completed
-</p>
+<div class="progress-bar-container">
+    <span class="progress-bar-info">
+        {{ user_country_progress }} / {{ country_lessons_count }} lessons
+        completed
+    </span>
+    <div class="progress-bar">
+        <div class="progress-fill"></div>
+    </div>
+    <span class="progress-bar-text"></span>
+</div>

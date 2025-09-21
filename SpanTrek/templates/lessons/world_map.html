@@ -18,6 +18,8 @@
         </div>
     </div>
 
+    {% include 'lessons/progress_bar.html' with user_country_progress=user_progress country_lessons_count=all_lessons_count %}
+
     <div class="map-section">
         <div class="map-wrapper">
             <?xml version="1.0"?>
@@ -2149,7 +2151,7 @@ THE SOFTWARE.
             </div>
         </div>
         <div class="continue-button-container">
-            <button class="continue-button">Continue</button>
+            <button class="continue-button">Continue adventure</button>
         </div>
     </div>
 </div>
