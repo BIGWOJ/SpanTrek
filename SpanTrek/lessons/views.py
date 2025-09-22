@@ -7,11 +7,28 @@ from .models import Lesson, Country
 def world_map(request):
     user_country_progress = request.user.country_lessons_progress
     user_progress = sum(user_country_progress.values())
+    user_countries_progress = request.user.country_lessons_progress
     all_lessons_count = Lesson.objects.count()
-    
+
+    all_countries = Country.objects.all()
+    countries_lessons_dict = {}
+    for country_obj in all_countries:
+        countries_lessons_dict[country_obj.name] = Lesson.objects.filter(country=country_obj).count()
+
+    # country_color_class = "lessons_done" if user_countries_progress.get(country_obj.name, 0) > 0 else "spanish-country"
+
+    # Calculate completion status for each country
+    country_completion_status = {}
+    for country_name, total_lessons in countries_lessons_dict.items():
+        completed = user_countries_progress.get(country_name, 0)
+        country_completion_status[country_name] = (completed == total_lessons and total_lessons > 0)
+    print(country_completion_status)
     context = {
         'user_progress': user_progress,
         'all_lessons_count': all_lessons_count,
+        'user_countries_progress': user_countries_progress,
+        'countries_lessons_dict': countries_lessons_dict,
+        'country_completion_status': country_completion_status,
     }
     return render(request, "lessons/world_map.html", context=context)
 

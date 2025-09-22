@@ -127,17 +127,25 @@ body > *:not(footer) {
     stroke-width: 1;
 }
 
+.lessons-done {
+    fill: #0a6c0dff !important;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.lessons-done:hover {
+    filter: drop-shadow(0 4px 8px hsla(122, 83%, 23%, 0.6));
+    stroke: hsl(122, 83%, 23%);
+    opacity: 1;
+    stroke-width: 2;
+}
+
 .spanish-country {
     fill: #ff8c00;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
-.starting-country {
-    fill: hsl(33, 100%, 75%);
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
 
 /* Link styles for clickable countries */
 .map-wrapper svg a {
@@ -149,11 +157,11 @@ body > *:not(footer) {
 }
 
 .spanish-country:hover {
-    fill: #ffa51f;
+    fill: hsl(36, 100%, 56%);
     opacity: 1;
     stroke: #ffa51f;
     stroke-width: 2;
-    filter: drop-shadow(0 4px 8px rgba(255, 165, 31, 0.6));
+    filter: drop-shadow(0 4px 8px hsla(36, 100%, 56%, 0.6));
 }
 
 /* Tooltip Styles */

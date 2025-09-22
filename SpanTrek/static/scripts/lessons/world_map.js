@@ -4,18 +4,13 @@ document.addEventListener("DOMContentLoaded", function () {
     tooltip.className = "country-tooltip";
     document.body.appendChild(tooltip);
 
-    // Get all Spanish country elements
     const spanishCountries = document.querySelectorAll(".spanish-country");
+    const lessonsDoneCountries = document.querySelectorAll(".lessons-done");
 
-    const startingCountries = document.querySelectorAll(".starting-country");
+    const allCountries = [...spanishCountries, ...lessonsDoneCountries];
 
     // Add event listeners to each country
-    spanishCountries.forEach((country) => {
-        country.addEventListener("mousemove", showTooltip);
-        country.addEventListener("mouseleave", hideTooltip);
-    });
-
-    startingCountries.forEach((country) => {
+    allCountries.forEach((country) => {
         country.addEventListener("mousemove", showTooltip);
         country.addEventListener("mouseleave", hideTooltip);
     });
@@ -23,33 +18,35 @@ document.addEventListener("DOMContentLoaded", function () {
     // Show tooltip function
     function showTooltip(e) {
         const country = e.target;
-        const countryData = JSON.parse(
-            country.dataset.lessons ||
-                '{"completed": 0, "total": 0, "name": "Unknown"}'
-        );
-
-        // Check if this is a starting country
+        const countryData = JSON.parse(country.getAttribute("data-lessons"));
         const isStartingCountry =
             country.classList.contains("starting-country");
 
-        // Calculate completion percentage
-        const percentage =
-            countryData.total > 0
-                ? Math.round((countryData.completed / countryData.total) * 100)
-                : 0;
+        const country_lessons_available =
+            countries_lessons_dict[countryData.name.toLowerCase()] || 0;
+        const user_completed_lessons =
+            user_countries_progress[countryData.name.toLowerCase()] || 0;
 
-        // Update tooltip content based on country type
+        // Calculate completion percentage
+        const percentage = country_lessons_available
+            ? Math.round(
+                  (user_completed_lessons / country_lessons_available) * 100
+              )
+            : 0;
+
+        // Set tooltip content
         if (isStartingCountry) {
             tooltip.innerHTML = `
                 <strong style="color: #ff8c00">Poland</strong><br>
                 <span style="color: #4CAF50">Start your journey here!</span><br>
-                Basic lessons available
+                Progress: ${percentage}%<br>
+                Completed: ${user_completed_lessons}/${country_lessons_available} lessons
             `;
         } else {
             tooltip.innerHTML = `
                 <strong style="color: #ff8c00">${countryData.name}</strong><br>
                 Progress: ${percentage}%<br>
-                Completed: ${countryData.completed}/${countryData.total} lessons
+                Completed: ${user_completed_lessons}/${country_lessons_available} lessons
             `;
         }
 
