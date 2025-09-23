@@ -10,7 +10,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         # Get the path to the vocabulary data file
         base_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-        vocabulary_json_data = os.path.join(base_dir, 'data', 'vocabulary.json')
+        vocabulary_json_data = os.path.join(base_dir, 'landmark_data', 'vocabulary.json')
 
         if not os.path.exists(vocabulary_json_data):
             self.stdout.write(self.style.ERROR('No vocabulary data file found'))

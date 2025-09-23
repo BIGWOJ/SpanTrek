@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const countryData = JSON.parse(country.getAttribute("data-lessons"));
         const isStartingCountry =
             country.classList.contains("starting-country");
-
+        
         const country_lessons_available =
             countries_lessons_dict[countryData.name.toLowerCase()] || 0;
         const user_completed_lessons =

@@ -59,6 +59,7 @@ class Lesson(models.Model):
     country = models.ForeignKey(Country, on_delete=models.CASCADE, null=True, blank=True)
     vocabularies = models.ManyToManyField('Vocabulary', blank=True, related_name='lessons')
     sentences = models.ManyToManyField('Sentence', blank=True, related_name='lessons')
+    lesson_sequence = models.JSONField(default=list, blank=True, help_text="Sequence of content types in the lesson")
 
     class Meta:
         ordering = ['landmark', 'order']

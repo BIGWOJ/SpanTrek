@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from lessons.models import Lesson
+from lessons.models import Lesson, Country
 import json
 import os
 
@@ -14,7 +14,7 @@ class Command(BaseCommand):
         
         # Get the path to the lesson data file
         base_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-        lesson_json_data = os.path.join(base_dir, 'data', 'poland', f'{landmark}.json')
+        lesson_json_data = os.path.join(base_dir, 'landmark_data', 'poland', f'{landmark}.json')
 
         if not os.path.exists(lesson_json_data):
             self.stdout.write(self.style.ERROR(f'No lesson data found for {landmark}'))
@@ -31,11 +31,15 @@ class Command(BaseCommand):
 
             for lesson_data in lessons_data:
                 try:
-                    # Remove ManyToMany fields from defaults
-                    defaults = {k: v for k, v in lesson_data.items() if k not in ['vocabularies', 'sentences']}
+                    # Remove ManyToMany fields and country from defaults
+                    defaults = {k: v for k, v in lesson_data.items() if k not in ['vocabularies', 'sentences', 'country']}
+
+                    country_obj = Country.objects.filter(name=lesson_data['country']).first()
+
                     # Try to get existing lesson by landmark and order
                     lesson, created = Lesson.objects.get_or_create(
                         landmark=landmark,
+                        country=country_obj,
                         order=lesson_data['order'],
                         defaults=defaults
                     )

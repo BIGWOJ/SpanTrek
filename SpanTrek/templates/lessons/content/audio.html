@@ -1,0 +1,28 @@
+<link
+    rel="stylesheet"
+    href="{% load static %}{% static 'styles/lessons/content/audio.css' %}"
+/>
+
+<div class="audio-container">
+    <div class="audio-player">
+        <button class="play-pause-btn" id="playPauseBtn">
+            <span class="play-icon">▶</span>
+            <span class="pause-icon" style="display: none">⏸</span>
+        </button>
+
+        <div class="audio-info">
+            <div class="audio-title">Sample Audio</div>
+            <div class="audio-duration">0:00 / 3:45</div>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+        </div>
+
+        <div class="volume-control">
+            <span class="volume-icon">🔊</span>
+        </div>
+    </div>
+</div>

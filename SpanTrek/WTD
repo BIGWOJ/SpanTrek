@@ -1,2 +1,7 @@
 1. Uporządkować achievements
 2. Mega redundant code w mapdata.js do zmieniania kolorów pinów, może osobny plik tylko do tego? Działać działa, ale brzydko totalnie
+3. "country" w json lekcji robi problem - nie chce się przypisać przy tworzeniu lekcji
+pomysł przy lesson_sequence = jest sekwencja co ma być w jakiej kolejności, w lekcji docelowo
+iterować po tym i wstawiać odpowiedni blok, może oprócz lesson_sequence pole typu
+lesson_sequence_data i też models.JSON lista i po kolei co wrzucać ["tekst do pierwszego", "coś do drugiego"] itd
+dobrze obmyśleć, bo inaczej przetwarzane będzie jak multiple choice a inaczej jak sam tekst, PRZEMYŚLEĆ GŁĘBOKO TO

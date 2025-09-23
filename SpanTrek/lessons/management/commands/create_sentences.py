@@ -10,7 +10,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         # Get the path to the sentences data file
         base_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-        sentences_json_data = os.path.join(base_dir, 'data', 'sentences.json')
+        sentences_json_data = os.path.join(base_dir, 'landmark_data', 'sentences.json')
 
         if not os.path.exists(sentences_json_data):
             self.stdout.write(self.style.ERROR('No sentences data file found'))

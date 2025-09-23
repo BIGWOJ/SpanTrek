@@ -3,18 +3,21 @@
         "title": "Greetings and Introductions",
         "content": "# Greetings in Spanish\n\n## Common Phrases\n- Hola - Hello\n- Buenos días - Good morning\n- Buenas tardes - Good afternoon\n- Buenas noches - Good night\n- ¿Cómo estás? - How are you?\n- Muy bien, gracias - Very well, thank you\n\n## Practice Exercises\n1. Greet someone in the morning\n2. Ask someone how they are\n3. Respond to \"¿Cómo estás?\"",
         "order": 1,
-        "landmark": "szczecin"
+        "landmark": "szczecin",
+        "country": "poland"
     },
     {
         "title": "Numbers 1-20",
         "content": "# Numbers in Spanish (1-20)\n\n## Numbers List\n1. uno - 1\n2. dos - 2\n3. tres - 3\n...up to\n20. veinte - 20\n\n## Practice Exercises\n1. Count from 1 to 20\n2. Write numbers in words\n3. Match numbers with their Spanish names",
         "order": 2,
-        "landmark": "szczecin"
+        "landmark": "szczecin",
+        "country": "poland"
     },
     {
         "title": "Basic Verbs",
         "content": "# Essential Spanish Verbs\n\n## Common Verbs\n- ser/estar - to be\n- tener - to have\n- ir - to go\n- hacer - to do/make\n\n## Practice Exercises\n1. Conjugate \"ser\" in present tense\n2. Use \"tener\" in simple sentences\n3. Create basic phrases with these verbs",
         "order": 3,
-        "landmark": "szczecin"
+        "landmark": "szczecin",
+        "country": "poland"
     }
 ]
