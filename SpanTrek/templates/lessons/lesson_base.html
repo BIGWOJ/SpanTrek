@@ -1,12 +1,13 @@
 {% extends 'base/base.html' %} 
 {% load static %}
-{% block styles %}
+
 <link
     rel="stylesheet"
     type="text/css"
     href="{% static 'styles/lessons/lesson_base.css' %}"
 />
-{% endblock %} {% block content %}
+
+{% block content %}
 <div class="lesson-container">
     <!-- Progress Bar -->
     <div class="lesson-header">
@@ -33,39 +34,34 @@
         {% include 'lessons/progress_bar.html' %}
 
         <h1 class="lesson-title">
-            {% block lesson_title %}{{lesson.title}}{% endblock %}
+            {{lesson.title}}
         </h1>
         <div class="lesson-meta">
             <span class="country-name"> {{ country|title }}</span>
             <span class="landmark-name"> - {{ landmark|title }},</span>
             <span class="lesson-number">lesson {{ lesson_number }}</span>
         </div>
-
+        
         <!-- Main Lesson Content -->
         <div class="lesson-content">
-            {{ lesson.lesson_sequence }}
-            {% for block in lesson.lesson_sequence %}
+            {% for block, content in lesson.lesson_sequence.items %}
             <div class="single-content">
                 {% if block == "audio" %}
-                    {% include 'lessons/content/audio.html' %}
+                    {% include 'lessons/content/audio.html' with content=content %}
                 {% elif block == "image" %}
-                    {% include 'lessons/content/image.html' %}
+                    {% include 'lessons/content/image.html' with content=content %}
                 {% elif block == "text" %}
-                    {% include 'lessons/content/text.html' %}
-                {% elif block == "listen" %}
-                    {% include 'lessons/exercises/listen.html' %}
+                    {% include 'lessons/content/text.html' with content=content %}
                 {% elif block == "fill_blank" %}
-                    {% include 'lessons/exercises/fill_blank.html' %}
+                    {% include 'lessons/exercises/fill_blank.html' with content=content %}
                 {% elif block == "match" %}
-                    {% include 'lessons/exercises/match.html' %}
+                    {% include 'lessons/exercises/match.html' with content=content %}
                 {% elif block == "multiple_choice" %}
-                    {% include 'lessons/exercises/multiple_choice.html' %}
-                {% elif block == "single_choice" %}
-                    {% include 'lessons/exercises/single_choice.html' %}
+                    {% include 'lessons/exercises/multiple_choice.html' with content=content %}
                 {% elif block == "speak" %}
-                    {% include 'lessons/exercises/speak.html' %}
+                    {% include 'lessons/exercises/speak.html' with content=content %}
                 {% elif block == "translate" %}
-                    {% include 'lessons/exercises/translate.html' %}
+                    {% include 'lessons/exercises/translate.html' with content=content %}
                 {% else %}
                     <!-- Unknown block type: {{ block }} -->
                     <div class="error-block">Unknown content type: {{ block }}</div>
@@ -74,5 +70,5 @@
             {% endfor %}
         </div>
     </div>
-    {% endblock %} {% block scripts %}{% endblock %}
 </div>
+{% endblock %}

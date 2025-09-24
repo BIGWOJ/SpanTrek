@@ -1,1 +1,41 @@
-fill
+{% load static %}
+
+<link
+    rel="stylesheet"
+    href="{% static 'styles/lessons/exercises/fill_blank.css' %}"
+/>
+<script src="{% static 'scripts/lessons/exercises/fill_blank.js' %}"></script>
+
+<div class="exercise-container">
+    <div class="exercise-wrapper">
+        <div class="exercise-header">
+            <h3 class="exercise-title">Complete the sentence</h3>
+            <div class="exercise-instruction">
+                Fill in the blanks with the correct words
+            </div>
+        </div>
+
+        <div class="exercise-content">
+            <div class="sentence-block">
+                <p class="exercise-text">
+                    {% for block in content %} {% if block == block|upper %}
+                    <!-- This is a correct answer - create an input field -->
+                    <input
+                        type="text"
+                        class="blank-input"
+                        placeholder="..........."
+                        data-answer="{{ block|lower }}"
+                    />
+                    {% else %}
+                    <!-- This is regular text - display as is -->
+                    {{ block }} {% endif %} {% endfor %}
+                </p>
+            </div>
+        </div>
+
+        <div class="exercise-actions">
+            <button class="check-btn">Check Answers</button>
+            <button class="reset-btn">Reset</button>
+        </div>
+    </div>
+</div>

@@ -22,7 +22,7 @@ def world_map(request):
     for country_name, total_lessons in countries_lessons_dict.items():
         completed = user_countries_progress.get(country_name, 0)
         country_completion_status[country_name] = (completed == total_lessons and total_lessons > 0)
-    print(country_completion_status)
+
     context = {
         'user_progress': user_progress,
         'all_lessons_count': all_lessons_count,
@@ -66,9 +66,9 @@ def country_landmark_lesson(request, country, landmark, lesson_number=None):
             'start_lesson_url': f"/{country}/{landmark}/{landmark_progress}/",
             'user_landmark_progress': user_landmark_progress,
         }
-
         return render(request, 'lessons/lesson_intro.html', context)
 
+    
     # Otherwise, show the actual lesson page
     current_lesson = lesson_number
     lesson = Lesson.objects.filter(landmark=landmark, order=current_lesson).first()
@@ -83,7 +83,7 @@ def country_landmark_lesson(request, country, landmark, lesson_number=None):
         'prev_lesson_number': current_lesson - 1 if current_lesson >= 1 else None,
         'next_lesson_number': current_lesson + 1 if current_lesson < 3 else None,
     }
-
-    return render(request, 'lessons/lesson_base.html', context)
+    print([x for x in lesson.lesson_sequence.keys()] if lesson and hasattr(lesson, 'lesson_sequence') else [])
+    return render(request, 'lessons/lesson_base.html', context=context)
 
 

@@ -1,1 +1,59 @@
-match
+{% load static %}
+
+<link
+    rel="stylesheet"
+    href="{% static 'styles/lessons/exercises/match.css' %}"
+/>
+<script src="{% static 'scripts/lessons/exercises/match.js' %}"></script>
+
+<div class="exercise-container">
+    <div class="exercise-wrapper">
+        <div class="exercise-header">
+            <h3 class="exercise-title">Match the pairs</h3>
+            <div class="exercise-instruction">
+                Click on items from both columns to match them together
+            </div>
+        </div>
+
+        <div class="exercise-content">
+            <div class="match-container">
+                <div class="left-column">
+                    <div class="match-item" data-match="1">
+                        <div class="match-content">Hello</div>
+                    </div>
+                    <div class="match-item" data-match="2">
+                        <div class="match-content">Goodbye</div>
+                    </div>
+                    <div class="match-item" data-match="3">
+                        <div class="match-content">Thank you</div>
+                    </div>
+                    <div class="match-item" data-match="4">
+                        <div class="match-content">Please</div>
+                    </div>
+                </div>
+
+                <div class="right-column">
+                    <div class="match-item" data-match="3">
+                        <div class="match-content">Gracias</div>
+                    </div>
+                    <div class="match-item" data-match="1">
+                        <div class="match-content">Hola</div>
+                    </div>
+                    <div class="match-item" data-match="4">
+                        <div class="match-content">Por favor</div>
+                    </div>
+                    <div class="match-item" data-match="2">
+                        <div class="match-content">Adiós</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="match-lines">
+                <!-- SVG lines will be drawn here by JavaScript -->
+                <svg class="connection-svg" width="100%" height="100%">
+                    <!-- Connection lines will be added dynamically -->
+                </svg>
+            </div>
+        </div>
+    </div>
+</div>

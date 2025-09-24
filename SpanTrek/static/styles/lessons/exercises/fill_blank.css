@@ -1,0 +1,202 @@
+/* Fill in the Blank Exercise Styles */
+.exercise-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: #1a1a1a;
+    min-height: 400px;
+}
+
+.exercise-wrapper {
+    background: #2a2a2a;
+    border: 2px solid #ffa51f;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 8px 32px rgba(255, 165, 31, 0.2);
+    max-width: 600px;
+    width: 100%;
+    color: #f5f5f5;
+}
+
+.exercise-header {
+    text-align: center;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 165, 31, 0.3);
+}
+
+.exercise-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #ffa51f;
+    margin-bottom: 8px;
+}
+
+.exercise-instruction {
+    font-size: 14px;
+    color: rgba(245, 245, 245, 0.7);
+}
+
+.exercise-content {
+    margin-bottom: 25px;
+}
+
+.sentence-block {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: rgba(255, 165, 31, 0.05);
+    border-radius: 10px;
+    border-left: 3px solid #ffa51f;
+}
+
+.exercise-text {
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+.blank-input {
+    background: rgba(245, 245, 245, 0.1);
+    border: 2px solid rgba(255, 165, 31, 0.5);
+    border-radius: 8px;
+    padding: 8px 12px;
+    color: #f5f5f5;
+    font-size: 16px;
+    min-width: 120px;
+    text-align: center;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.blank-input::placeholder {
+    color: rgba(255, 165, 31, 0.6);
+    font-style: italic;
+}
+
+.blank-input:focus {
+    border-color: #ffa51f;
+    background: rgba(255, 165, 31, 0.1);
+    box-shadow: 0 0 10px rgba(255, 165, 31, 0.3);
+}
+
+.blank-input.correct {
+    border-color: #4caf50;
+    background: rgba(76, 175, 80, 0.1);
+}
+
+.blank-input.incorrect {
+    border-color: #f44336;
+    background: rgba(244, 67, 54, 0.1);
+    animation: shake 0.5s ease-in-out;
+}
+
+.exercise-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.check-btn, .reset-btn {
+    background: rgba(255, 165, 31, 0.1);
+    border: 2px solid #ffa51f;
+    border-radius: 10px;
+    padding: 12px 24px;
+    color: #f5f5f5;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 120px;
+}
+
+.check-btn:hover, .reset-btn:hover {
+    background: rgba(255, 165, 31, 0.2);
+    border-color: #ff8c00;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 165, 31, 0.3);
+}
+
+.check-btn:active, .reset-btn:active {
+    transform: translateY(0);
+}
+
+.reset-btn {
+    background: rgba(245, 245, 245, 0.1);
+    border-color: rgba(245, 245, 245, 0.3);
+}
+
+.reset-btn:hover {
+    background: rgba(245, 245, 245, 0.15);
+    border-color: rgba(245, 245, 245, 0.5);
+    box-shadow: 0 4px 15px rgba(245, 245, 245, 0.1);
+}
+
+/* Animations */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .exercise-container {
+        padding: 15px;
+    }
+    
+    .exercise-wrapper {
+        padding: 20px;
+    }
+    
+    .exercise-text {
+        font-size: 15px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    
+    .blank-input {
+        min-width: 100px;
+        font-size: 15px;
+    }
+    
+    .exercise-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .check-btn, .reset-btn {
+        width: 100%;
+        max-width: 200px;
+    }
+}
+
+@media (max-width: 480px) {
+    .exercise-wrapper {
+        padding: 15px;
+    }
+    
+    .exercise-title {
+        font-size: 18px;
+    }
+    
+    .exercise-text {
+        font-size: 14px;
+    }
+    
+    .blank-input {
+        font-size: 14px;
+        padding: 6px 10px;
+    }
+    
+    .check-btn, .reset-btn {
+        padding: 10px 20px;
+        font-size: 13px;
+    }
+}

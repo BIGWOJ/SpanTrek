@@ -22,7 +22,8 @@
             {"sentence": "Ceno a las siete de la noche.", "translation": "I have dinner at seven in the evening."},
             {"sentence": "Me acuesto a las diez de la noche.", "translation": "I go to bed at ten at night."}
         ],
-        "lesson_sequence": ["audio", "image", "text", "listen", "fill_blank", "match", "multiple_choice", "single_choice", "speak", "translate"]
+        "lesson_sequence": {"audio": "link_audio", "image": "link_img", "text": "link_text", "fill_blank": ["Przykładowa pierwsza część zdania", "CORRECT1", "To jest kontynuacja. Zdanie po odpowiedzi.", "CORRECT2", "text3"], "match": ["match2", "match1", "match11", "match22"], "multiple_choice": ["option1", "option2", "correct_option"], "speak": "link_speak", "translate": "text_to_translate"}
+
 
     },
     {
