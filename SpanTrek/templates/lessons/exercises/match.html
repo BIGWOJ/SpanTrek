@@ -11,48 +11,31 @@
         <div class="exercise-header">
             <h3 class="exercise-title">Match the pairs</h3>
             <div class="exercise-instruction">
-                Click on items from both columns to match them together
+                Click on items to match them together
             </div>
         </div>
 
         <div class="exercise-content">
             <div class="match-container">
                 <div class="left-column">
-                    <div class="match-item" data-match="1">
-                        <div class="match-content">Hello</div>
-                    </div>
-                    <div class="match-item" data-match="2">
-                        <div class="match-content">Goodbye</div>
-                    </div>
-                    <div class="match-item" data-match="3">
-                        <div class="match-content">Thank you</div>
-                    </div>
-                    <div class="match-item" data-match="4">
-                        <div class="match-content">Please</div>
-                    </div>
+                    {% for item in content %}
+                        {% if forloop.counter0|divisibleby:2 %}
+                            <div class="match-item" data-match="pair_{{ item|slice:":1" }}">
+                                <div class="match-content">{{ item|slice:"2:" }}</div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
                 </div>
 
                 <div class="right-column">
-                    <div class="match-item" data-match="3">
-                        <div class="match-content">Gracias</div>
-                    </div>
-                    <div class="match-item" data-match="1">
-                        <div class="match-content">Hola</div>
-                    </div>
-                    <div class="match-item" data-match="4">
-                        <div class="match-content">Por favor</div>
-                    </div>
-                    <div class="match-item" data-match="2">
-                        <div class="match-content">Adiós</div>
-                    </div>
+                    {% for item in content %}
+                        {% if not forloop.counter0|divisibleby:2 %}
+                            <div class="match-item" data-match="pair_{{ item|slice:":1" }}">
+                                <div class="match-content">{{ item|slice:"2:" }}</div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
                 </div>
-            </div>
-
-            <div class="match-lines">
-                <!-- SVG lines will be drawn here by JavaScript -->
-                <svg class="connection-svg" width="100%" height="100%">
-                    <!-- Connection lines will be added dynamically -->
-                </svg>
             </div>
         </div>
     </div>

@@ -56,6 +56,8 @@
                     {% include 'lessons/exercises/fill_blank.html' with content=content %}
                 {% elif block == "match" %}
                     {% include 'lessons/exercises/match.html' with content=content %}
+                {% elif block == "single_choice" %}
+                    {% include 'lessons/exercises/single_choice.html' with content=content %}
                 {% elif block == "multiple_choice" %}
                     {% include 'lessons/exercises/multiple_choice.html' with content=content %}
                 {% elif block == "speak" %}

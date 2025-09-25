@@ -1,1 +1,43 @@
-multiple
+{% load static %}
+
+<link
+    rel="stylesheet"
+    href="{% static 'styles/lessons/exercises/multiple_choice.css' %}"
+/>
+<script src="{% static 'scripts/lessons/exercises/multiple_choice.js' %}"></script>
+
+<div class="exercise-container">
+    <div class="exercise-wrapper">
+        <div class="exercise-header">
+            <h3 class="exercise-title">Choose the correct answer(s)</h3>
+            <div class="exercise-instruction">
+                Select all correct options from the choices below (multiple
+                selections allowed)
+            </div>
+        </div>
+
+        <div class="exercise-content">
+            <div class="question-block">
+                <div class="question-text">
+                    What is the Spanish word for "hello"?
+                </div>
+
+                <div class="choices-container">
+                    {% for choice in content %}
+                    <div
+                        class="choice-item"
+                        data-choice="{{ forloop.counter0 }}"
+                    >
+                        <div class="choice-content">{{ choice }}</div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="exercise-actions">
+            <button class="check-btn-multi">Check Answer</button>
+            <button class="reset-btn-multi">Reset</button>
+        </div>
+    </div>
+</div>

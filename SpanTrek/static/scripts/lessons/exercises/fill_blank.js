@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const checkBtn = document.querySelector(".check-btn");
-    const resetBtn = document.querySelector(".reset-btn");
+    const checkBtn = document.querySelector(".check-btn-fill");
+    const resetBtn = document.querySelector(".reset-btn-fill");
     const blankInputs = document.querySelectorAll(".blank-input");
 
     // Check answers functionality

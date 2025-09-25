@@ -1,15 +1,28 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const checkBtn = document.querySelector(".check-btn");
-    const resetBtn = document.querySelector(".reset-btn");
     const matchItems = document.querySelectorAll(".match-item");
-    const connectionSvg = document.querySelector(".connection-svg");
 
     let selectedItems = [];
     let matches = [];
 
-    // Initialize match functionality
-    matchItems.forEach((item) => {
+    // Initialize match functionality and add choice labels
+    matchItems.forEach((item, index) => {
         item.addEventListener("click", handleItemClick);
+
+        // Add choice labels based on actual DOM structure:
+        const totalItems = matchItems.length;
+        const itemsPerColumn = totalItems / 2;
+
+        let label;
+        if (index < itemsPerColumn) {
+            // Left column items: indices 0 to itemsPerColumn-1
+            label = (index * 2 + 1).toString();
+        } else {
+            // Right column items: indices itemsPerColumn to totalItems-1
+            const rightColumnPosition = index - itemsPerColumn;
+            label = ((rightColumnPosition + 1) * 2).toString();
+        }
+
+        item.setAttribute("data-choice", label);
     });
 
     // Handle item selection and matching
@@ -70,7 +83,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Store the match
             matches.push({ item1, item2, correct: true });
-
         } else {
             // Items don't match - show briefly then deselect
             item1.classList.add("incorrect");
@@ -85,28 +97,27 @@ document.addEventListener("DOMContentLoaded", function () {
         selectedItems = [];
     }
 
-    // Check answers functionality
-    checkBtn.addEventListener("click", function () {
-        let allCorrect = true;
-        let checkedMatches = [];
+    // Keyboard navigation - map number keys to match items based on their labels
+    document.addEventListener("keydown", function (event) {
+        const key = event.key;
+        const keyNumber = parseInt(key); // Convert "1", "2", "3", "4" to 1, 2, 3, 4
 
-        // Clear previous connection lines
-        connectionSvg.innerHTML = "";
+        if (
+            !isNaN(keyNumber) &&
+            keyNumber >= 1 &&
+            keyNumber <= matchItems.length
+        ) {
+            event.preventDefault();
 
-        // Check all current matches
-        matches.forEach((match) => {
-            const { item1, item2 } = match;
-            const match1 = item1.getAttribute("data-match");
-            const match2 = item2.getAttribute("data-match");
-            const isCorrect = match1 === match2;
+            // Find the item with the matching data-choice label
+            const targetItem = Array.from(matchItems).find(
+                (item) =>
+                    item.getAttribute("data-choice") === keyNumber.toString()
+            );
 
-            if (!isCorrect) {
-                allCorrect = false;
-                item1.classList.add("incorrect");
-                item2.classList.add("incorrect");
+            if (targetItem && !targetItem.classList.contains("matched")) {
+                handleItemClick({ currentTarget: targetItem });
             }
-
-            checkedMatches.push({ item1, item2, correct: isCorrect });
-        });
+        }
     });
 });
