@@ -18,15 +18,13 @@
 
         <div class="exercise-content">
             <div class="question-block">
-                <div class="question-text">
-                    What is the Spanish word for "hello"?
-                </div>
+                <div class="question-text">{{content.0}}</div>
 
                 <div class="choices-container">
-                    {% for choice in content %}
+                    {% for choice in content|slice:"1:" %}
                     <div
                         class="choice-item"
-                        data-choice="{{ forloop.counter0 }}"
+                        data-choice="{{ forloop.counter }}"
                     >
                         <div class="choice-content">{{ choice }}</div>
                     </div>
@@ -36,7 +34,7 @@
         </div>
 
         <div class="exercise-actions">
-            <button class="check-btn-multi">Check Answer</button>
+            <button class="check-btn-multi">Check answers</button>
             <button class="reset-btn-multi">Reset</button>
         </div>
     </div>
