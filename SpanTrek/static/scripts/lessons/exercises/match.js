@@ -97,27 +97,29 @@ document.addEventListener("DOMContentLoaded", function () {
         selectedItems = [];
     }
 
-    // Keyboard navigation - map number keys to match items based on their labels
+    // Keyboard navigation - NUMPAD ONLY - map numpad number keys to match items based on their labels
     document.addEventListener("keydown", function (event) {
-        const key = event.key;
-        const keyNumber = parseInt(key); // Convert "1", "2", "3", "4" to 1, 2, 3, 4
+        const code = event.code;
 
-        if (
-            !isNaN(keyNumber) &&
-            keyNumber >= 1 &&
-            keyNumber <= matchItems.length
-        ) {
-            event.preventDefault();
+        // Handle ONLY numpad numbers (1, 2, 3, etc.) - numpad navigation only
+        if (code.startsWith("Numpad") && event.key >= "1" && event.key <= "9") {
+            const keyNumber = parseInt(event.key);
 
-            // Find the item with the matching data-choice label
-            const targetItem = Array.from(matchItems).find(
-                (item) =>
-                    item.getAttribute("data-choice") === keyNumber.toString()
-            );
+            if (keyNumber >= 1 && keyNumber <= matchItems.length) {
+                event.preventDefault();
 
-            if (targetItem && !targetItem.classList.contains("matched")) {
-                handleItemClick({ currentTarget: targetItem });
+                // Find the item with the matching data-choice label
+                const targetItem = Array.from(matchItems).find(
+                    (item) =>
+                        item.getAttribute("data-choice") ===
+                        keyNumber.toString()
+                );
+
+                if (targetItem && !targetItem.classList.contains("matched")) {
+                    handleItemClick({ currentTarget: targetItem });
+                }
             }
+            return;
         }
     });
 });

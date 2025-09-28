@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", function () {
             checkBtn.style.background = "";
             checkBtn.style.borderColor = "";
             checkBtn.style.color = "";
-            checkBtn.textContent = "Check answers";
+            checkBtn.textContent = "Check answer";
         }, 2000);
     });
 

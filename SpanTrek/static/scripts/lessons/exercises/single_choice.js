@@ -144,10 +144,12 @@ document.addEventListener("DOMContentLoaded", function () {
         checkBtn.textContent = "Check answer";
     });
 
-    // Keyboard navigation
+    // Keyboard navigation - NUMPAD ONLY
     document.addEventListener("keydown", function (event) {
-        // Handle Enter key for check button
-        if (event.key === "Enter") {
+        const code = event.code;
+
+        // Handle Enter key (both main Enter and numpad Enter)
+        if (event.key === "Enter" || code === "NumpadEnter") {
             event.preventDefault();
             if (checkBtn && !checkBtn.disabled) {
                 checkBtn.click();
@@ -155,8 +157,12 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        // Handle Delete key for reset button
-        if (event.key === "Delete") {
+        // Handle Delete key (both main Delete and numpad Delete/Decimal)
+        if (
+            event.key === "Delete" ||
+            code === "NumpadDelete" ||
+            code === "NumpadDecimal"
+        ) {
             event.preventDefault();
             if (resetBtn && !resetBtn.disabled) {
                 resetBtn.click();
@@ -166,17 +172,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (isAnswered) return;
 
-        const key = event.key;
-        const keyNumber = parseInt(key); // Convert "1", "2", "3", "4" to 1, 2, 3, 4
-        const index = keyNumber - 1; // Convert to 0-based index (1→0, 2→1, 3→2, etc.)
+        // Handle ONLY numpad numbers (1, 2, 3, 4) - numpad navigation only
+        if (code.startsWith("Numpad") && event.key >= "1" && event.key <= "9") {
+            const keyNumber = parseInt(event.key);
+            const index = keyNumber - 1;
 
-        if (
-            !isNaN(keyNumber) &&
-            keyNumber >= 1 &&
-            keyNumber <= choiceItems.length
-        ) {
-            event.preventDefault();
-            handleChoiceClick(choiceItems[index], index);
+            if (keyNumber <= choiceItems.length) {
+                event.preventDefault();
+                handleChoiceClick(choiceItems[index], index);
+            }
+            return;
         }
     });
 });
