@@ -1,0 +1,198 @@
+/* Input Field Styles - Based on text.css theme */
+.input-field-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: #1a1a1a;
+    min-height: 300px;
+}
+
+.input-field-wrapper {
+    background: #2a2a2a;
+    border: 2px solid #ffa51f;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 8px 32px rgba(255, 165, 31, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    max-width: 500px;
+    width: 100%;
+    color: #f5f5f5;
+}
+
+.input-field-header {
+    text-align: center;
+    width: 100%;
+}
+
+.input-field-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #ffa51f;
+    margin-bottom: 8px;
+    margin-top: 0;
+}
+
+.input-field-instruction {
+    font-size: 18px;
+    color: #f5f5f5;
+    margin-bottom: 10px;
+}
+
+.input-field-content {
+    width: 100%;
+}
+
+.input-container {
+    width: 100%;
+}
+
+.user-input {
+    width: 100%;
+    background: rgba(255, 165, 31, 0.05);
+    border: 2px solid rgba(255, 165, 31, 0.3);
+    border-radius: 10px;
+    padding: 15px;
+    color: #f5f5f5;
+    font-size: 16px;
+    font-weight: 400;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.user-input::placeholder {
+    color: rgba(245, 245, 245, 0.5);
+}
+
+.user-input:focus {
+    outline: none;
+    border-color: #ffa51f;
+    background: rgba(255, 165, 31, 0.1);
+    box-shadow: 0 0 15px rgba(255, 165, 31, 0.2);
+}
+
+.user-input:hover {
+    border-color: rgba(255, 165, 31, 0.5);
+    background: rgba(255, 165, 31, 0.08);
+}
+
+/* Input states for correct/incorrect answers */
+.user-input.correct {
+    border-color: #4caf50;
+    background: rgba(76, 175, 80, 0.1);
+    box-shadow: 0 0 15px rgba(76, 175, 80, 0.2);
+}
+
+.user-input.incorrect {
+    border-color: #f44336;
+    background: rgba(244, 67, 54, 0.1);
+    box-shadow: 0 0 15px rgba(244, 67, 54, 0.2);
+    animation: shake 0.5s ease-in-out;
+}
+
+.input-field-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    width: 100%;
+}
+
+.check-btn-input, .reset-btn-input {
+    background: rgba(255, 165, 31, 0.1);
+    border: 2px solid #ffa51f;
+    border-radius: 10px;
+    padding: 12px 24px;
+    color: #f5f5f5;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 120px;
+}
+
+.check-btn-input:hover, .reset-btn-input:hover {
+    background: rgba(255, 165, 31, 0.2);
+    border-color: #ff8c00;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 165, 31, 0.3);
+}
+
+.check-btn-input:active, .reset-btn-input:active {
+    transform: translateY(0);
+}
+
+.reset-btn-input {
+    background: rgba(245, 245, 245, 0.1);
+    border-color: rgba(245, 245, 245, 0.3);
+}
+
+.reset-btn-input:hover {
+    background: rgba(245, 245, 245, 0.15);
+    border-color: rgba(245, 245, 245, 0.5);
+    box-shadow: 0 4px 15px rgba(245, 245, 245, 0.1);
+}
+
+/* Shake animation for incorrect answers */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .input-field-container {
+        padding: 15px;
+    }
+    
+    .input-field-wrapper {
+        padding: 20px;
+        gap: 15px;
+    }
+    
+    .input-field-title {
+        font-size: 18px;
+    }
+    
+    .user-input {
+        padding: 12px;
+        font-size: 15px;
+    }
+    
+    .input-field-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .check-btn-input, .reset-btn-input {
+        width: 100%;
+        max-width: 200px;
+    }
+}
+
+@media (max-width: 480px) {
+    .input-field-wrapper {
+        padding: 15px;
+    }
+    
+    .input-field-title {
+        font-size: 16px;
+    }
+    
+    .input-field-instruction {
+        font-size: 13px;
+    }
+    
+    .user-input {
+        padding: 10px;
+        font-size: 14px;
+    }
+    
+    .check-btn-input, .reset-btn-input {
+        padding: 10px 20px;
+        font-size: 13px;
+    }
+}

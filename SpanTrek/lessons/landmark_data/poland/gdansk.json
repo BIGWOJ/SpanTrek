@@ -22,7 +22,7 @@
             {"sentence": "Ceno a las siete de la noche.", "translation": "I have dinner at seven in the evening."},
             {"sentence": "Me acuesto a las diez de la noche.", "translation": "I go to bed at ten at night."}
         ],
-        "lesson_sequence": {"audio": "link_audio", "image": "link_img", "text": "link_text", "fill_blank": ["Przykładowa pierwsza część zdania", "CORRECT1", "To jest kontynuacja. Zdanie po odpowiedzi.", "CORRECT2", "text3"], "match": ["1_match1", "4_MATCH4", "2_match2", "3_MATCH3", "3_match3", "2_MATCH2", "4_match4", "1_MATCH1"], "multiple_choice": ["Tutaj zawsze będzie pytanie", "ASD", "option2", "opcja", "CORRECT", "CORRECT"], "single_choice": ["option1", "CORRECT", "option2"], "speak": "link_speak", "translate": "text_to_translate"}
+        "lesson_sequence": {"audio": ["/static/audio/word/hola.mp3", "transcription text"], "image": ["/static/images/colors/green.png", "optional text - spanish text", "optional text - english text"], "text": "link_text", "fill_blank": ["Przykładowa pierwsza część zdania", "CORRECT1", "To jest kontynuacja. Zdanie po odpowiedzi.", "CORRECT2", "text3"], "match": ["1_match1", "4_MATCH4", "2_match2", "3_MATCH3", "3_match3", "2_MATCH2", "4_match4", "1_MATCH1"], "single_choice": ["TUTAJ ZAWSZE pytanie będzie single", "CORRECT", "option2"], "multiple_choice": ["Tutaj zawsze będzie pytanie", "ASD", "option2", "opcja", "CORRECT", "CORRECT"], "audio_input": "text_to_translate", "input_field": ["text to translate", "CORRECT"]}
 
 
     },

@@ -3,14 +3,14 @@
     href="{% load static %}{% static 'styles/lessons/content/image.css' %}"
 />
 
-Passed image link: {{ content }}
 <div class="image-container">
     <div class="image-wrapper">
-        <img
-            src="https://placehold.co/600x400"
-            alt="Sample Image"
-            class="content-image"
-        />
-        <div class="image-caption">IMAGE</div>
+        <img src="{{ content.0 }}" class="content-image" />
+        <div class="image-caption">
+            {% if content.1 %}{{ content.1 }}{% endif %}
+        </div>
+        <div class="image-text">
+            {% if content.2 %}{{ content.2 }}{% endif %}
+        </div>
     </div>
 </div>

@@ -52,6 +52,8 @@
                     {% include 'lessons/content/image.html' with content=content %}
                 {% elif block == "text" %}
                     {% include 'lessons/content/text.html' with content=content %}
+                {% elif block == "input_field" %}
+                    {% include 'lessons/exercises/input_field.html' with content=content %}
                 {% elif block == "fill_blank" %}
                     {% include 'lessons/exercises/fill_blank.html' with content=content %}
                 {% elif block == "match" %}
@@ -60,10 +62,8 @@
                     {% include 'lessons/exercises/single_choice.html' with content=content %}
                 {% elif block == "multiple_choice" %}
                     {% include 'lessons/exercises/multiple_choice.html' with content=content %}
-                {% elif block == "speak" %}
-                    {% include 'lessons/exercises/speak.html' with content=content %}
-                {% elif block == "translate" %}
-                    {% include 'lessons/exercises/translate.html' with content=content %}
+                {% elif block == "audio_input" %}
+                    {% include 'lessons/exercises/audio_input.html' with content=content %}
                 {% else %}
                     <!-- Unknown block type: {{ block }} -->
                     <div class="error-block">Unknown content type: {{ block }}</div>

@@ -1,0 +1,172 @@
+/* Audio Input Exercise Styles - Extension of audio_block.css */
+
+/* Modify the audio container to be vertical */
+.audio-container {
+    flex-direction: column;
+    gap: 20px;
+    min-height: 300px;
+}
+
+/* Input section styling */
+.input-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #ffa51f;
+    margin-bottom: 5px;
+}
+
+.audio-input {
+    background: rgba(255, 165, 31, 0.05);
+    border: 2px solid rgba(255, 165, 31, 0.3);
+    border-radius: 10px;
+    padding: 15px;
+    color: #f5f5f5;
+    font-size: 16px;
+    font-weight: 400;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.audio-input::placeholder {
+    color: rgba(245, 245, 245, 0.5);
+}
+
+.audio-input:focus {
+    outline: none;
+    border-color: #ffa51f;
+    background: rgba(255, 165, 31, 0.1);
+    box-shadow: 0 0 15px rgba(255, 165, 31, 0.2);
+}
+
+.audio-input:hover {
+    border-color: rgba(255, 165, 31, 0.5);
+    background: rgba(255, 165, 31, 0.08);
+}
+
+/* Input states for correct/incorrect answers */
+.audio-input.correct {
+    border-color: #4caf50;
+    background: rgba(76, 175, 80, 0.1);
+    box-shadow: 0 0 15px rgba(76, 175, 80, 0.2);
+}
+
+.audio-input.incorrect {
+    border-color: #f44336;
+    background: rgba(244, 67, 54, 0.1);
+    box-shadow: 0 0 15px rgba(244, 67, 54, 0.2);
+    animation: shake 0.5s ease-in-out;
+}
+
+/* Action buttons */
+.input-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.check-btn-audio, .reset-btn-audio {
+    background: rgba(255, 165, 31, 0.1);
+    border: 2px solid #ffa51f;
+    border-radius: 10px;
+    padding: 12px 24px;
+    color: #f5f5f5;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 120px;
+    backdrop-filter: blur(10px);
+}
+
+.check-btn-audio:hover, .reset-btn-audio:hover {
+    background: rgba(255, 165, 31, 0.2);
+    border-color: #ff8c00;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 165, 31, 0.3);
+}
+
+.check-btn-audio:active, .reset-btn-audio:active {
+    transform: translateY(0);
+}
+
+.reset-btn-audio {
+    background: rgba(245, 245, 245, 0.1);
+    border-color: rgba(245, 245, 245, 0.3);
+}
+
+.reset-btn-audio:hover {
+    background: rgba(245, 245, 245, 0.15);
+    border-color: rgba(245, 245, 245, 0.5);
+    box-shadow: 0 4px 15px rgba(245, 245, 245, 0.1);
+}
+
+/* Shake animation for incorrect answers */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .audio-container {
+        padding: 15px;
+        gap: 15px;
+    }
+    
+    .input-section {
+        gap: 12px;
+    }
+    
+    .audio-input {
+        padding: 12px;
+        font-size: 15px;
+    }
+    
+    .input-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .check-btn-audio, .reset-btn-audio {
+        width: 100%;
+        max-width: 200px;
+    }
+}
+
+@media (max-width: 480px) {
+    .audio-container {
+        padding: 10px;
+    }
+    
+    .audio-input {
+        padding: 10px;
+        font-size: 14px;
+    }
+    
+    .input-label {
+        font-size: 13px;
+    }
+    
+    .check-btn-audio, .reset-btn-audio {
+        padding: 10px 20px;
+        font-size: 13px;
+    }
+}

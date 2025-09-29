@@ -1,28 +1,40 @@
 <link
     rel="stylesheet"
-    href="{% load static %}{% static 'styles/lessons/content/audio_block.css' %}"
+    href="{% load static %}{% static 'styles/lessons/content/audio.css' %}"
 />
-Passed audio link: {{ content }}
+<script src="{% static 'scripts/lessons/content/audio.js' %}"></script>
+
+<script>
+    // Pass the audio URL to JavaScript
+    window.audioContentUrl = "{{ content.0 }}";
+</script>
+
 <div class="audio-container">
-    <div class="audio-player">
-        <button class="play-pause-btn" id="playPauseBtn">
-            <span class="play-icon">▶</span>
-            <span class="pause-icon" style="display: none">⏸</span>
-        </button>
+    <div class="audio-wrapper">
+        <div class="audio-player">
+            <button class="play-pause-btn" id="playPauseBtn">
+                <span class="play-icon">▶</span>
+                <span class="pause-icon" style="display: none">⏸</span>
+            </button>
 
-        <div class="audio-info">
-            <div class="audio-title">Sample Audio</div>
-            <div class="audio-duration">0:00 / 3:45</div>
-        </div>
+            <div class="audio-info">
+                <div class="audio-duration"></div>
+            </div>
 
-        <div class="progress-container">
-            <div class="progress-bar">
-                <div class="progress-fill"></div>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill-audio"></div>
+                </div>
             </div>
         </div>
-
-        <div class="volume-control">
-            <span class="volume-icon">🔊</span>
-        </div>
+        
+        <!-- Text content below audio player -->
+        {% if content.1 %}
+        <div class="audio-title">{{ content.1 }}</div>
+        {% endif %}
+        
+        {% if content.2 %}
+        <div class="audio-text">{{ content.2 }}</div>
+        {% endif %}
     </div>
 </div>
