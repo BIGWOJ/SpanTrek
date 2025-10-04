@@ -50,7 +50,7 @@ def country_view(request, country):
 
 
 @login_required
-def country_landmark_lesson(request, country, landmark, lesson_number=None):
+def country_landmark_lesson(request, country, landmark, lesson_number=None, exercise_number=None):
     # Get the current progress for this landmark from the user's profile
     landmark_progress = request.user.landmark_lessons_progress.get(landmark, 1)
 
@@ -69,19 +69,73 @@ def country_landmark_lesson(request, country, landmark, lesson_number=None):
         return render(request, 'lessons/lesson_intro.html', context)
 
     
-    # Otherwise, show the actual lesson page
+    # Get the lesson
     current_lesson = lesson_number
     lesson = Lesson.objects.filter(landmark=landmark, order=current_lesson).first()
+    
+    if not lesson:
+        # Handle case where lesson doesn't exist
+        context = {
+            'landmark': landmark,
+            'country': country,
+            'error': 'Lesson not found'
+        }
+        return render(request, 'lessons/lesson_base.html', context=context)
+    
+    # Get lesson sequence items as a list of tuples
+    lesson_sequence_items = list(lesson.lesson_sequence.items()) if lesson.lesson_sequence else []
+    total_exercises = len(lesson_sequence_items)
+    
+    # If exercise_number is not provided, redirect to first exercise
+    if exercise_number is None and lesson_sequence_items:
+        from django.shortcuts import redirect
+        return redirect('lessons:landmark_lesson_with_exercise', 
+                       country=country, landmark=landmark, 
+                       lesson_number=lesson_number, exercise_number=1)
+    
+    # If no exercises in lesson, show lesson overview
+    if not lesson_sequence_items:
+        context = {
+            'landmark': landmark,
+            'country': country,
+            'lesson': lesson,
+            'lesson_vocabularies': lesson.vocabularies.all(),
+            'lesson_sentences': lesson.sentences.all(),
+            'lesson_number': current_lesson,
+            'prev_lesson_number': current_lesson - 1 if current_lesson >= 1 else None,
+            'next_lesson_number': current_lesson + 1 if current_lesson < 3 else None,
+            'error': 'No exercises found in this lesson'
+        }
+        return render(request, 'lessons/lesson_base.html', context=context)
+    
+    # Validate exercise_number
+    if exercise_number < 1 or exercise_number > total_exercises:
+        from django.shortcuts import redirect
+        return redirect('lessons:landmark_lesson_with_exercise', 
+                       country=country, landmark=landmark, 
+                       lesson_number=lesson_number, exercise_number=1)
+    
+    # Get current exercise (convert to 0-based index)
+    current_exercise_index = exercise_number - 1
+    current_block, current_content = lesson_sequence_items[current_exercise_index]
 
     context = {
         'landmark': landmark,
         'country': country,
         'lesson': lesson,
-        'lesson_vocabularies': lesson.vocabularies.all() if lesson else [],
-        'lesson_sentences': lesson.sentences.all() if lesson else [],
+        'lesson_vocabularies': lesson.vocabularies.all(),
+        'lesson_sentences': lesson.sentences.all(),
         'lesson_number': current_lesson,
+        'exercise_number': exercise_number,
+        'total_exercises': total_exercises,
+        'current_block': current_block,
+        'current_content': current_content,
         'prev_lesson_number': current_lesson - 1 if current_lesson >= 1 else None,
         'next_lesson_number': current_lesson + 1 if current_lesson < 3 else None,
+        'prev_exercise_number': exercise_number - 1 if exercise_number > 1 else None,
+        'next_exercise_number': exercise_number + 1 if exercise_number < total_exercises else None,
+        'is_last_exercise': exercise_number == total_exercises,
+        'is_first_exercise': exercise_number == 1,
     }
     print([x for x in lesson.lesson_sequence.keys()] if lesson and hasattr(lesson, 'lesson_sequence') else [])
     return render(request, 'lessons/lesson_base.html', context=context)

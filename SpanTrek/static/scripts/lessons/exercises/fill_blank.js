@@ -46,6 +46,14 @@ document.addEventListener("DOMContentLoaded", function () {
             checkBtn.style.borderColor = "#f44336";
             checkBtn.style.color = "#f44336";
             checkBtn.textContent = "Try again";
+
+            // Reset button appearance after 2 seconds
+            setTimeout(() => {
+                checkBtn.style.background = "";
+                checkBtn.style.borderColor = "";
+                checkBtn.style.color = "";
+                checkBtn.textContent = "Check answer";
+            }, 2000);
         }
     });
 

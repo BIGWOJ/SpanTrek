@@ -3,3 +3,102 @@ body {
     color: #f0f0f0;
 }
 
+/* Exercise Navigation Styles */
+.exercise-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+}
+
+.exercise-progress {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    min-width: 200px;
+}
+
+.exercise-progress span {
+    font-size: 14px;
+    color: #f0f0f0;
+    font-weight: 500;
+}
+
+.exercise-progress-bar {
+    width: 200px;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.exercise-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #4CAF50, #66BB6A);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.nav-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.nav-button:hover {
+    background: linear-gradient(135deg, #0056b3, #004085);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+    color: white;
+    text-decoration: none;
+}
+
+.nav-button.prev-exercise,
+.nav-button.next-exercise {
+    background: linear-gradient(135deg, #28a745, #1e7e34);
+}
+
+.nav-button.prev-exercise:hover,
+.nav-button.next-exercise:hover {
+    background: linear-gradient(135deg, #1e7e34, #155724);
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+}
+
+.nav-button .arrow {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.exercise-info {
+    color: #66BB6A;
+    font-weight: 500;
+}
+
+/* Error message styles */
+.error-message {
+    text-align: center;
+    padding: 40px 20px;
+    background: rgba(220, 53, 69, 0.1);
+    border: 1px solid rgba(220, 53, 69, 0.3);
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+.error-message h2 {
+    color: #ff6b6b;
+    margin: 0;
+}
+

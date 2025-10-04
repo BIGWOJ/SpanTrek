@@ -21,7 +21,7 @@
             >
                 <span class="arrow">←</span> Previous Lesson
             </a>
-            {% endif %} {% if next_lesson_number %}
+            {% endif %} {% if next_lesson_number and is_last_exercise %}
             <a
                 href="{% url 'lessons:landmark_lesson_with_number' country=country landmark=landmark lesson_number=next_lesson_number %}"
                 class="nav-button next-lesson"
@@ -41,35 +41,81 @@
             <span class="landmark-name"> - {{ landmark|title }},</span>
             <span class="lesson-number">lesson {{ lesson_number }}</span>
         </div>
-        
-        <!-- Main Lesson Content -->
+
+        <!-- Exercise Navigation -->
+        {% if total_exercises %}
+        <div class="exercise-navigation">
+            {% if prev_exercise_number %}
+            <a
+                href="{% url 'lessons:landmark_lesson_with_exercise' country=country landmark=landmark lesson_number=lesson_number exercise_number=prev_exercise_number %}"
+                class="nav-button prev-exercise"
+            >
+                <span class="arrow">←</span> Previous Exercise
+            </a>
+            {% endif %}
+            
+            <div class="exercise-progress">
+                <span>Exercise {{ exercise_number }} of {{ total_exercises }}</span>
+                <div class="exercise-progress-bar">
+                    {% widthratio exercise_number total_exercises 100 as progress_percentage %}
+                    <div class="exercise-progress-fill" style="width: {{ progress_percentage }}%"></div>
+                </div>
+            </div>
+            
+            {% if next_exercise_number %}
+            <a
+                href="{% url 'lessons:landmark_lesson_with_exercise' country=country landmark=landmark lesson_number=lesson_number exercise_number=next_exercise_number %}"
+                class="nav-button next-exercise"
+            >
+                Next Exercise <span class="arrow">→</span>
+            </a>
+            {% elif next_lesson_number %}
+            <a
+                href="{% url 'lessons:landmark_lesson_with_number' country=country landmark=landmark lesson_number=next_lesson_number %}"
+                class="nav-button next-lesson"
+            >
+                Complete Lesson <span class="arrow">→</span>
+            </a>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <!-- Main Exercise Content -->
         <div class="lesson-content">
-            {% for block, content in lesson.lesson_sequence.items %}
+            {% if current_block and current_content %}
             <div class="single-content">
-                {% if block == "audio" %}
-                    {% include 'lessons/content/audio.html' with content=content %}
-                {% elif block == "image" %}
-                    {% include 'lessons/content/image.html' with content=content %}
-                {% elif block == "text" %}
-                    {% include 'lessons/content/text.html' with content=content %}
-                {% elif block == "input_field" %}
-                    {% include 'lessons/exercises/input_field.html' with content=content %}
-                {% elif block == "fill_blank" %}
-                    {% include 'lessons/exercises/fill_blank.html' with content=content %}
-                {% elif block == "match" %}
-                    {% include 'lessons/exercises/match.html' with content=content %}
-                {% elif block == "single_choice" %}
-                    {% include 'lessons/exercises/single_choice.html' with content=content %}
-                {% elif block == "multiple_choice" %}
-                    {% include 'lessons/exercises/multiple_choice.html' with content=content %}
-                {% elif block == "audio_input" %}
-                    {% include 'lessons/exercises/audio_input.html' with content=content %}
+                {% if current_block == "audio" %}
+                    {% include 'lessons/content/audio.html' with content=current_content %}
+                {% elif current_block == "image" %}
+                    {% include 'lessons/content/image.html' with content=current_content %}
+                {% elif current_block == "text" %}
+                    {% include 'lessons/content/text.html' with content=current_content %}
+                {% elif current_block == "input_field" %}
+                    {% include 'lessons/exercises/input_field.html' with content=current_content %}
+                {% elif current_block == "translate_input_field" %}
+                    {% include 'lessons/exercises/translate_input_field.html' with content=current_content %}
+                {% elif current_block == "fill_blank" %}
+                    {% include 'lessons/exercises/fill_blank.html' with content=current_content %}
+                {% elif current_block == "match" %}
+                    {% include 'lessons/exercises/match.html' with content=current_content %}
+                {% elif current_block == "single_choice" %}
+                    {% include 'lessons/exercises/single_choice.html' with content=current_content %}
+                {% elif current_block == "multiple_choice" %}
+                    {% include 'lessons/exercises/multiple_choice.html' with content=current_content %}
                 {% else %}
-                    <!-- Unknown block type: {{ block }} -->
-                    <div class="error-block">Unknown content type: {{ block }}</div>
+                    <!-- Unknown block type: {{ current_block }} -->
+                    <div class="error-block">Unknown content type: {{ current_block }}</div>
                 {% endif %}
             </div>
-            {% endfor %}
+            {% elif error %}
+            <div class="error-message">
+                <h2>{{ error }}</h2>
+            </div>
+            {% else %}
+            <div class="error-message">
+                <h2>No exercise content available</h2>
+            </div>
+            {% endif %}
         </div>
     </div>
 </div>
