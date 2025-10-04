@@ -8,8 +8,8 @@
 
 <div class="progress-bar-container">
     <span class="progress-bar-info">
-        {{ user_country_progress }} / {{ country_lessons_count }} lessons
-        completed
+        {{ progress_bar_progress }} / {{ progress_bar_max }} 
+        {{ progress_bar_optional_text|default:"lessons completed"}}
     </span>
     <div class="progress-bar">
         <div class="progress-fill"></div>

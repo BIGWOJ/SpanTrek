@@ -31,7 +31,7 @@
             {% endif %}
         </div>
 
-        {% include 'lessons/progress_bar.html' %}
+        {% include 'lessons/progress_bar.html' with progress_bar_progress=current_lesson_progress progress_bar_max=total_exercises progress_bar_optional_text=" " %}
 
         <h1 class="lesson-title">
             {{lesson.title}}
@@ -50,12 +50,11 @@
                 href="{% url 'lessons:landmark_lesson_with_exercise' country=country landmark=landmark lesson_number=lesson_number exercise_number=prev_exercise_number %}"
                 class="nav-button prev-exercise"
             >
-                <span class="arrow">←</span> Previous Exercise
+                <span class="arrow">←</span> Back
             </a>
             {% endif %}
             
             <div class="exercise-progress">
-                <span>Exercise {{ exercise_number }} of {{ total_exercises }}</span>
                 <div class="exercise-progress-bar">
                     {% widthratio exercise_number total_exercises 100 as progress_percentage %}
                     <div class="exercise-progress-fill" style="width: {{ progress_percentage }}%"></div>
@@ -67,11 +66,11 @@
                 href="{% url 'lessons:landmark_lesson_with_exercise' country=country landmark=landmark lesson_number=lesson_number exercise_number=next_exercise_number %}"
                 class="nav-button next-exercise"
             >
-                Next Exercise <span class="arrow">→</span>
+                Next<span class="arrow">→</span>
             </a>
             {% elif next_lesson_number %}
             <a
-                href="{% url 'lessons:landmark_lesson_with_number' country=country landmark=landmark lesson_number=next_lesson_number %}"
+                href="{% url 'lessons:lesson_complete' country=country landmark=landmark lesson_number=lesson_number %}"
                 class="nav-button next-lesson"
             >
                 Complete Lesson <span class="arrow">→</span>

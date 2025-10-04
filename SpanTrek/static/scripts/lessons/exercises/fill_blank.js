@@ -3,6 +3,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const resetBtn = document.querySelector(".reset-btn-fill");
     const blankInputs = document.querySelectorAll(".blank-input");
 
+    // Set correct names for input fields
+    blankInputs.forEach((input, index) => {
+        input.name = `answer_${index + 1}`;
+    });
+
     // Check answers functionality
     checkBtn.addEventListener("click", function () {
         let userAnswered = false;

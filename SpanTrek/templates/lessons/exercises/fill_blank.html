@@ -18,24 +18,30 @@
         <div class="exercise-content">
             <div class="sentence-block">
                 <p class="exercise-text">
-                    {% for block in content %} {% if block == block|upper %}
-                    <!-- This is a correct answer - create an input field -->
-                    <input
-                        type="text"
-                        class="blank-input"
-                        placeholder="..........."
-                        data-answer="{{ block|lower }}"
-                    />
-                    {% else %}
-                    <!-- This is regular text - display as is -->
-                    {{ block }} {% endif %} {% endfor %}
-                </p>
+                    <form method="POST" action="">
+                    {% csrf_token %}
+                    {% for block in content %} 
+                        {% if block == block|upper %}
+                        <!-- This is a correct answer - create an input field -->
+                        <input
+                            type="text"
+                            class="blank-input"
+                            placeholder="..........."
+                            data-answer="{{ block|lower }}"
+                        />
+                        {% else %}
+                        <!-- This is regular text - display as is -->
+                        {{ block }} 
+                        {% endif %} 
+                    {% endfor %}
+                    </p>
+                </div>
             </div>
-        </div>
-
-        <div class="exercise-actions">
-            <button class="check-btn-fill">Check answer</button>
-            <button class="reset-btn-fill">Reset</button>
-        </div>
+            
+            <div class="exercise-actions">
+                <input type='submit' class="check-btn-fill" value="Check answer"></input>
+                <button class="reset-btn-fill">Reset</button>
+            </div>
+        </form>
     </div>
 </div>

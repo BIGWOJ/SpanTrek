@@ -5,8 +5,8 @@ from .models import Lesson, Country
 
 @login_required
 def world_map(request):
-    user_country_progress = request.user.country_lessons_progress
-    user_progress = sum(user_country_progress.values())
+    progress_bar_progress = request.user.country_lessons_progress
+    user_progress = sum(progress_bar_progress.values())
     user_countries_progress = request.user.country_lessons_progress
     all_lessons_count = Lesson.objects.count()
 
@@ -24,8 +24,8 @@ def world_map(request):
         country_completion_status[country_name] = (completed == total_lessons and total_lessons > 0)
 
     context = {
-        'user_progress': user_progress,
-        'all_lessons_count': all_lessons_count,
+        'progress_bar_progress': user_progress,
+        'progress_bar_max': all_lessons_count,
         'user_countries_progress': user_countries_progress,
         'countries_lessons_dict': countries_lessons_dict,
         'country_completion_status': country_completion_status,
@@ -41,9 +41,9 @@ def country_view(request, country):
     country_lessons_count = Lesson.objects.filter(country=country_obj).count() if country_obj else 0
     user_country_progress = request.user.country_lessons_progress.get(country, 0)
     context = {
-        'country_lessons_count': country_lessons_count,
+        'progress_bar_max': country_lessons_count,
         'country': country,
-        'user_country_progress': user_country_progress,
+        'progress_bar_progress': user_country_progress,
     }
 
     return render(request, template_name, context)
@@ -53,8 +53,12 @@ def country_view(request, country):
 def country_landmark_lesson(request, country, landmark, lesson_number=None, exercise_number=None):
     # Get the current progress for this landmark from the user's profile
     landmark_progress = request.user.landmark_lessons_progress.get(landmark, 1)
-
     user_landmark_progress = request.user.landmark_lessons_progress.get(landmark, 0)
+    
+    current_lesson_progress = 0
+    if request.method == 'POST':
+        check_exercise_done(request)
+    
     
     # If lesson_number is not provided, show intro page first
     if lesson_number is None:
@@ -127,6 +131,8 @@ def country_landmark_lesson(request, country, landmark, lesson_number=None, exer
         'lesson_sentences': lesson.sentences.all(),
         'lesson_number': current_lesson,
         'exercise_number': exercise_number,
+        'exercise_done': False,
+        'current_lesson_progress': current_lesson_progress,
         'total_exercises': total_exercises,
         'current_block': current_block,
         'current_content': current_content,
@@ -137,7 +143,39 @@ def country_landmark_lesson(request, country, landmark, lesson_number=None, exer
         'is_last_exercise': exercise_number == total_exercises,
         'is_first_exercise': exercise_number == 1,
     }
-    print([x for x in lesson.lesson_sequence.keys()] if lesson and hasattr(lesson, 'lesson_sequence') else [])
+
     return render(request, 'lessons/lesson_base.html', context=context)
 
+
+@login_required
+def lesson_complete(request, country, landmark, lesson_number):
+    """View for lesson completion page with congratulations message"""
+    # Get the completed lesson
+    lesson = Lesson.objects.filter(landmark=landmark, order=lesson_number).first()
+    
+    if not lesson:
+        # If lesson doesn't exist, redirect back to landmark
+        from django.shortcuts import redirect
+        return redirect('lessons:country_landmark_lesson', country=country, landmark=landmark)
+    
+    # Check if there's a next lesson
+    next_lesson = Lesson.objects.filter(landmark=landmark, order=lesson_number + 1).first()
+    
+    context = {
+        'landmark': landmark,
+        'country': country,
+        'lesson': lesson,
+        'lesson_number': lesson_number,
+        'next_lesson_number': lesson_number + 1 if next_lesson else None,
+        'has_next_lesson': next_lesson is not None,
+        'total_exercises': len(list(lesson.lesson_sequence.items())) if lesson.lesson_sequence else 0,
+    }
+    
+    return render(request, 'lessons/lesson_complete.html', context=context)
+
+
+@login_required
+def check_exercise_done(request):
+    print(request.POST.get('answer_1'))
+    print(request.POST.get('answer_2'))
 
