@@ -1,5 +1,6 @@
 {% extends 'base/base.html' %} 
 {% load static %}
+{% block content %}
 
 <link
     rel="stylesheet"
@@ -7,7 +8,6 @@
     href="{% static 'styles/lessons/lesson_base.css' %}"
 />
 
-{% block content %}
 <div class="lesson-container">
     <!-- Progress Bar -->
     <div class="lesson-header">
@@ -21,25 +21,13 @@
             >
                 <span class="arrow">←</span> Previous Lesson
             </a>
-            {% endif %} {% if next_lesson_number and is_last_exercise %}
-            <a
-                href="{% url 'lessons:landmark_lesson_with_number' country=country landmark=landmark lesson_number=next_lesson_number %}"
-                class="nav-button next-lesson"
-            >
-                Next Lesson <span class="arrow">→</span>
-            </a>
-            {% endif %}
+            {% endif %} 
         </div>
 
         {% include 'lessons/progress_bar.html' with progress_bar_progress=current_lesson_progress progress_bar_max=total_exercises progress_bar_optional_text=" " %}
 
-        <h1 class="lesson-title">
-            {{lesson.title}}
-        </h1>
         <div class="lesson-meta">
-            <span class="country-name"> {{ country|title }}</span>
-            <span class="landmark-name"> - {{ landmark|title }},</span>
-            <span class="lesson-number">lesson {{ lesson_number }}</span>
+            <span class="lesson-details">{{ lesson.title }} &bull; {{ country|title }} &bull; {{ landmark|title }} &bull; lesson {{ lesson_number }}</span>
         </div>
 
         <!-- Exercise Navigation -->
@@ -53,18 +41,15 @@
                 <span class="arrow">←</span> Back
             </a>
             {% endif %}
-            
-            <div class="exercise-progress">
-                <div class="exercise-progress-bar">
-                    {% widthratio exercise_number total_exercises 100 as progress_percentage %}
-                    <div class="exercise-progress-fill" style="width: {{ progress_percentage }}%"></div>
-                </div>
-            </div>
-            
+                        
             {% if next_exercise_number %}
             <a
                 href="{% url 'lessons:landmark_lesson_with_exercise' country=country landmark=landmark lesson_number=lesson_number exercise_number=next_exercise_number %}"
                 class="nav-button next-exercise"
+                id="next-exercise-btn"
+                {% if current_block == "fill_blank" or current_block == "input_field" or current_block == "translate_input_field" or current_block == "match" or current_block == "single_choice" or current_block == "multiple_choice" %}
+                style="display: none;"
+                {% endif %}
             >
                 Next<span class="arrow">→</span>
             </a>
@@ -72,8 +57,12 @@
             <a
                 href="{% url 'lessons:lesson_complete' country=country landmark=landmark lesson_number=lesson_number %}"
                 class="nav-button next-lesson"
+                id="complete-lesson-btn"
+                {% if current_block == "fill_blank" or current_block == "input_field" or current_block == "translate_input_field" or current_block == "match" or current_block == "single_choice" or current_block == "multiple_choice" %}
+                style="display: none;"
+                {% endif %}
             >
-                Complete Lesson <span class="arrow">→</span>
+                Complete lesson <span class="arrow">→</span>
             </a>
             {% endif %}
         </div>

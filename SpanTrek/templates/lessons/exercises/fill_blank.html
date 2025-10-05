@@ -18,7 +18,7 @@
         <div class="exercise-content">
             <div class="sentence-block">
                 <p class="exercise-text">
-                    <form method="POST" action="">
+                    <form method="POST" action="{% url 'lessons:check_exercise' %}">
                     {% csrf_token %}
                     {% for block in content %} 
                         {% if block == block|upper %}
@@ -28,6 +28,7 @@
                             class="blank-input"
                             placeholder="..........."
                             data-answer="{{ block|lower }}"
+                            name="answer_temp"
                         />
                         {% else %}
                         <!-- This is regular text - display as is -->
@@ -40,8 +41,8 @@
             
             <div class="exercise-actions">
                 <input type='submit' class="check-btn-fill" value="Check answer"></input>
-                <button class="reset-btn-fill">Reset</button>
+                </form>
+                <button type="button" class="reset-btn-fill">Reset</button>
             </div>
-        </form>
     </div>
 </div>

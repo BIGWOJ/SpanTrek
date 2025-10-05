@@ -46,7 +46,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // Play/Pause button functionality
     playPauseBtn.addEventListener("click", function () {
         if (!audio) {
-            console.log("No audio file loaded");
             return;
         }
 

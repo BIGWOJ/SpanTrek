@@ -43,6 +43,14 @@ document.addEventListener("DOMContentLoaded", function () {
         // Don't allow clicking if already answered
         if (isAnswered) return;
 
+        // Hide next button when user starts making new selections
+        const nextBtn =
+            document.getElementById("next-exercise-btn") ||
+            document.getElementById("complete-lesson-btn");
+        if (nextBtn) {
+            nextBtn.style.display = "none";
+        }
+
         // Toggle selection for multiple choice
         if (selectedChoices.has(index)) {
             // Deselect
@@ -101,6 +109,19 @@ document.addEventListener("DOMContentLoaded", function () {
             checkBtn.style.borderColor = "#4caf50";
             checkBtn.style.color = "#4caf50";
             checkBtn.textContent = "Perfect!";
+
+            // Show the next button when exercise is completed successfully
+            const nextBtn =
+                document.getElementById("next-exercise-btn") ||
+                document.getElementById("complete-lesson-btn");
+            if (nextBtn) {
+                nextBtn.style.display = "inline-block";
+                nextBtn.style.opacity = "0";
+                nextBtn.style.transition = "opacity 0.5s ease-in-out";
+                setTimeout(() => {
+                    nextBtn.style.opacity = "1";
+                }, 100);
+            }
         } else {
             checkBtn.style.background = "rgba(244, 67, 54, 0.2)";
             checkBtn.style.borderColor = "#f44336";
@@ -138,6 +159,14 @@ document.addEventListener("DOMContentLoaded", function () {
         checkBtn.style.borderColor = "";
         checkBtn.style.color = "";
         checkBtn.textContent = "Check answer";
+
+        // Hide the next button when resetting
+        const nextBtn =
+            document.getElementById("next-exercise-btn") ||
+            document.getElementById("complete-lesson-btn");
+        if (nextBtn) {
+            nextBtn.style.display = "none";
+        }
 
         setTimeout(() => {
             resetBtn.textContent = "Reset";

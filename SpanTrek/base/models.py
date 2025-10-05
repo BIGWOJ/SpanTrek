@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
 from django.utils.text import slugify
 from datetime import date
+from lessons.models import Lesson
 
 class User(AbstractUser):
     username = models.CharField(max_length=150, unique=True, blank=False, null=False)
@@ -12,7 +13,8 @@ class User(AbstractUser):
     level = models.IntegerField(default=1)
     experience = models.IntegerField(default=0)
     adventure_progress = models.IntegerField(default=0)
-    words_learned = models.IntegerField(default=0)
+    words_learned = models.JSONField(default=list, blank=True) # Store list of learned words
+    sentences_learned = models.JSONField(default=list, blank=True) # Store list of learned sentences
     activity_days = models.JSONField(default=list, blank=True)  # Store list of active dates as strings
     last_activity_date = models.DateField(null=True, blank=True)  # Track last activity for streak calculation 
 
@@ -26,6 +28,51 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.username
+
+    def update_progress_after_lesson(self, landmark, lesson_number):
+        if self.is_authenticated:
+            if self.last_activity_date != date.today():
+                self.mark_activity_today()
+                self.calculate_streak()
+            
+            if self.landmark_lessons_progress.get(landmark, 0) >= lesson_number:
+                return  # No update needed if lesson already completed or in progress
+            self.experience += 50
+            self.adventure_progress += 1
+
+            lesson = Lesson.objects.filter(landmark=landmark, order=lesson_number).first()
+
+            # Add new words to user's learned words list
+            lesson_words = set(vocab.word for vocab in lesson.vocabularies.all())
+            # Ensure words_learned is a list (safety check)
+            if not isinstance(self.words_learned, list):
+                self.words_learned = []
+            new_words = lesson_words - set(self.words_learned)
+            self.words_learned.extend(new_words)
+
+            # Add new sentences to user's learned sentences list
+            lesson_sentences = set(sentence.sentence for sentence in lesson.sentences.all()) 
+            # Ensure sentences_learned is a list (safety check)
+            if not isinstance(self.sentences_learned, list):
+                self.sentences_learned = []
+            new_sentences = lesson_sentences - set(self.sentences_learned)
+            self.sentences_learned.extend(new_sentences)
+
+            # Update country progress (increment by 1, but don't exceed total lessons)
+            country_lessons_counter = Lesson.objects.filter(country=lesson.country).count()
+
+            current_progress = self.country_lessons_progress.get(lesson.country.name, 0)
+            self.country_lessons_progress[lesson.country.name] = min(
+                current_progress + 1, 
+                country_lessons_counter
+            )
+
+            self.landmark_lessons_progress[landmark] = max(
+                self.landmark_lessons_progress.get(landmark, 0), 
+                lesson_number
+            )
+
+            self.save()
 
     def has_achievement(self, achievement_name):
         """Check if user has earned a specific achievement by name"""
@@ -57,12 +104,10 @@ class User(AbstractUser):
         if today_str not in self.activity_days:
             self.activity_days.append(today_str)
             self.last_activity_date = today
-            self._calculate_streak()
+            self.calculate_streak()
             self.save()
-            return True
-        return False
 
-    def _calculate_streak(self):
+    def calculate_streak(self):
         """Calculate current streak based on activity_days"""
         if not self.activity_days:
             self.days_streak = 0

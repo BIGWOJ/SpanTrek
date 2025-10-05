@@ -23,6 +23,19 @@ document.addEventListener("DOMContentLoaded", function () {
             checkBtn.style.borderColor = "#4caf50";
             checkBtn.style.color = "#4caf50";
             checkBtn.textContent = "Perfect!";
+
+            // Show the next button when exercise is completed successfully
+            const nextBtn =
+                document.getElementById("next-exercise-btn") ||
+                document.getElementById("complete-lesson-btn");
+            if (nextBtn) {
+                nextBtn.style.display = "inline-block";
+                nextBtn.style.opacity = "0";
+                nextBtn.style.transition = "opacity 0.5s ease-in-out";
+                setTimeout(() => {
+                    nextBtn.style.opacity = "1";
+                }, 100);
+            }
         } else {
             userInput.classList.add("incorrect");
             checkBtn.style.background = "rgba(244, 67, 54, 0.2)";
@@ -54,6 +67,14 @@ document.addEventListener("DOMContentLoaded", function () {
         checkBtn.style.color = "";
         checkBtn.textContent = "Check answer";
 
+        // Hide the next button when resetting
+        const nextBtn =
+            document.getElementById("next-exercise-btn") ||
+            document.getElementById("complete-lesson-btn");
+        if (nextBtn) {
+            nextBtn.style.display = "none";
+        }
+
         // Add brief highlight effect
         userInput.style.transition = "all 0.3s ease";
         userInput.style.backgroundColor = "rgba(255, 165, 31, 0.2)";
@@ -69,6 +90,14 @@ document.addEventListener("DOMContentLoaded", function () {
     // Clear states when user starts typing
     userInput.addEventListener("input", function () {
         this.classList.remove("correct", "incorrect");
+
+        // Hide next button when user starts typing again
+        const nextBtn =
+            document.getElementById("next-exercise-btn") ||
+            document.getElementById("complete-lesson-btn");
+        if (nextBtn) {
+            nextBtn.style.display = "none";
+        }
     });
 
     // Keyboard navigation

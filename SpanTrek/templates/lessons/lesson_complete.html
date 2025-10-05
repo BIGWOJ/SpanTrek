@@ -1,4 +1,4 @@
-{% extends 'base/base.html' %} {% load static %}
+{% extends 'base/base.html' %} {% load static %} {% block content %}
 
 <link
     rel="stylesheet"
@@ -6,7 +6,6 @@
     href="{% static 'styles/lessons/lesson_complete.css' %}"
 />
 
-{% block content %}
 <div class="lesson-complete-container">
     <div class="congratulations-card">
         <div class="celebration-icon">🎉</div>
@@ -21,7 +20,7 @@
         <div class="lesson-stats">
             <div class="stat-item">
                 <span class="stat-number">{{ total_exercises }}</span>
-                <span class="stat-label">Exercises Completed</span>
+                <span class="stat-label">Exercises completed</span>
             </div>
         </div>
 
@@ -39,7 +38,7 @@
                 href="{% url 'lessons:landmark_lesson_with_number' country=country landmark=landmark lesson_number=next_lesson_number %}"
                 class="btn btn-primary next-lesson-btn"
             >
-                Next Lesson <span class="arrow">→</span>
+                Next lesson <span class="arrow">→</span>
             </a>
             {% else %}
             <div class="all-lessons-complete">
@@ -48,16 +47,16 @@
                     href="{% url 'lessons:country_map' country=country %}"
                     class="btn btn-secondary back-to-map-btn"
                 >
-                    Back to {{ country|title }} Map
+                    Back to {{ country|title }} map
                 </a>
             </div>
             {% endif %}
-            <br>
+            <br />
             <a
                 href="{% url 'lessons:country_map' country=country %}"
                 class="btn btn-outline back-to-map-link"
             >
-                Back to Map
+                Back to {{country|title}} map
             </a>
         </div>
     </div>

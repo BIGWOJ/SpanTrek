@@ -12,7 +12,6 @@ def home_page(request):
     
     return render(request, 'base/home.html')
 
-
 def login_page(request):
     page = 'login'
     # If user is already logged in, redirect to home page from login page

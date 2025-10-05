@@ -34,6 +34,15 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
+        // Hide next button when user starts making new selections
+        const nextBtn =
+            document.getElementById("next-exercise-btn") ||
+            document.getElementById("complete-lesson-btn");
+        if (nextBtn && selectedItems.length === 0) {
+            // Only hide on first selection to avoid hiding during matching process
+            nextBtn.style.display = "none";
+        }
+
         // Remove any previous incorrect styling
         item.classList.remove("incorrect");
 
@@ -83,6 +92,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Store the match
             matches.push({ item1, item2, correct: true });
+
+            // Check if all items are matched
+            const allMatched = Array.from(matchItems).every((item) =>
+                item.classList.contains("matched")
+            );
+
+            if (allMatched) {
+                // Show the next button when all matches are completed
+                const nextBtn =
+                    document.getElementById("next-exercise-btn") ||
+                    document.getElementById("complete-lesson-btn");
+                if (nextBtn) {
+                    nextBtn.style.display = "inline-block";
+                    nextBtn.style.opacity = "0";
+                    nextBtn.style.transition = "opacity 0.5s ease-in-out";
+                    setTimeout(() => {
+                        nextBtn.style.opacity = "1";
+                    }, 500);
+                }
+            }
         } else {
             // Items don't match - show briefly then deselect
             item1.classList.add("incorrect");

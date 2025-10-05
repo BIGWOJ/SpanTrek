@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.views.decorators.http import require_http_methods
 from .models import Lesson, Country
 
 
@@ -57,8 +59,8 @@ def country_landmark_lesson(request, country, landmark, lesson_number=None, exer
     
     current_lesson_progress = 0
     if request.method == 'POST':
-        check_exercise_done(request)
-    
+        output = check_exercise_done(request)
+        print(output)
     
     # If lesson_number is not provided, show intro page first
     if lesson_number is None:
@@ -161,6 +163,8 @@ def lesson_complete(request, country, landmark, lesson_number):
     # Check if there's a next lesson
     next_lesson = Lesson.objects.filter(landmark=landmark, order=lesson_number + 1).first()
     
+    request.user.update_progress_after_lesson(landmark, lesson_number)
+    
     context = {
         'landmark': landmark,
         'country': country,
@@ -176,6 +180,43 @@ def lesson_complete(request, country, landmark, lesson_number):
 
 @login_required
 def check_exercise_done(request):
-    print(request.POST.get('answer_1'))
-    print(request.POST.get('answer_2'))
+    """Handle exercise completion - supports both AJAX and regular form submission"""
+    if request.method == 'POST':
+        # Get all answer fields
+        answers = {}
+        for key, value in request.POST.items():
+            if key.startswith('answer_'):
+                answers[key] = value.strip()
+        
+        # Get additional data
+        exercise_completed = request.POST.get('exercise_completed', 'false').lower() == 'true'
+
+        # Process the answers (validate, save progress, etc.)
+        # print(f"Received answers: {answers}")
+        # print(f"Exercise completed: {exercise_completed}")
+        
+        # Here you can add logic to:
+        # - Validate answers against correct answers
+        # - Update user progress
+        # - Save exercise attempt to database
+        # - Calculate points/experience
+        
+        # Check if this is an AJAX request
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            # Return JSON response for AJAX
+            response_data = {
+                'success': True,
+                'message': 'Exercise completed successfully',
+                'exercise_completed': exercise_completed,
+                'answers_received': len(answers)
+            }
+            return JsonResponse(response_data)
+        else:
+            # Handle regular form submission (redirect or render)
+            # You might want to redirect to next exercise or show results
+            from django.shortcuts import redirect
+            return redirect('lessons:world_map')  # or wherever you want to redirect
+
+    # Handle GET request
+    return JsonResponse({'error': 'Method not allowed'}, status=405)
 
