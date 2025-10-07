@@ -1,10 +1,6 @@
-{%extends 'base/base.html'%} {%load static%} {% block styles %} 
+{%extends 'base/base.html'%} {%load static%} {% block styles %}
 {{ block.super }}
-<link
-    rel="stylesheet"
-    type="text/css"
-    href="{% static 'styles/base/home.css' %}"
-/>
+<link rel="stylesheet" type="text/css" href="{% static 'styles/base/home.css' %}" />
 <script src="{% static 'scripts/base/home.js' %}"></script>
 {% endblock styles %} {%block content%}
 
@@ -43,9 +39,7 @@
                 <div class="progress-bar">
                     <div class="progress-fill" style="width: 65%"></div>
                 </div>
-                <span class="next-level"
-                    >XXX levels to //next level name//</span
-                >
+                <span class="next-level">XXX levels to //next level name//</span>
             </div>
         </div>
     </div>
@@ -59,9 +53,8 @@
                     <h4>Main adventure</h4>
                     <div class="lesson-progress">
                         <div class="stars">⭐⭐☆</div>
-                        <span class="completion"
-                            >{{ user.adventure_progress }}/XXX completed</span
-                        >
+                        <span class="completion">{{ user.adventure_progress }} / {{ all_lessons_count }}
+                            completed</span>
                     </div>
                     <span class="continue-btn">Continue adventure</span>
                 </div>
@@ -72,7 +65,7 @@
     <div class="review-section">
         <h2 class="section-title">Review & practice</h2>
         <div class="lessons-grid">
-            <div class="lesson-card completed">
+            <div class="lesson-card">
                 <div class="lesson-icon">🎲</div>
                 <h4>Random</h4>
                 <div class="lesson-progress">

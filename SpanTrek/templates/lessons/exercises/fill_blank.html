@@ -1,9 +1,6 @@
 {% load static %}
 
-<link
-    rel="stylesheet"
-    href="{% static 'styles/lessons/exercises/fill_blank.css' %}"
-/>
+<link rel="stylesheet" href="{% static 'styles/lessons/exercises/fill_blank.css' %}" />
 <script src="{% static 'scripts/lessons/exercises/fill_blank.js' %}"></script>
 
 <div class="exercise-container">
@@ -18,31 +15,26 @@
         <div class="exercise-content">
             <div class="sentence-block">
                 <p class="exercise-text">
-                    <form method="POST" action="{% url 'lessons:check_exercise' %}">
+                <form method="POST">
                     {% csrf_token %}
-                    {% for block in content %} 
-                        {% if block == block|upper %}
-                        <!-- This is a correct answer - create an input field -->
-                        <input
-                            type="text"
-                            class="blank-input"
-                            placeholder="..........."
-                            data-answer="{{ block|lower }}"
-                            name="answer_temp"
-                        />
-                        {% else %}
-                        <!-- This is regular text - display as is -->
-                        {{ block }} 
-                        {% endif %} 
+                    {% for block in content %}
+                    {% if block == block|upper %}
+                    <!-- This is a correct answer - create an input field -->
+                    <input type="text" class="blank-input" placeholder="..........." data-answer="{{ block|lower }}"
+                        name="answer_temp" />
+                    {% else %}
+                    <!-- This is regular text - display as is -->
+                    {{ block }}
+                    {% endif %}
                     {% endfor %}
                     </p>
-                </div>
             </div>
-            
-            <div class="exercise-actions">
-                <input type='submit' class="check-btn-fill" value="Check answer"></input>
-                </form>
-                <button type="button" class="reset-btn-fill">Reset</button>
-            </div>
+        </div>
+
+        <div class="exercise-actions">
+            <input type="submit" class="check-btn-fill" value="Check answer"></input>
+            </form>
+            <button type="button" class="reset-btn-fill">Reset</button>
+        </div>
     </div>
 </div>

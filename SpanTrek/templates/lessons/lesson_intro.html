@@ -1,13 +1,17 @@
-{% extends 'lessons/lesson_base.html' %} {% block content %}
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'styles/lessons/lesson_intro.css' %}" />
+
+
 <div class="lesson-intro">
     {% include 'lessons/back_to_country_map.html' with country=country %}
     <h1>
-        {{lesson.country}} - {{lesson.landmark}}<br />
+        {{lesson.country | title}} - {{lesson.landmark | title}}<br />
         {{lesson.title}}
     </h1>
-    <a
-        href="{% url 'lessons:landmark_lesson_with_number' country=country landmark=landmark lesson_number=1 %}"
-        >Start lesson</a
-    >
+    <a href="{% url 'lessons:landmark_lesson_with_number' country=country landmark=landmark lesson_number=1 %}">Start
+        lesson</a>
 </div>
 {% endblock %}

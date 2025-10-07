@@ -12,10 +12,11 @@ body {
 }
 
 .exercise-navigation {
+    width: 60%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 20px 0;
+    margin: 20px auto;
     padding: 15px 20px;
     border-radius: 10px;
 }

@@ -9,22 +9,22 @@
 />
 
 <div class="lesson-container">
-    <!-- Progress Bar -->
     <div class="lesson-header">
         <!-- Navigation Buttons -->
         <div class="lesson-navigation">
             {% include 'lessons/back_to_country_map.html' with country=country %} 
             {% if prev_lesson_number %}
             <a
-                href="{% url 'lessons:landmark_lesson_with_number' country=country landmark=landmark lesson_number=prev_lesson_number %}"
-                class="nav-button prev-lesson"
+            href="{% url 'lessons:landmark_lesson_with_number' country=country landmark=landmark lesson_number=prev_lesson_number %}"
+            class="nav-button prev-lesson"
             >
-                <span class="arrow">←</span> Previous Lesson
-            </a>
-            {% endif %} 
-        </div>
-
-        {% include 'lessons/progress_bar.html' with progress_bar_progress=current_lesson_progress progress_bar_max=total_exercises progress_bar_optional_text=" " %}
+            <span class="arrow">←</span> Previous Lesson
+        </a>
+        {% endif %} 
+    </div>
+    
+        <!-- Progress Bar -->
+        {% include 'lessons/progress_bar.html' with progress_bar_progress=exercise_number progress_bar_max=total_exercises progress_bar_optional_text=" " %}
 
         <div class="lesson-meta">
             <span class="lesson-details">{{ lesson.title }} &bull; {{ country|title }} &bull; {{ landmark|title }} &bull; lesson {{ lesson_number }}</span>

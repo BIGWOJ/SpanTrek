@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .models import User
+from lessons.models import Lesson
 from .forms import My_User_Creation_Form
 from .services import AchievementService
 
@@ -10,7 +11,13 @@ def home_page(request):
     if not request.user.is_authenticated:
         return redirect('login_page')
     
-    return render(request, 'base/home.html')
+
+    all_lessons_count = Lesson.objects.count()
+
+    context = {
+        'all_lessons_count': all_lessons_count,
+    }
+    return render(request, 'base/home.html', context)
 
 def login_page(request):
     page = 'login'

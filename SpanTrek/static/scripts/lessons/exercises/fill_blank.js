@@ -87,11 +87,11 @@ document.addEventListener("DOMContentLoaded", function () {
     function sendAnswersToBackend(allCorrect) {
         const form = document.querySelector("form");
         const formData = new FormData(form);
-
+   
         // Add additional data
         formData.append("exercise_completed", allCorrect);
-        formData.append("score", calculateScore());
-
+        formData.append("current_lesson_progress", current_lesson_progress);
+        
         fetch(form.action || window.location.href, {
             method: "POST",
             body: formData,
@@ -99,17 +99,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 "X-Requested-With": "XMLHttpRequest", // Mark as AJAX request
             },
         });
-    }
-
-    // Function to calculate score
-    function calculateScore() {
-        const totalInputs = blankInputs.length;
-        const correctInputs = document.querySelectorAll(
-            ".blank-input.correct"
-        ).length;
-        return totalInputs > 0
-            ? Math.round((correctInputs / totalInputs) * 100)
-            : 0;
     }
 
     // Reset functionality

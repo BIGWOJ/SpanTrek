@@ -222,6 +222,10 @@ body > *:not(footer) {
     padding: 12px 25px;
 }
 
+.review-section * {
+    text-decoration: none;
+}
+
 .lessons-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);

@@ -5,7 +5,6 @@ app_name = 'lessons'
 
 urlpatterns = [
     path('world_map/', views.world_map, name='world_map'),
-    path('check_exercise/', views.check_exercise_done, name='check_exercise'),
     path('<str:country>/', views.country_view, name='country_map'),
     path('<str:country>/<str:landmark>/', views.country_landmark_lesson, name='country_landmark_lesson'),
     path('<str:country>/<str:landmark>/<int:lesson_number>/', views.country_landmark_lesson, name='landmark_lesson_with_number'),
