@@ -1,0 +1,21 @@
+{%extends 'base/base.html'%}
+{%load static%}
+{% block styles %}
+{{ block.super}}
+
+<link rel="stylesheet" type="text/css" href="{% static 'styles/practice/intro.css' %}" />
+
+{% endblock styles %}
+
+{%block content%}
+
+<div class="intro-container">
+
+    {{practice_set}}
+
+
+
+
+
+</div>
+{%endblock content%}

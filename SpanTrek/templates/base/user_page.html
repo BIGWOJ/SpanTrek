@@ -1,9 +1,5 @@
 {%extends 'base/base.html'%} {%load static%} {% block styles %} {{ block.super}}
-<link
-    rel="stylesheet"
-    type="text/css"
-    href="{% static 'styles/base/user_page.css' %}"
-/>
+<link rel="stylesheet" type="text/css" href="{% static 'styles/base/user_page.css' %}" />
 <script src="{% static 'scripts/base/user_page.js' %}"></script>
 {% endblock styles %} {%block content%}
 
@@ -12,9 +8,7 @@
         <div class="profile-header">
             <div class="avatar-section">
                 <div class="avatar-circle">
-                    <span class="avatar-initial"
-                        >{{ user.username|first|upper }}</span
-                    >
+                    <span class="avatar-initial">{{ user.username|first|upper }}</span>
                 </div>
                 <div class="profile-info">
                     <h1 class="username">{{ user.username }}</h1>
@@ -32,14 +26,10 @@
                 <div class="xp-progress">
                     <span class="xp-text">{{ user.experience }} XP</span>
                     <div class="progress-bar">
-                        <div
-                            class="progress-fill"
-                            style="width: {{ progress_percentage }}%"
-                        ></div>
+                        <div class="progress-fill" style="width: {{ progress_percentage }}%"></div>
                     </div>
                     <span class="next-level">
-                        {{ xp_needed_next_lvl }} XP to level {{ user.level|add:1
-                        }}
+                        {{ xp_needed_next_lvl }} XP to level {{ user.level|add:1 }}
                     </span>
                 </div>
             </div>
@@ -60,7 +50,7 @@
             <div class="stat-card">
                 <div class="stat-icon">⚡</div>
                 <div class="stat-value">{{ user.days_streak }}</div>
-                <div class="stat-label">Current Streak</div>
+                <div class="stat-label">Current streak</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">🏆</div>
@@ -69,8 +59,8 @@
             </div>
             <div class="stat-card">
                 <div class="stat-icon">📚</div>
-                <div class="stat-value">{{ user.words_learned }}</div>
-                <div class="stat-label">Words Learned</div>
+                <div class="stat-value">{{ words_learned_count }}</div>
+                <div class="stat-label">Words learned</div>
             </div>
         </div>
     </div>
@@ -80,9 +70,7 @@
         <h2 class="section-title">Achievements</h2>
         <div class="achievements-grid">
             {% for achievement in achievements %}
-            <div
-                class="achievement-card {% if achievement.earned %}earned{% else %}locked{% endif %}"
-            >
+            <div class="achievement-card {% if achievement.earned %}earned{% else %}locked{% endif %}">
                 <div class="achievement-badge">
                     {{ achievement.achievement.icon }}
                 </div>
@@ -174,10 +162,7 @@
             <div class="settings-card">
                 <div class="settings-header">
                     <h3>Learning Preferences</h3>
-                    <button
-                        class="edit-btn"
-                        onclick="toggleEdit('preferences')"
-                    >
+                    <button class="edit-btn" onclick="toggleEdit('preferences')">
                         Edit
                     </button>
                 </div>
@@ -200,10 +185,7 @@
             <div class="settings-card">
                 <div class="settings-header">
                     <h3>Notifications</h3>
-                    <button
-                        class="edit-btn"
-                        onclick="toggleEdit('notifications')"
-                    >
+                    <button class="edit-btn" onclick="toggleEdit('notifications')">
                         Edit
                     </button>
                 </div>
@@ -211,40 +193,22 @@
                     <div class="toggle-row">
                         <label>Daily Reminders:</label>
                         <div class="toggle-switch">
-                            <input
-                                type="checkbox"
-                                id="daily-reminders"
-                                checked
-                            />
+                            <input type="checkbox" id="daily-reminders" checked />
                             <label for="daily-reminders" class="slider"></label>
                         </div>
                     </div>
                     <div class="toggle-row">
                         <label>Achievement Alerts:</label>
                         <div class="toggle-switch">
-                            <input
-                                type="checkbox"
-                                id="achievement-alerts"
-                                checked
-                            />
-                            <label
-                                for="achievement-alerts"
-                                class="slider"
-                            ></label>
+                            <input type="checkbox" id="achievement-alerts" checked />
+                            <label for="achievement-alerts" class="slider"></label>
                         </div>
                     </div>
                     <div class="toggle-row">
                         <label>Streak Reminders:</label>
                         <div class="toggle-switch">
-                            <input
-                                type="checkbox"
-                                id="streak-reminders"
-                                checked
-                            />
-                            <label
-                                for="streak-reminders"
-                                class="slider"
-                            ></label>
+                            <input type="checkbox" id="streak-reminders" checked />
+                            <label for="streak-reminders" class="slider"></label>
                         </div>
                     </div>
                 </div>
@@ -268,7 +232,7 @@
 
 <script>
     // Pass Django data to JavaScript
-    window.userActivityDays = {{ user.activity_days|safe }};
+    window.userActivityDays = {{ user.activity_days | safe }};
 </script>
 
 {%endblock content%}

@@ -1,0 +1,201 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.intro-container {
+    height: calc(100vh - 160px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.practice-intro-wrapper {
+    background: #2a2a2a;
+    border: 2px solid #ffa51f;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 12px 40px rgba(255, 165, 31, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    max-width: 500px;
+    width: 100%;
+    color: #f5f5f5;
+    text-align: center;
+}
+
+.practice-intro-header {
+    width: 100%;
+    position: relative;
+}
+
+.back-to-home-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    color: #f5f5f5;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+    background: rgba(255, 165, 31, 0.1);
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.back-to-home-btn:hover {
+    color: white;
+    text-decoration: none;
+    background: rgba(255, 165, 31, 0.2);
+    border-color: #ffa51f;
+    box-shadow: 0 4px 12px rgba(255, 165, 31, 0.2);
+    transform: translateY(-1px);
+}
+
+.back-arrow {
+    font-size: 16px;
+    font-weight: bold;
+    transition: transform 0.3s ease;
+}
+
+.back-to-home-btn:hover .back-arrow {
+    transform: translateX(-2px);
+}
+
+.back-text {
+    font-weight: 500;
+}
+
+.practice-intro-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #ffa51f;
+    margin-bottom: 12px;
+    margin-top: 0;
+    text-shadow: 0 2px 10px rgba(255, 165, 31, 0.3);
+}
+
+.practice-intro-description {
+    font-size: 18px;
+    color: #f5f5f5;
+    margin-bottom: 0;
+    line-height: 1.5;
+    opacity: 0.9;
+}
+
+.practice-intro-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.input-container {
+    width: 100%;
+}
+
+.input-label {
+    display: block;
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffa51f;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.question-input {
+    width: 100%;
+    background: rgba(255, 165, 31, 0.05);
+    border: 2px solid rgba(255, 165, 31, 0.3);
+    border-radius: 12px;
+    padding: 16px;
+    color: #f5f5f5;
+    font-size: 18px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.question-input:focus {
+    outline: none;
+    border-color: #ffa51f;
+    background: rgba(255, 165, 31, 0.1);
+    box-shadow: 0 0 20px rgba(255, 165, 31, 0.3);
+}
+
+.question-input:hover {
+    border-color: rgba(255, 165, 31, 0.5);
+    background: rgba(255, 165, 31, 0.08);
+}
+
+.start-practice-btn {
+    background: linear-gradient(135deg, #ffa51f, #ff8c00);
+    border: none;
+    border-radius: 12px;
+    padding: 18px 30px;
+    color: #1a1a1a;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 4px 15px rgba(255, 165, 31, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.start-practice-btn:hover {
+    background: linear-gradient(135deg, #ff8c00, #ff7700);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(255, 165, 31, 0.4);
+}
+
+.start-practice-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 10px rgba(255, 165, 31, 0.3);
+}
+
+.btn-text {
+    font-weight: 700;
+}
+
+.btn-arrow {
+    font-size: 20px;
+    font-weight: bold;
+    transition: transform 0.3s ease;
+}
+
+.start-practice-btn:hover .btn-arrow {
+    transform: translateX(3px);
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    .practice-intro-wrapper {
+        padding: 30px 20px;
+        margin: 10px;
+    }
+    
+    .practice-intro-title {
+        font-size: 24px;
+    }
+    
+    .practice-intro-description {
+        font-size: 16px;
+    }
+    
+    .start-practice-btn {
+        padding: 16px 25px;
+        font-size: 16px;
+    }
+}

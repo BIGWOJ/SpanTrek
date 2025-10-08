@@ -217,7 +217,7 @@ body > *:not(footer) {
     color: #1a1a1a;
 }
 
-.main-lesson .continue-btn {
+.main-lesson {
     font-size: 1.2rem;
     padding: 12px 25px;
 }
@@ -245,6 +245,7 @@ body > *:not(footer) {
 
 .lesson-card {
     background: #f5f5f5;
+    border-left: 5px solid #ffa51f;
     border-radius: 15px;
     padding: 25px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
@@ -259,39 +260,10 @@ body > *:not(footer) {
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
 }
 
-.lesson-card.completed {
-    border-left: 5px solid #ffa51f;
-}
-
-.lesson-card.current {
-    border-left: 5px solid #ffa51f;
-    background: linear-gradient(135deg, #f5f5f5 0%, rgba(255, 165, 31, 0.1) 100%);
-}
-
-.lesson-card.locked {
-    opacity: 0.6;
-    cursor: not-allowed;
-}
-
-.lesson-card.locked:hover {
-    transform: none;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
 .lesson-icon {
     font-size: 3rem;
     margin-bottom: 15px;
     display: block;
-}
-
-.lesson-icon.active {
-    animation: bounce 2s infinite;
-}
-
-@keyframes bounce {
-    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-    40% { transform: translateY(-10px); }
-    60% { transform: translateY(-5px); }
 }
 
 .lesson-card h4 {
@@ -312,26 +284,6 @@ body > *:not(footer) {
 .completion {
     color: #2d2d2d;
     font-size: 0.9rem;
-}
-
-.continue-btn {
-    background: linear-gradient(45deg, #ffa51f, #ff8c00);
-    color: #f5f5f5;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 25px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-    min-width: 140px;
-    text-align: center;
-    white-space: nowrap;
-    overflow: hidden;
-    text-decoration: none;
-}
-
-.continue-btn:hover {
-    transform: scale(1.05);
 }
 
 .lock-icon {

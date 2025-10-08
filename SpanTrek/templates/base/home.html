@@ -65,39 +65,32 @@
     <div class="review-section">
         <h2 class="section-title">Review & practice</h2>
         <div class="lessons-grid">
-            <div class="lesson-card">
-                <div class="lesson-icon">🎲</div>
-                <h4>Random</h4>
-                <div class="lesson-progress">
-                    <span class="completion">Completed</span>
+            <a href="{% url 'practice:practice_intro' 'random' %}" class="lesson-card-link">
+                <div class="lesson-card">
+                    <div class="lesson-icon">🎲</div>
+                    <h4>Random</h4>
                 </div>
-            </div>
+            </a>
+            <a href="{% url 'practice:practice_intro' 'vocabulary' %}" class="lesson-card-link">
+                <div class="lesson-card">
+                    <div class="lesson-icon">📚</div>
+                    <h4>Vocabulary</h4>
+                </div>
+            </a>
 
-            <div class="lesson-card locked">
-                <div class="lesson-icon">📚</div>
-                <h4>Vocabulary</h4>
-                <div class="lesson-progress">
-                    <div class="lock-icon">🔒</div>
-                    <span class="completion">Locked</span>
+            <a href="{% url 'practice:practice_intro' 'sentence' %}" class="lesson-card-link">
+                <div class="lesson-card">
+                    <div class="lesson-icon">📖</div>
+                    <h4>Sentences</h4>
                 </div>
-            </div>
+            </a>
 
-            <div class="lesson-card completed">
-                <div class="lesson-icon">📖</div>
-                <h4>Reading</h4>
-                <div class="lesson-progress">
-                    <span class="completion">Completed</span>
+            <a href="{% url 'practice:practice_intro' 'listening' %}" class="lesson-card-link">
+                <div class="lesson-card">
+                    <div class="lesson-icon">👂🏻</div>
+                    <h4>Listening</h4>
                 </div>
-            </div>
-
-            <div class="lesson-card current">
-                <div class="lesson-icon active">👂🏻</div>
-                <h4>Listening</h4>
-                <div class="lesson-progress">
-                    <span class="completion">2/3 completed</span>
-                </div>
-                <button class="continue-btn">Continue</button>
-            </div>
+            </a>
         </div>
 
         <div class="daily-challenge">

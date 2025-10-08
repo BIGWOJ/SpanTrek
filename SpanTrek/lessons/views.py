@@ -70,7 +70,6 @@ def country_landmark_lesson(request, country, landmark, lesson_number=None, exer
         }
         return render(request, 'lessons/lesson_intro.html', context)
 
-    
     # Get the lesson
     current_lesson = lesson_number
     lesson = Lesson.objects.filter(landmark=landmark, order=current_lesson).first()

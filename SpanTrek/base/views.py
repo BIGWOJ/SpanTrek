@@ -87,12 +87,15 @@ def user_page(request, pk):
     # Count earned achievements
     earned_count = sum(1 for ach in achievements if ach['earned'])
     
+    words_learned_count = len(user.words_learned)
+
     context = {
         'user': user,
         'xp_needed_next_lvl': xp_needed_next_lvl,
         'progress_percentage': progress_percentage,
         'achievements': achievements,
         'earned_count': earned_count,
+        'words_learned_count': words_learned_count,
     }
     print('aaa')
     return render(request, 'base/user_page.html', context)

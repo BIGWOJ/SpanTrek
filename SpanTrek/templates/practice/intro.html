@@ -1,0 +1,45 @@
+{%extends 'base/base.html'%}
+{%load static%}
+{% block styles %}
+{{ block.super}}
+
+<link rel="stylesheet" type="text/css" href="{% static 'styles/practice/intro.css' %}" />
+
+{% endblock styles %}
+
+{%block content%}
+
+<div class="intro-container">
+    <div class="practice-intro-wrapper">
+        <div class="practice-intro-header">
+            <a href="{% url 'home_page' %}" class="back-to-home-btn">
+                <span class="back-arrow">←</span>
+                <span class="back-text">Back to home</span>
+            </a>
+            <h1 class="practice-intro-title">{{practice_type|title}} practice session</h1>
+            <p class="practice-intro-description">Ready to practice?<br> Set the number of questions!</p>
+        </div>
+
+        <form method="post" class="practice-intro-form">
+            {% csrf_token %}
+            <div class="input-container">
+                <label for="question-count" class="input-label">Number of questions:</label>
+                <input type="number"
+                id="question-count" 
+                name="question_count" 
+                value="{{ question_count }}" 
+                min="1"
+                max="100" 
+                class="question-input" 
+                required />
+            </div>
+
+            <button type="submit" class="start-practice-btn">
+                <span class="btn-text">Start practice</span>
+                <span class="btn-arrow">→</span>
+            </button>
+        </form>
+    </div>
+</div>
+
+{%endblock content%}

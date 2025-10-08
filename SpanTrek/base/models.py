@@ -15,8 +15,15 @@ class User(AbstractUser):
     adventure_progress = models.IntegerField(default=0)
     words_learned = models.JSONField(default=list, blank=True) # Store list of learned words
     sentences_learned = models.JSONField(default=list, blank=True) # Store list of learned sentences
+    audio_learned = models.JSONField(default=list, blank=True) # Store list of learned audio clips
     activity_days = models.JSONField(default=list, blank=True)  # Store list of active dates as strings
-    last_activity_date = models.DateField(null=True, blank=True)  # Track last activity for streak calculation 
+    last_activity_date = models.DateField(null=True, blank=True)  # Track last activity for streak calculation
+
+    # Default numbers of practice questions 
+    default_random_practice_count = models.IntegerField(default=20)  
+    default_vocabulary_practice_count = models.IntegerField(default=20)
+    default_sentence_practice_count = models.IntegerField(default=10)
+    default_listening_practice_count = models.IntegerField(default=10)
 
     # Country lessons progress tracking
     country_lessons_progress = models.JSONField(default=dict, blank=True)  # e.g., {"Spain": 3, "Mexico": 5}
