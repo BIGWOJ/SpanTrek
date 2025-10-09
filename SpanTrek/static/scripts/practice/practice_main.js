@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const userInput = document.getElementById("userInput");
     const checkBtn = document.querySelector(".check-btn-input");
     const resetBtn = document.querySelector(".reset-btn-input");
-    const showAnswerBtn = document.querySelector(".show-answer-btn-input");
 
     // Get correct answer from data attribute
     const correctAnswer = userInput.getAttribute("data-answer") || "";
@@ -26,16 +25,12 @@ document.addEventListener("DOMContentLoaded", function () {
             checkBtn.textContent = "Perfect!";
 
             // Show the next button when exercise is completed successfully
-            const nextBtn =
-                document.getElementById("next-exercise-btn") ||
-                document.getElementById("complete-lesson-btn");
+            const nextBtn = document.querySelector(".next-btn");
             if (nextBtn) {
-                nextBtn.style.display = "inline-block";
-                nextBtn.style.opacity = "0";
-                nextBtn.style.transition = "opacity 0.5s ease-in-out";
+                // Auto-advance to next exercise after 2 seconds
                 setTimeout(() => {
-                    nextBtn.style.opacity = "1";
-                }, 100);
+                    nextBtn.click();
+                }, 500);
             }
         } else {
             userInput.classList.add("incorrect");
@@ -69,9 +64,7 @@ document.addEventListener("DOMContentLoaded", function () {
         checkBtn.textContent = "Check answer";
 
         // Hide the next button when resetting
-        const nextBtn =
-            document.getElementById("next-exercise-btn") ||
-            document.getElementById("complete-lesson-btn");
+        const nextBtn = document.querySelector(".next-btn");
         if (nextBtn) {
             nextBtn.style.display = "none";
         }
@@ -88,21 +81,12 @@ document.addEventListener("DOMContentLoaded", function () {
         userInput.focus();
     });
 
-    //Show answer functionality
-    showAnswerBtn.addEventListener("click", function () {
-        userInput.value = correctAnswer;
-        userInput.classList.remove("incorrect");
-        userInput.classList.add("correct");
-    });
-
     // Clear states when user starts typing
     userInput.addEventListener("input", function () {
         this.classList.remove("correct", "incorrect");
 
         // Hide next button when user starts typing again
-        const nextBtn =
-            document.getElementById("next-exercise-btn") ||
-            document.getElementById("complete-lesson-btn");
+        const nextBtn = document.querySelector(".next-btn");
         if (nextBtn) {
             nextBtn.style.display = "none";
         }

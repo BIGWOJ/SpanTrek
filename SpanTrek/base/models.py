@@ -81,6 +81,18 @@ class User(AbstractUser):
 
             self.save()
 
+    def update_progress_after_practice(self):
+        print(date.today())
+        print(self.last_activity_date)
+        
+        if self.is_authenticated:
+            if self.last_activity_date != date.today():
+                self.mark_activity_today()
+                self.calculate_streak()
+            
+            self.experience += 20
+            self.save()
+
     def has_achievement(self, achievement_name):
         """Check if user has earned a specific achievement by name"""
         return self.earned_achievements.filter(achievement__name=achievement_name).exists()

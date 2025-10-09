@@ -1,0 +1,9 @@
+podział na vocabulary/sentecens/use of spanish itd
+jasny podział poziomów (np. Polska poziom 1, HIszpania poziom 2)
+informacyjnie (np. różnica 2 poziomów) między dwoma działami (use of spanish vs vocabulary) - coś w stylu, Hej podszkol ten dział! tlyko informacja wystarczy (na stronie użytkownika)
+
+środa-piątek call ewentualnie umawiać się
+
+zmniejszyć ilość miast (i krajów) (wrzucanie do bazy danych to sama wisienka na torcie, ważniejsze pokazanie funkcjonalności)
+progress/usystematycować co się nauczył na jakim poziomie
+funkcjonalność przejścia między poziomiami (krajami?)

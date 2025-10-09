@@ -1,21 +1,40 @@
-{%extends 'base/base.html'%}
-{%load static%}
-{% block styles %}
-{{ block.super}}
+{%extends 'base/base.html'%} {%load static%} {% block styles %} {{ block.super}}
 
-<link rel="stylesheet" type="text/css" href="{% static 'styles/practice/intro.css' %}" />
+<link
+    rel="stylesheet"
+    type="text/css"
+    href="{% static 'styles/practice/practice_main.css' %}"
+/>
 
-{% endblock styles %}
+{% endblock styles %} {%block content%}
+<div class="main-container">
+    {% include 'lessons/progress_bar.html' with progress_bar_progress=current_number progress_bar_max=total_count progress_bar_optional_text=" " %}
+    
+    <div class="exercise-container">
+        {% if current_exercise.0 in 'vocabulary, sentence' %}
+            {% include 'lessons/exercises/translate_input_field.html' with content=current_exercise|slice:"1:3" %}
 
-{%block content%}
+        {% elif current_exercise.0 == 'audio' %}
+            {% include 'lessons/content/audio.html' with content=current_exercise|slice:"1:2" %}
+            {% comment %} Passing list 1:2, so one-element list, but audio block gets list of items, thats why not used current_exercise.1 {% endcomment %}
+            {{current_exercise|slice:"2:4"}}
 
-<div class="intro-container">
-
-    {{practice_set}}
-
-
-
-
-
+            {% include 'lessons/exercises/input_field.html' with content=current_exercise|slice:"2:4" %}
+        {% endif %}
+    </div>
+    
+    <div class="navigation-buttons">
+        {% if has_next %}
+        <a href="{% url 'practice:practice_main' next_index %}" class="next-btn" style="display: none;"
+            >Next →</a
+        >
+        {% elif is_end %}
+        <a href="{% url 'practice:practice_complete' %}" class="next-btn" style="display: none;"
+            >Complete Practice</a
+        >
+        {% endif %}
+    </div>
 </div>
+
+<script src="{% static 'scripts/practice/practice_main.js' %}"></script>
 {%endblock content%}

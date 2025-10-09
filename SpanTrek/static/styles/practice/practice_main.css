@@ -1,0 +1,84 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.main-container {
+    height: calc(100vh - 160px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.exercise-container {
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.vocabulary-exercise, .sentence-exercise, .audio-exercise {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.word-container, .sentence-container, .audio-container {
+    margin-top: 20px;
+}
+
+.spanish-word, .spanish-sentence {
+    color: #007bff;
+    font-size: 2.5em;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.translation {
+    color: #6c757d;
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    font-style: italic;
+}
+
+.pronunciation {
+    color: #28a745;
+    font-size: 1.1em;
+    margin-bottom: 10px;
+}
+
+.example-sentence {
+    background-color: #e9ecef;
+    padding: 15px;
+    border-radius: 5px;
+    margin: 15px 0;
+    font-size: 1.1em;
+}
+
+.description {
+    color: #6c757d;
+    font-size: 1.2em;
+    margin-bottom: 15px;
+}
+
+.audio-player {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 300px;
+}
+
+.navigation-buttons {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.completed-message {
+    text-align: center;
+    color: #28a745;
+    font-size: 18px;
+    font-weight: bold;
+}

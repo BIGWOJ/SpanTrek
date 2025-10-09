@@ -87,11 +87,11 @@ document.addEventListener("DOMContentLoaded", function () {
     function sendAnswersToBackend(allCorrect) {
         const form = document.querySelector("form");
         const formData = new FormData(form);
-   
+
         // Add additional data
         formData.append("exercise_completed", allCorrect);
         formData.append("current_lesson_progress", current_lesson_progress);
-        
+
         fetch(form.action || window.location.href, {
             method: "POST",
             body: formData,

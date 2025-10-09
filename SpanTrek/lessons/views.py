@@ -111,7 +111,6 @@ def country_landmark_lesson(request, country, landmark, lesson_number=None, exer
     
     # Validate exercise_number
     if exercise_number < 1 or exercise_number > total_exercises:
-        from django.shortcuts import redirect
         return redirect('lessons:landmark_lesson_with_exercise', 
                        country=country, landmark=landmark, 
                        lesson_number=lesson_number, exercise_number=1)
@@ -151,7 +150,6 @@ def lesson_complete(request, country, landmark, lesson_number):
     
     if not lesson:
         # If lesson doesn't exist, redirect back to landmark
-        from django.shortcuts import redirect
         return redirect('lessons:country_landmark_lesson', country=country, landmark=landmark)
     
     # Check if there's a next lesson

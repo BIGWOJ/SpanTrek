@@ -42,5 +42,5 @@ class SentenceAdmin(admin.ModelAdmin):
 
 @admin.register(Audio)
 class AudioAdmin(admin.ModelAdmin):
-    list_display = ['title', 'audio_url']
-    search_fields = ['title']
+    list_display = ['text', 'audio_url']
+    search_fields = ['text']

@@ -99,7 +99,7 @@
     width: 100%;
 }
 
-.check-btn-input, .reset-btn-input {
+.check-btn-input, .reset-btn-input, .show-answer-btn-input {
     background: rgba(255, 165, 31, 0.1);
     border: 2px solid #ffa51f;
     border-radius: 10px;
@@ -112,14 +112,14 @@
     min-width: 120px;
 }
 
-.check-btn-input:hover, .reset-btn-input:hover {
+.check-btn-input:hover, .reset-btn-input:hover, .show-answer-btn-input:hover {
     background: rgba(255, 165, 31, 0.2);
     border-color: #ff8c00;
     transform: translateY(-2px);
     box-shadow: 0 4px 15px rgba(255, 165, 31, 0.3);
 }
 
-.check-btn-input:active, .reset-btn-input:active {
+.check-btn-input:active, .reset-btn-input:active, .show-answer-btn-input:active {
     transform: translateY(0);
 }
 
@@ -132,6 +132,23 @@
     background: rgba(245, 245, 245, 0.15);
     border-color: rgba(245, 245, 245, 0.5);
     box-shadow: 0 4px 15px rgba(245, 245, 245, 0.1);
+}
+
+.show-answer-btn-input {
+    background: rgba(255, 165, 31, 0.05);
+    border-color: rgba(255, 165, 31, 0.5);
+    padding: 8px 16px;
+    font-size: 12px;
+    min-width: 90px;
+    color: rgba(245, 245, 245, 0.8);
+}
+
+.show-answer-btn-input:hover {
+    background: rgba(255, 165, 31, 0.1);
+    border-color: rgba(255, 165, 31, 0.7);
+    color: #f5f5f5;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 10px rgba(255, 165, 31, 0.2);
 }
 
 /* Shake animation for incorrect answers */
@@ -166,7 +183,7 @@
         align-items: center;
     }
     
-    .check-btn-input, .reset-btn-input {
+    .check-btn-input, .reset-btn-input, .show-answer-btn-input {
         width: 100%;
         max-width: 200px;
     }
@@ -190,8 +207,14 @@
         font-size: 14px;
     }
     
-    .check-btn-input, .reset-btn-input {
+    .check-btn-input, .reset-btn-input, .show-answer-btn-input {
         padding: 10px 20px;
         font-size: 13px;
+    }
+    
+    .show-answer-btn-input {
+        padding: 8px 16px;
+        font-size: 11px;
+        max-width: 150px;
     }
 }

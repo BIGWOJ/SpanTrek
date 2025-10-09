@@ -94,13 +94,12 @@ class Sentence(models.Model):
 
 class Audio(models.Model):
     """Audio clips for listening"""
-    title = models.CharField(max_length=200)
     audio_url = models.CharField(max_length=200)
-    description = models.TextField(blank=True)
+    text = models.TextField(max_length=500, default="")
 
     class Meta:
-        ordering = ['title']
+        ordering = ['text']
 
     def __str__(self):
-        return self.title
+        return self.text
     
