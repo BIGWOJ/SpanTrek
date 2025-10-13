@@ -16,6 +16,7 @@ class User(AbstractUser):
     words_learned = models.JSONField(default=list, blank=True) # Store list of learned words
     sentences_learned = models.JSONField(default=list, blank=True) # Store list of learned sentences
     audio_learned = models.JSONField(default=list, blank=True) # Store list of learned audio clips
+    use_of_spanish = models.IntegerField(default=0)  # Use of Spanish 
     activity_days = models.JSONField(default=list, blank=True)  # Store list of active dates as strings
     last_activity_date = models.DateField(null=True, blank=True)  # Track last activity for streak calculation
 

@@ -177,7 +177,7 @@ body > *:not(footer) {
 
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 2fr);
     gap: 20px;
 }
 
@@ -210,6 +210,13 @@ body > *:not(footer) {
 .stat-label {
     color: #2d2d2d;
     font-size: 0.9rem;
+}
+
+.stat-sublabel {
+    color: #666;
+    font-size: 0.8rem;
+    margin-top: 3px;
+    font-weight: 500;
 }
 
 /* Achievements Section */
@@ -605,7 +612,7 @@ input:checked + .slider:before {
     }
     
     .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
     }
     
     .achievements-grid {
@@ -632,7 +639,7 @@ input:checked + .slider:before {
     }
     
     .stats-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
     }
     
     .calendar-grid {

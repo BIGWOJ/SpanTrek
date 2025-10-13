@@ -11,6 +11,26 @@
         {{lesson.country | title}} - {{lesson.landmark | title}}<br />
         {{lesson.title}}
     </h1>
+
+    <!-- Lesson Statistics -->
+    <div class="lesson-statistics">
+        <div class="stats-header">To learn</div>
+        <div class="stats-items">
+            <div class="stat-item">
+                <span class="stat-number">{{ lesson.vocabularies.count }}</span>
+                <span class="stat-label">Words</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">{{ lesson.sentences.count }}</span>
+                <span class="stat-label">Sentences</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">{{ lesson.audios.count }} </span>
+                <span class="stat-label">Audios</span>
+            </div>
+        </div>
+    </div>
+
     <a href="{% url 'lessons:landmark_lesson_with_number' country=country landmark=landmark lesson_number=1 %}">Start
         lesson</a>
 </div>

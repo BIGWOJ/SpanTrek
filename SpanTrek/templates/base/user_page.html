@@ -44,8 +44,9 @@
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-icon">🎯</div>
-                <div class="stat-value">{{ user.adventure_progress }}%</div>
+                <div class="stat-value">{{ lessons_completed_percentage }}%</div>
                 <div class="stat-label">Course Progress</div>
+                <div class="stat-sublabel">{{ completed_lessons }}/{{ total_lessons }}</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">⚡</div>
@@ -54,15 +55,33 @@
             </div>
             <div class="stat-card">
                 <div class="stat-icon">🏆</div>
-                <div class="stat-value">{{ user.achievements.count }}</div>
+                <div class="stat-value">{{ achievement_earned_percentage }}%</div>
                 <div class="stat-label">Achievements</div>
+                <div class="stat-sublabel">{{ user.achievements.count }}/{{ total_achievements }}</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">📚</div>
-                <div class="stat-value">{{ words_learned_count }}</div>
+                <div class="stat-value">{{ words_learned_percentage }}%</div>
                 <div class="stat-label">Words learned</div>
+                <div class="stat-sublabel">{{ words_learned_count }}/{{ total_words_count }}</div>
             </div>
+            <div class="stat-card">
+                <div class="stat-icon">💬</div>
+                <div class="stat-value">{{ sentences_learned_percentage }}%</div>
+                <div class="stat-label">Sentences</div>
+                <div class="stat-sublabel">{{ sentences_learned_count }}/{{ total_sentences_count }}</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🇪🇸</div>
+                <div class="stat-value">{{ spanish_usage_percentage }}%</div>
+                <div class="stat-label">Use of Spanish</div>
+                <div class="stat-sublabel">{{ user.use_of_spanish }}/{{ total_usage_count }}</div>
+            </div>
+
+
         </div>
+
+
     </div>
 
     <!-- Achievements Section -->

@@ -57,7 +57,7 @@ def country_landmark_lesson(request, country, landmark, lesson_number=None, exer
     # Get the current progress for this landmark from the user's profile
     landmark_progress = request.user.landmark_lessons_progress.get(landmark, 1)
     user_landmark_progress = request.user.landmark_lessons_progress.get(landmark, 0)
-    
+
     # If lesson_number is not provided, show intro page first
     if lesson_number is None:
         lesson = Lesson.objects.filter(landmark=landmark, order=landmark_progress).first()

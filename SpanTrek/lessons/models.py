@@ -51,6 +51,8 @@ class Lesson(models.Model):
     country = models.ForeignKey(Country, on_delete=models.CASCADE, null=True, blank=True)
     vocabularies = models.ManyToManyField('Vocabulary', blank=True, related_name='lessons')
     sentences = models.ManyToManyField('Sentence', blank=True, related_name='lessons')
+    audios = models.ManyToManyField('Audio', blank=True, related_name='lessons')
+    use_of_spanish = models.IntegerField(default=0, help_text="Number of use of Spanish exercises in the lesson")
     lesson_sequence = models.JSONField(default=list, blank=True, help_text="Sequence of content types in the lesson")
 
     class Meta:
