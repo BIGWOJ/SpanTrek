@@ -65,32 +65,64 @@
     <div class="review-section">
         <h2 class="section-title">Review & practice</h2>
         <div class="lessons-grid">
+            {% if user.words_learned|length > 0 or user.sentences_learned|length > 0 or user.audio_learned|length > 0 %}
             <a href="{% url 'practice:practice_intro' 'random' %}" class="lesson-card-link">
                 <div class="lesson-card">
                     <div class="lesson-icon">🎲</div>
                     <h4>Random</h4>
                 </div>
             </a>
+            {%else%}
+            <div class="lesson-card locked">
+                <div class="lesson-icon">🎲</div>
+                <h4>Random</h4>
+                <p class="lock-text">Start SpanTrek adventure to unlock practice</p>
+            </div>
+            {% endif %}
+            {% if user.words_learned|length > 0 %}
             <a href="{% url 'practice:practice_intro' 'vocabulary' %}" class="lesson-card-link">
                 <div class="lesson-card">
                     <div class="lesson-icon">📚</div>
                     <h4>Vocabulary</h4>
                 </div>
             </a>
+            {% else %}
+            <div class="lesson-card locked">
+                <div class="lesson-icon">📚</div>
+                <h4>Vocabulary</h4>
+                <p class="lock-text">Learn some vocabularies first to unlock practice</p>
+            </div>
+            {% endif %}
 
+            {% if user.sentences_learned|length > 0 %}
             <a href="{% url 'practice:practice_intro' 'sentence' %}" class="lesson-card-link">
                 <div class="lesson-card">
                     <div class="lesson-icon">📖</div>
                     <h4>Sentences</h4>
                 </div>
             </a>
+            {% else %}
+            <div class="lesson-card locked">
+                <div class="lesson-icon">📖</div>
+                <h4>Sentences</h4>
+                <p class="lock-text">Learn some sentences first to unlock practice</p>
+            </div>
+            {% endif %}
 
+            {% if user.audio_learned|length > 0 %}
             <a href="{% url 'practice:practice_intro' 'listening' %}" class="lesson-card-link">
                 <div class="lesson-card">
                     <div class="lesson-icon">👂🏻</div>
                     <h4>Listening</h4>
                 </div>
             </a>
+            {% else %}
+            <div class="lesson-card locked">
+                <div class="lesson-icon">👂🏻</div>
+                <h4>Listening</h4>
+                <p class="lock-text">Learn some audio first to unlock practice</p>
+            </div>
+            {% endif %}
         </div>
 
         <div class="daily-challenge">

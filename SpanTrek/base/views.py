@@ -78,6 +78,34 @@ def logout_user(request):
 def user_page(request, pk):
     user = User.objects.get(id=pk)
     
+    if request.method == 'POST':
+        if request.POST['email'] != user.email:
+            print(request.POST['email'])
+            user.email = request.POST['email']
+            user.save()
+            messages.success(request, 'Email updated successfully')
+
+        if request.POST['current_password'] != '':
+            if user.check_password(request.POST['current_password']):
+                new_password = request.POST['new_password']
+                confirm_password = request.POST['confirm_password']
+                if new_password == '' or confirm_password == '':
+                    messages.error(request, 'New password fields cannot be empty')
+                    return redirect('user_page', pk=user.id)
+                if new_password == confirm_password:
+                    if user.check_password(new_password) or user.check_password(confirm_password):
+                        messages.error(request, 'New password cannot be the same as the current password')
+                        return redirect('user_page', pk=user.id)
+                    user.set_password(new_password)
+                    login(request, user)  
+                    user.save()
+                    messages.success(request, 'Password updated successfully')
+                else:
+                    messages.error(request, 'New password and confirmation do not match')
+            else:
+                messages.error(request, 'Current password is incorrect')
+            
+
     # Calculate some additional stats for the user page
     xp_for_next_level = ((user.level) * 100) + 200  # Example formula
     xp_needed_next_lvl = max(0, xp_for_next_level - user.experience)

@@ -118,119 +118,67 @@
                 <!-- Calendar will be populated by JavaScript -->
             </div>
         </div>
-
-        <div class="activity-list">
-            <div class="activity-item">
-                <div class="activity-date">Today</div>
-                <div class="activity-content">
-                    <div class="activity-icon">📝</div>
-                    <div class="activity-text">
-                        Completed lesson: <strong>Basic Greetings</strong>
-                    </div>
-                    <div class="activity-xp">+15 XP</div>
-                </div>
-            </div>
-            <div class="activity-item">
-                <div class="activity-date">Yesterday</div>
-                <div class="activity-content">
-                    <div class="activity-icon">🔥</div>
-                    <div class="activity-text">
-                        Extended streak to
-                        <strong>{{ user.days_streak }} days</strong>
-                    </div>
-                    <div class="activity-xp">+5 XP</div>
-                </div>
-            </div>
-            <div class="activity-item">
-                <div class="activity-date">2 days ago</div>
-                <div class="activity-content">
-                    <div class="activity-icon">🏆</div>
-                    <div class="activity-text">
-                        Earned achievement: <strong>Streak Master</strong>
-                    </div>
-                    <div class="activity-xp">+25 XP</div>
-                </div>
-            </div>
-        </div>
     </div>
 
     {% if request.user.id == user.id %}
     <!-- Settings Section -->
     <div class="settings-section">
-        <h2 class="section-title">Account Settings</h2>
-        <div class="settings-grid">
-            <div class="settings-card">
-                <div class="settings-header">
-                    <h3>Profile Information</h3>
-                    <button class="edit-btn" onclick="toggleEdit('profile')">
-                        Edit
-                    </button>
-                </div>
-                <div class="settings-content" id="profile-content">
-                    <div class="info-row">
-                        <label>Username:</label>
-                        <span>{{ user.username }}</span>
+        <h2 class="section-title">Account settings</h2>
+
+        <!-- Collapsed Settings View -->
+        <div class="settings-collapsed" id="settings-collapsed">
+            <button class="gear-btn" onclick="expandSettings()">⚙️</button>
+        </div>
+
+        <!-- Expanded Settings View -->
+        <div class="settings-expanded" id="settings-expanded" style="display: none;">
+            <div class="settings-grid">
+                <div class="settings-card">
+                    <div class="settings-header">
+                        <h3>Profile information</h3>
                     </div>
-                    <div class="info-row">
-                        <label>Email:</label>
-                        <span>{{ user.email }}</span>
+                    <div class="settings-content" id="profile-content">
+                        <div class="profile-edit">
+                            <form method="POST" class="profile-form">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="email-input">Email:</label>
+                                    <input type="email" id="email-input" name="email" value="{{ user.email }}"
+                                        class="profile-input" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="current-password">Current password:</label>
+                                    <input type="password" id="current-password" name="current_password"
+                                        placeholder="Enter current password" class="profile-input" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="new-password">New password:</label>
+                                    <input type="password" id="new-password" name="new_password"
+                                        placeholder="Enter new password" class="profile-input" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="confirm-password">Confirm new password:</label>
+                                    <input type="password" id="confirm-password" name="confirm_password"
+                                        placeholder="Confirm new password" class="profile-input" />
+                                </div>
+                                <div class="form-actions">
+                                    <button type="submit" class="save-btn">Save changes</button>
+                                    <button type="button" class="cancel-btn"
+                                        onclick="collapseSettings()">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
+
             </div>
 
-            <div class="settings-card">
-                <div class="settings-header">
-                    <h3>Learning Preferences</h3>
-                    <button class="edit-btn" onclick="toggleEdit('preferences')">
-                        Edit
-                    </button>
-                </div>
-                <div class="settings-content" id="preferences-content">
-                    <div class="info-row">
-                        <label>Daily Goal:</label>
-                        <span>20 minutes</span>
-                    </div>
-                    <div class="info-row">
-                        <label>Reminder Time:</label>
-                        <span>7:00 PM</span>
-                    </div>
-                    <div class="info-row">
-                        <label>Difficulty Level:</label>
-                        <span>Beginner</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="settings-card">
-                <div class="settings-header">
-                    <h3>Notifications</h3>
-                    <button class="edit-btn" onclick="toggleEdit('notifications')">
-                        Edit
-                    </button>
-                </div>
-                <div class="settings-content" id="notifications-content">
-                    <div class="toggle-row">
-                        <label>Daily Reminders:</label>
-                        <div class="toggle-switch">
-                            <input type="checkbox" id="daily-reminders" checked />
-                            <label for="daily-reminders" class="slider"></label>
-                        </div>
-                    </div>
-                    <div class="toggle-row">
-                        <label>Achievement Alerts:</label>
-                        <div class="toggle-switch">
-                            <input type="checkbox" id="achievement-alerts" checked />
-                            <label for="achievement-alerts" class="slider"></label>
-                        </div>
-                    </div>
-                    <div class="toggle-row">
-                        <label>Streak Reminders:</label>
-                        <div class="toggle-switch">
-                            <input type="checkbox" id="streak-reminders" checked />
-                            <label for="streak-reminders" class="slider"></label>
-                        </div>
-                    </div>
-                </div>
+            <!-- Collapse Button -->
+            <div class="collapse-settings">
+                <button class="collapse-settings-btn" onclick="collapseSettings()">
+                    <span class="btn-arrow">←</span>
+                    <span class="btn-text">Back to account settings</span>
+                </button>
             </div>
         </div>
     </div>
@@ -238,9 +186,9 @@
 
     <!-- Quick Actions -->
     <div class="quick-actions">
-        <a href="/" class="action-btn primary">
+        <a href="{% url 'lessons:world_map' %}" class="action-btn primary">
             <span class="btn-icon">🏠</span>
-            Continue Learning
+            Continue learning
         </a>
         <a href="/logout" class="action-btn secondary">
             <span class="btn-icon">🚪</span>
@@ -248,10 +196,4 @@
         </a>
     </div>
 </div>
-
-<script>
-    // Pass Django data to JavaScript
-    window.userActivityDays = {{ user.activity_days | safe }};
-</script>
-
 {%endblock content%}

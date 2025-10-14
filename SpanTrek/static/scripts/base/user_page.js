@@ -131,6 +131,26 @@ class ActivityCalendar {
     }
 }
 
+function expandSettings() {
+    const collapsedDiv = document.getElementById('settings-collapsed');
+    const expandedDiv = document.getElementById('settings-expanded');
+
+    collapsedDiv.style.display = 'none';
+    expandedDiv.style.display = 'block';
+}
+
+    // Collapse settings section
+function collapseSettings() {
+    const collapsedDiv = document.getElementById('settings-collapsed');
+    const expandedDiv = document.getElementById('settings-expanded');
+
+    expandedDiv.style.display = 'none';
+    collapsedDiv.style.display = 'flex';
+
+    // Reset the form when collapsing
+    const form = document.querySelector('.profile-form');
+}
+
 // Settings functionality
 function toggleEdit(section) {
     const content = document.getElementById(`${section}-content`);
@@ -371,17 +391,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initAchievements();
     initToggleSwitches();
     initKeyboardShortcuts();
-
-    // Add loading effect to action buttons
-    const actionButtons = document.querySelectorAll(".action-btn");
-    actionButtons.forEach((btn) => {
-        btn.addEventListener("click", (e) => {
-            if (btn.href && !btn.href.includes("logout")) {
-                btn.style.opacity = "0.7";
-                btn.innerHTML = `<span class="btn-icon">⏳</span> Loading...`;
-            }
-        });
-    });
+    
 });
 
 // Export functions for potential external use
