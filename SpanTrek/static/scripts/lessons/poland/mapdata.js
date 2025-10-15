@@ -1,27 +1,37 @@
 var szczecin_pin_image =
-    landmark_lessons_progress["szczecin"] === 3
+   landmark_lessons_progress["szczecin"] === 3
         ? "/static/images/map_pins/pin1_done.svg"
         : "/static/images/map_pins/pin1.svg";
 
-var krakow_pin_image =
-    landmark_lessons_progress["krakow"] === 3
-        ? "/static/images/map_pins/pin2_done.svg"
-        : "/static/images/map_pins/pin2.svg";
+var poznan_url = 
+    landmark_lessons_progress["szczecin"] === 3
+        ? "/lessons/poland/poznan/"
+        : "";
 
-var gdansk_pin_image =
-    landmark_lessons_progress["gdansk"] === 3
+if (!poznan_url) {
+    var poznan_pin_image = "/static/images/map_pins/pin2_locked.svg";
+}
+else {
+    var poznan_pin_image =
+    landmark_lessons_progress["poznan"] === 3
+        ? "/static/images/map_pins/pin1_done.svg"
+        : "/static/images/map_pins/pin1.svg";
+}
+
+var warsaw_url = 
+    landmark_lessons_progress["poznan"] === 3
+        ? "/lessons/poland/warsaw/"
+        : "";
+
+if (!warsaw_url) {
+    var warsaw_pin_image = "/static/images/map_pins/pin3_locked.svg";
+}
+else {
+    var warsaw_pin_image =
+    landmark_lessons_progress["warsaw"] === 3
         ? "/static/images/map_pins/pin3_done.svg"
         : "/static/images/map_pins/pin3.svg";
-
-var poznan_pin_image =
-    landmark_lessons_progress["poznan"] === 3
-        ? "/static/images/map_pins/pin4_done.svg"
-        : "/static/images/map_pins/pin4.svg";
-
-var warsaw_pin_image =
-    landmark_lessons_progress["warsaw"] === 3
-        ? "/static/images/map_pins/pin5_done.svg"
-        : "/static/images/map_pins/pin5.svg";
+}
 
 var simplemaps_countrymap_mapdata = {
     main_settings: {
@@ -107,35 +117,19 @@ var simplemaps_countrymap_mapdata = {
             image_url: szczecin_pin_image,
         },
         1: {
-            name: "Krakow",
-            lat: "50.0647",
-            lng: "19.9450",
-            description: "Historical capital and cultural center",
-            url: "/lessons/poland/krakow/",
-            image_url: krakow_pin_image,
-        },
-        2: {
-            name: "Gdansk",
-            lat: "54.3520",
-            lng: "18.6466",
-            description: "Port city on the Baltic Sea",
-            url: "/lessons/poland/gdansk/",
-            image_url: gdansk_pin_image,
-        },
-        3: {
             name: "Poznan",
             lat: "52.4064",
             lng: "16.9252",
             description: "Historical trade center",
-            url: "/lessons/poland/poznan/",
+            url: poznan_url,
             image_url: poznan_pin_image,
         },
-        4: {
+        2: {
             name: "Warsaw",
             lat: "52.2297",
             lng: "21.0122",
             description: "Capital of Poland",
-            url: "/lessons/poland/warsaw/",
+            url: warsaw_url,
             image_url: warsaw_pin_image,
         },
     },

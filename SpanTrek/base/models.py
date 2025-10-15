@@ -19,6 +19,7 @@ class User(AbstractUser):
     use_of_spanish = models.IntegerField(default=0)  # Use of Spanish 
     activity_days = models.JSONField(default=list, blank=True)  # Store list of active dates as strings
     last_activity_date = models.DateField(null=True, blank=True)  # Track last activity for streak calculation
+    passports_earned = models.JSONField(default=list, blank=True)  # Store list of earned passports
 
     # Default numbers of practice questions 
     default_random_practice_count = models.IntegerField(default=20)  
@@ -43,7 +44,7 @@ class User(AbstractUser):
                 self.mark_activity_today()
                 self.calculate_streak()
             
-            if self.landmark_lessons_progress.get(landmark, 0) >= lesson_number:
+            if self.landmark_lessons_progress.get(landmark, -1) >= lesson_number:
                 return  # No update needed if lesson already completed or in progress
             self.experience += 50
             self.adventure_progress += 1
@@ -74,10 +75,10 @@ class User(AbstractUser):
                 current_progress + 1, 
                 country_lessons_counter
             )
-
+            
             self.landmark_lessons_progress[landmark] = max(
                 self.landmark_lessons_progress.get(landmark, 0), 
-                lesson_number
+                lesson_number + 1
             )
 
             self.save()

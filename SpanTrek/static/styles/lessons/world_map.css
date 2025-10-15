@@ -146,6 +146,11 @@ body > *:not(footer) {
     transition: all 0.3s ease;
 }
 
+.lessons-locked {
+    fill: #555 !important;
+    cursor: not-allowed;
+    transition: all 0.3s ease;
+}
 
 /* Link styles for clickable countries */
 .map-wrapper svg a {

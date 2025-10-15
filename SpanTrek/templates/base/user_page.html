@@ -40,7 +40,7 @@
 <div class="main-content">
     <!-- Statistics Section -->
     <div class="stats-section">
-        <h2 class="section-title">Your Progress</h2>
+        <h2 class="section-title">Your progress</h2>
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-icon">🎯</div>
@@ -82,6 +82,28 @@
         </div>
 
 
+    </div>
+
+    <!-- Passports Section -->
+    <div class="passports-section">
+        <h2 class="section-title">Passports</h2>
+        <div class="passports-grid">
+            <div class="passport-card" {% if "spain" in user.passports_earned %}data-status="earned"{% else %}data-status="locked"{% endif %}>
+                <div class="passport-flag">🇪🇸</div>
+                <div class="passport-name">Spain</div>
+                <div class="passport-status">{% if "spain" in user.passports_earned %}Earned{% else %}Locked{% endif %}</div>
+            </div>
+            <div class="passport-card" {% if "peru" in user.passports_earned %}data-status="earned"{% else %}data-status="locked"{% endif %}>
+                <div class="passport-flag">🇵🇪</div>
+                <div class="passport-name">Peru</div>
+                <div class="passport-status">{% if "peru" in user.passports_earned %}Earned{% else %}Locked{% endif %}</div>
+            </div>
+            <div class="passport-card" {% if "mexico" in user.passports_earned %}data-status="earned"{% else %}data-status="locked"{% endif %}>
+                <div class="passport-flag">🇲🇽</div>
+                <div class="passport-name">Mexico</div>
+                <div class="passport-status">{% if "mexico" in user.passports_earned %}Earned{% else %}Locked{% endif %}</div>
+            </div>
+        </div>
     </div>
 
     <!-- Achievements Section -->

@@ -19,8 +19,6 @@ class Command(BaseCommand):
         # The order of cities matches the Spanish learning progression
         cities = [
             'szczecin',
-            'krakow',
-            'gdansk',
             'poznan',
             'warsaw'
         ]

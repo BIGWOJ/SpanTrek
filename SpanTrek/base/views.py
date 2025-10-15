@@ -78,6 +78,7 @@ def logout_user(request):
 def user_page(request, pk):
     user = User.objects.get(id=pk)
     
+    # Update settings 
     if request.method == 'POST':
         if request.POST['email'] != user.email:
             print(request.POST['email'])

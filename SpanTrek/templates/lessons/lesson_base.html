@@ -27,7 +27,7 @@
         {% include 'lessons/progress_bar.html' with progress_bar_progress=exercise_number progress_bar_max=total_exercises progress_bar_optional_text=" " %}
 
         <div class="lesson-meta">
-            <span class="lesson-details">{{ lesson.title }} &bull; {{ country|title }} &bull; {{ landmark|title }} &bull; lesson {{ lesson_number }}</span>
+            <span class="lesson-details">{{ lesson.title }} &bull; {{ country|title }} &bull; {{ landmark|title }} &bull; lesson {{ lesson_number|add:1 }}</span>
         </div>
 
         <!-- Exercise Navigation -->

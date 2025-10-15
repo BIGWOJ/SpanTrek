@@ -2,21 +2,21 @@
     {
         "title": "Physical Descriptions",
         "content": "# Physical Descriptions in Spanish\n\n## Adjectives for Appearance\n- alto/baja - tall/short\n- delgado/gordo - thin/fat\n- joven/viejo - young/old\n- guapo/feo - handsome/ugly\n- rubio/moreno - blonde/dark-haired\n\n## Grammar Points\n- Adjective agreement (gender and number)\n- Position of adjectives\n- Ser vs. Estar with descriptions\n\n## Practice Exercises\n1. Describe people's physical appearance\n2. Practice adjective agreement\n3. Create character descriptions",
-        "order": 1,
+        "order": 0,
         "landmark": "poznan",
         "country": "poland"
     },
     {
         "title": "Personality Traits",
         "content": "# Personality Descriptions in Spanish\n\n## Character Traits\n- simpático/antipático - nice/unpleasant\n- inteligente/tonto - smart/silly\n- trabajador/perezoso - hardworking/lazy\n- divertido/aburrido - fun/boring\n- tímido/sociable - shy/outgoing\n\n## Practice Exercises\n1. Describe your personality\n2. Compare different personalities\n3. Write about your best friend",
-        "order": 2,
+        "order": 1,
         "landmark": "poznan",
         "country": "poland"
     },
     {
         "title": "Places and Objects",
         "content": "# Describing Places and Objects\n\n## Location Words\n- cerca/lejos - near/far\n- dentro/fuera - inside/outside\n- encima/debajo - on top/under\n- delante/detrás - in front/behind\n\n## Object Descriptions\n- grande/pequeño - big/small\n- nuevo/viejo - new/old\n- limpio/sucio - clean/dirty\n- caro/barato - expensive/cheap\n\n## Practice Exercises\n1. Describe your house/apartment\n2. Give directions using location words\n3. Describe objects in a room",
-        "order": 3,
+        "order": 2,
         "landmark": "poznan",
         "country": "poland"
     }

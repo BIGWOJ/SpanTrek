@@ -25,7 +25,7 @@ def world_map(request):
     for country_name, total_lessons in countries_lessons_dict.items():
         completed = user_countries_progress.get(country_name, 0)
         country_completion_status[country_name] = (completed == total_lessons and total_lessons > 0)
-
+        
     context = {
         'progress_bar_progress': user_progress,
         'progress_bar_max': all_lessons_count,
@@ -55,12 +55,13 @@ def country_view(request, country):
 @login_required
 def country_landmark_lesson(request, country, landmark, lesson_number=None, exercise_number=None):
     # Get the current progress for this landmark from the user's profile
-    landmark_progress = request.user.landmark_lessons_progress.get(landmark, 1)
+    landmark_progress = request.user.landmark_lessons_progress.get(landmark, 0)
     user_landmark_progress = request.user.landmark_lessons_progress.get(landmark, 0)
-
     # If lesson_number is not provided, show intro page first
     if lesson_number is None:
         lesson = Lesson.objects.filter(landmark=landmark, order=landmark_progress).first()
+        print(lesson_number, landmark, landmark_progress)
+        print(lesson)
         context = {
             'landmark': landmark,
             'country': country,
@@ -89,7 +90,6 @@ def country_landmark_lesson(request, country, landmark, lesson_number=None, exer
     
     # If exercise_number is not provided, redirect to first exercise
     if exercise_number is None and lesson_sequence_items:
-        from django.shortcuts import redirect
         return redirect('lessons:landmark_lesson_with_exercise', 
                        country=country, landmark=landmark, 
                        lesson_number=lesson_number, exercise_number=1)

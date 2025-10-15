@@ -1,23 +1,46 @@
 [
     {
-        "title": "Greetings and Introductions",
-        "content": "# Greetings in Spanish\n\n## Common Phrases\n- Hola - Hello\n- Buenos días - Good morning\n- Buenas tardes - Good afternoon\n- Buenas noches - Good night\n- ¿Cómo estás? - How are you?\n- Muy bien, gracias - Very well, thank you\n\n## Practice Exercises\n1. Greet someone in the morning\n2. Ask someone how they are\n3. Respond to \"¿Cómo estás?\"",
+        "title": "Daily Routines",
+        "content": "# Daily Routines in Spanish\n\n## Common Activities\n- despertarse - to wake up\n- ducharse - to shower\n- desayunar - to have breakfast\n- trabajar - to work\n- almorzar - to have lunch\n- cenar - to have dinner\n- acostarse - to go to bed\n\n## Practice Exercises\n1. Describe your daily routine\n2. Tell time in Spanish\n3. Use reflexive verbs correctly",
+        "order": 0,
+        "landmark": "szczecin",
+        "country": "poland",
+        "vocabularies": [
+            {"word": "despertarse", "translation": "to wake up"},
+            {"word": "ducharse", "translation": "to shower"},
+            {"word": "desayunar", "translation": "to have breakfast"},
+            {"word": "trabajar", "translation": "to work"},
+            {"word": "almorzar", "translation": "to have lunch"},
+            {"word": "cenar", "translation": "to have dinner"},
+            {"word": "acostarse", "translation": "to go to bed"}
+        ],
+        "sentences": [
+            {"sentence": "Me despierto a las siete de la mañana.", "translation": "I wake up at seven in the morning."},
+            {"sentence": "Después de ducharme, desayuno.", "translation": "After showering, I have breakfast."},
+            {"sentence": "Trabajo de nueve a cinco.", "translation": "I work from nine to five."},
+            {"sentence": "Almuerzo con mis amigos al mediodía.", "translation": "I have lunch with my friends at noon."},
+            {"sentence": "Ceno a las siete de la noche.", "translation": "I have dinner at seven in the evening."},
+            {"sentence": "Me acuesto a las diez de la noche.", "translation": "I go to bed at ten at night."}
+        ],
+        "use_of_spanish": 2,
+        "lesson_sequence": {"audio": ["/static/audio/word/hola.mp3", "transcription text"], "image": ["/static/images/colors/green.png", "optional text - spanish text", "optional text - english text"], "text": "link_text", "fill_blank": ["Przykładowa pierwsza część zdania", "CORRECT1", "To jest kontynuacja. Zdanie po odpowiedzi.", "CORRECT2", "text3"], "match": ["1_match1", "4_MATCH4", "2_match2", "3_MATCH3", "3_match3", "2_MATCH2", "4_match4", "1_MATCH1"], "single_choice": ["TUTAJ ZAWSZE pytanie będzie single", "CORRECT", "option2"], "multiple_choice": ["Tutaj zawsze będzie pytanie", "ASD", "option2", "opcja", "CORRECT", "CORRECT"], "input_field": ["question", "CORRECT"], "translate_input_field": ["text to translate", "translate"]}
+    },
+    {
+        "title": "Food and Dining",
+        "content": "# Food and Dining Vocabulary\n\n## Food Categories\n- el desayuno - breakfast\n- el almuerzo - lunch\n- la cena - dinner\n- las bebidas - drinks\n- los postres - desserts\n\n## Common Phrases\n- Tengo hambre - I'm hungry\n- Tengo sed - I'm thirsty\n- ¡Buen provecho! - Enjoy your meal!\n\n## Practice Exercises\n1. Order food at a restaurant\n2. Describe your favorite meals\n3. Learn food-related vocabulary",
         "order": 1,
         "landmark": "szczecin",
-        "country": "poland"
+        "country": "poland",
+        "vocabularies": [],
+        "sentences": []
     },
     {
-        "title": "Numbers 1-20",
-        "content": "# Numbers in Spanish (1-20)\n\n## Numbers List\n1. uno - 1\n2. dos - 2\n3. tres - 3\n...up to\n20. veinte - 20\n\n## Practice Exercises\n1. Count from 1 to 20\n2. Write numbers in words\n3. Match numbers with their Spanish names",
+        "title": "Hobbies and Free Time",
+        "content": "# Hobbies and Free Time Activities\n\n## Common Activities\n- leer - to read\n- ver la televisión - to watch TV\n- escuchar música - to listen to music\n- jugar al fútbol - to play soccer\n- nadar - to swim\n\n## Practice Exercises\n1. Talk about your hobbies\n2. Plan weekend activities\n3. Express preferences (me gusta/no me gusta)",
         "order": 2,
         "landmark": "szczecin",
-        "country": "poland"
-    },
-    {
-        "title": "Basic Verbs",
-        "content": "# Essential Spanish Verbs\n\n## Common Verbs\n- ser/estar - to be\n- tener - to have\n- ir - to go\n- hacer - to do/make\n\n## Practice Exercises\n1. Conjugate \"ser\" in present tense\n2. Use \"tener\" in simple sentences\n3. Create basic phrases with these verbs",
-        "order": 3,
-        "landmark": "szczecin",
-        "country": "poland"
+        "country": "poland",
+        "vocabularies": [],
+        "sentences": []
     }
 ]
