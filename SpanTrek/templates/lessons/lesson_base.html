@@ -30,6 +30,8 @@
             <span class="lesson-details">{{ lesson.title }} &bull; {{ country|title }} &bull; {{ landmark|title }} &bull; lesson {{ lesson_number|add:1 }}</span>
         </div>
 
+        
+
         <!-- Exercise Navigation -->
         {% if total_exercises %}
         <div class="exercise-navigation">
@@ -54,16 +56,16 @@
                 Next<span class="arrow">→</span>
             </a>
             {% elif next_lesson_number %}
-            <a
-                href="{% url 'lessons:lesson_complete' country=country landmark=landmark lesson_number=lesson_number %}"
-                class="nav-button next-lesson"
-                id="complete-lesson-btn"
-                {% if current_block == "fill_blank" or current_block == "input_field" or current_block == "translate_input_field" or current_block == "match" or current_block == "single_choice" or current_block == "multiple_choice" %}
-                style="display: none;"
-                {% endif %}
-            >
-                Complete lesson <span class="arrow">→</span>
-            </a>
+                <a
+                    href="{% url 'lessons:lesson_complete' country=country landmark=landmark lesson_number=lesson_number %}"
+                    class="nav-button next-lesson"
+                    id="complete-lesson-btn"
+                    {% if current_block == "fill_blank" or current_block == "input_field" or current_block == "translate_input_field" or current_block == "match" or current_block == "single_choice" or current_block == "multiple_choice" %}
+                    style="display: none;"
+                    {% endif %}
+                >
+                    Complete lesson <span class="arrow">→</span>
+                </a>
             {% endif %}
         </div>
         {% endif %}

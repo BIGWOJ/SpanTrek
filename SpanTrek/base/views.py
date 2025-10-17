@@ -159,6 +159,8 @@ def user_page(request, pk):
         'spanish_usage_count': user.use_of_spanish,
         'total_usage_count': total_use_of_spanish,
         'spanish_usage_percentage': use_of_spanish_percentage,
+        
+        'user_activity_days': user.activity_days,
     }
 
     return render(request, 'base/user_page.html', context)

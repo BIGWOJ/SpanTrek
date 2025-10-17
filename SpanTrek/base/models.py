@@ -8,6 +8,7 @@ from lessons.models import Lesson
 class User(AbstractUser):
     username = models.CharField(max_length=150, unique=True, blank=False, null=False)
     email = models.EmailField(unique=True, blank=False, null=False)
+    avatar = models.ImageField(default='avatars/default_avatar.png', upload_to='avatars/', null=True, blank=True)
 
     days_streak = models.IntegerField(default=0)
     level = models.IntegerField(default=1)
@@ -89,6 +90,7 @@ class User(AbstractUser):
         
         if self.is_authenticated:
             if self.last_activity_date != date.today():
+                print('aaa')
                 self.mark_activity_today()
                 self.calculate_streak()
             
@@ -127,6 +129,7 @@ class User(AbstractUser):
             self.last_activity_date = today
             self.calculate_streak()
             self.save()
+            print('bbbbbb')
 
     def calculate_streak(self):
         """Calculate current streak based on activity_days"""

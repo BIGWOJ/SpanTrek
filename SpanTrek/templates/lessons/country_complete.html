@@ -1,0 +1,171 @@
+{% extends 'base/base.html' %} {% load static %} {% block content %}
+
+<link
+    rel="stylesheet"
+    type="text/css"
+    href="{% static 'styles/lessons/country_complete.css' %}"
+/>
+
+<div class="country-complete-container">
+    <div class="country-hero-section">
+        <div class="celebration-burst">🎉</div>
+        <div class="country-flag">
+            <img
+                src="{% static 'images/flags/' %}{{ country|lower }}.png"
+                alt="{{ country }} flag"
+                class="flag-image"
+                onerror="this.style.display='none';"
+            />
+        </div>
+        <h1 class="country-complete-title">¡Excelente trabajo!</h1>
+        <h2 class="country-name-display">{{ country|title }} complete!</h2>
+        <p class="completion-subtitle">
+            You've completed all lessons in {{ country|title }}!
+        </p>
+    </div>
+
+    <div class="stats-section">
+        <h3 class="stats-title">Your journey trough {{ country|title }}</h3>
+        <div class="progress-showcase">
+            <div class="progress-ring">
+                <svg class="progress-circle" width="120" height="120">
+                    <circle
+                        cx="60"
+                        cy="60"
+                        r="54"
+                        stroke="#333"
+                        stroke-width="8"
+                        fill="transparent"
+                    />
+                    <circle
+                        cx="60"
+                        cy="60"
+                        r="54"
+                        stroke="#ffa51f"
+                        stroke-width="8"
+                        fill="transparent"
+                        stroke-dasharray="339.292"
+                        stroke-dashoffset="0"
+                        class="progress-bar-circle"
+                        data-progress="{{ completion_percentage }}"
+                    />
+                </svg>
+                <div class="progress-text">
+                    <span class="progress-number">100%</span>
+                    <span class="progress-label">Complete</span>
+                </div>
+            </div>
+            <div class="stats-details">
+                <div class="stat-item">
+                    <span class="stat-number">{{ total_lessons }}</span>
+                    <span class="stat-label">Lessons completed</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">{{ xp_gained }}</span>
+                    <span class="stat-label">Total XP earned</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="passport-section">
+        <div class="passport-card">
+            <div class="passport-header">
+                <h3>{{ country|title }} Learning Passport</h3>
+                <div class="passport-stamp">
+                    <div class="stamp-circle">
+                        <div class="stamp-text">COMPLETED</div>
+                        <div class="stamp-date">{{ "now"|date:"M d, Y" }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="passport-details">
+                <div class="passport-info">
+                    <span class="info-label">Student:</span>
+                    <span class="info-value">{{ user.username|title }}</span>
+                </div>
+                <div class="passport-info">
+                    <span class="info-label">Country:</span>
+                    <span class="info-value">{{ country|title }}</span>
+                </div>
+                <div class="passport-info">
+                    <span class="info-label">Lessons:</span>
+                    <span class="info-value"
+                        >{{ total_lessons }}/{{ total_lessons }}</span
+                    >
+                </div>
+                <div class="passport-info">
+                    <span class="info-label">Status:</span>
+                    <span class="info-value status-complete">MASTER</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="next-steps-section">
+        <h3>What's Next?</h3>
+        <div class="next-steps-cards">
+            <a href="{% url 'lessons:world_map' %}" class="next-step-card">
+                <div class="next-step-icon">🗺️</div>
+                <h4>Explore World Map</h4>
+                <p>Choose your next Spanish-speaking adventure</p>
+            </a>
+
+            {% comment %}
+            <a href="{% url 'practice:intro' %}" class="next-step-card">
+                <div class="next-step-icon">💪</div>
+                <h4>Practice Mode</h4>
+                <p>Strengthen your {{ country|title }} knowledge</p>
+            </a>
+            {% endcomment %} {% if countries_completed < total_countries %}
+            <div class="next-step-card achievement-locked">
+                <div class="next-step-icon">🎯</div>
+                <h4>Complete All Countries</h4>
+                <p>
+                    {{ total_countries|add:"-"|add:countries_completed }} more
+                    to go!
+                </p>
+            </div>
+            {% else %}
+            <div class="next-step-card achievement-unlocked">
+                <div class="next-step-icon">👑</div>
+                <h4>Spanish Master!</h4>
+                <p>You've completed all countries!</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="celebration-footer">
+        <div class="celebration-text">
+            <h3>¡Excelente trabajo!</h3>
+            <p>
+                Your dedication to learning Spanish is inspiring. Keep up the
+                amazing work!
+            </p>
+        </div>
+        <div class="celebration-emojis">
+            <span class="emoji bounce">🎉</span>
+            <span class="emoji bounce delay-1">🌟</span>
+            <span class="emoji bounce delay-2">🎊</span>
+            <span class="emoji bounce delay-3">🏆</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Animate progress circle on load
+    document.addEventListener("DOMContentLoaded", function () {
+        const progressCircle = document.querySelector(".progress-bar-circle");
+        const circumference = 2 * Math.PI * 54; // radius = 54
+        progressCircle.style.strokeDasharray = circumference;
+        progressCircle.style.strokeDashoffset = circumference;
+
+        // Animate to 100%
+        setTimeout(() => {
+            progressCircle.style.strokeDashoffset = 0;
+        }, 500);
+    });
+</script>
+
+{% endblock %}

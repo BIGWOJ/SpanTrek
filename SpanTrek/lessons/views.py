@@ -57,6 +57,7 @@ def country_landmark_lesson(request, country, landmark, lesson_number=None, exer
     # Get the current progress for this landmark from the user's profile
     landmark_progress = request.user.landmark_lessons_progress.get(landmark, 0)
     user_landmark_progress = request.user.landmark_lessons_progress.get(landmark, 0)
+    
     # If lesson_number is not provided, show intro page first
     if lesson_number is None:
         lesson = Lesson.objects.filter(landmark=landmark, order=landmark_progress).first()
@@ -147,7 +148,7 @@ def lesson_complete(request, country, landmark, lesson_number):
     """View for lesson completion page with congratulations message"""
     # Get the completed lesson
     lesson = Lesson.objects.filter(landmark=landmark, order=lesson_number).first()
-    
+
     if not lesson:
         # If lesson doesn't exist, redirect back to landmark
         return redirect('lessons:country_landmark_lesson', country=country, landmark=landmark)
@@ -166,9 +167,29 @@ def lesson_complete(request, country, landmark, lesson_number):
         'has_next_lesson': next_lesson is not None,
         'total_exercises': len(list(lesson.lesson_sequence.items())) if lesson.lesson_sequence else 0,
     }
-    
+
+    country_lessons = Lesson.objects.filter(country__name__iexact=country).count()    
+    # Country completed
+    if request.user.country_lessons_progress.get(country, 0) >= country_lessons:
+        return country_complete(request, country)
+
     return render(request, 'lessons/lesson_complete.html', context=context)
 
+@login_required
+def country_complete(request, country):
+    """View for country completion page with congratulations and statistics"""  
+    country_obj = Country.objects.filter(name__iexact=country).first()
+    country_lessons = Lesson.objects.filter(country=country_obj).count()
+    xp_gained = country_lessons * 50
+    
+    context = {
+        'country': country,
+        'total_lessons': country_lessons,
+        'xp_gained': xp_gained,
+    }
+    
+    
+    return render(request, 'lessons/country_complete.html', context=context)
 
 @login_required
 def check_exercise_done(request):

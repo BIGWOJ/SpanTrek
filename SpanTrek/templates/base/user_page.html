@@ -1,14 +1,21 @@
-{%extends 'base/base.html'%} {%load static%} {% block styles %} {{ block.super}}
+{%extends 'base/base.html'%} 
+{%load static%} 
+{% block styles %} 
+{{ block.super}}
+
 <link rel="stylesheet" type="text/css" href="{% static 'styles/base/user_page.css' %}" />
+<script>
+
+    window.userActivityDays = {{ user_activity_days|safe }};
+</script>
 <script src="{% static 'scripts/base/user_page.js' %}"></script>
 {% endblock styles %} {%block content%}
-
 <div class="hero-section">
     <div class="hero-content">
         <div class="profile-header">
             <div class="avatar-section">
                 <div class="avatar-circle">
-                    <span class="avatar-initial">{{ user.username|first|upper }}</span>
+                    <img src="{{ user.avatar.url }}">
                 </div>
                 <div class="profile-info">
                     <h1 class="username">{{ user.username }}</h1>
@@ -88,6 +95,11 @@
     <div class="passports-section">
         <h2 class="section-title">Passports</h2>
         <div class="passports-grid">
+            <div class="passport-card" {% if "poland" in user.passports_earned %}data-status="earned"{% else %}data-status="locked"{% endif %}>
+                <div class="passport-flag">🇵🇱</div>
+                <div class="passport-name">Poland</div>
+                <div class="passport-status">{% if "poland" in user.passports_earned %}Earned{% else %}Locked{% endif %}</div>
+            </div>
             <div class="passport-card" {% if "spain" in user.passports_earned %}data-status="earned"{% else %}data-status="locked"{% endif %}>
                 <div class="passport-flag">🇪🇸</div>
                 <div class="passport-name">Spain</div>

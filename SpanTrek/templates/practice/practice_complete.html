@@ -22,6 +22,10 @@
                 <span class="stat-number">{{ total_count }}</span>
                 <span class="stat-label">Questions completed</span>
             </div>
+            <div class="stat-item">
+                <span class="stat-number">50</span>
+                <span class="stat-label">XP Gained</span>
+            </div>
         </div>
 
         <div class="practice-info">
@@ -38,13 +42,6 @@
                 class="btn btn-primary repeat-practice-btn"
             >
                 Practice again <span class="arrow">🔄</span>
-            </a>
-
-            <a
-                href="{% url 'practice:practice_intro' 'vocabulary' %}"
-                class="btn btn-secondary new-practice-btn"
-            >
-                Start new practice <span class="arrow">→</span>
             </a>
 
             <br />
