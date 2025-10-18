@@ -1,9 +1,10 @@
-{%extends 'base/base.html'%} 
-{%load static%} 
-{% block styles %} 
-{{ block.super}}
+{%extends 'base/base.html'%} {%load static%} {% block styles %} {{ block.super}}
 
-<link rel="stylesheet" type="text/css" href="{% static 'styles/base/user_page.css' %}" />
+<link
+    rel="stylesheet"
+    type="text/css"
+    href="{% static 'styles/base/user_page.css' %}"
+/>
 <script>
 
     window.userActivityDays = {{ user_activity_days|safe }};
@@ -15,12 +16,12 @@
         <div class="profile-header">
             <div class="avatar-section">
                 <div class="avatar-circle">
-                    <img src="{{ user.avatar.url }}">
+                    <img src="{{ user.avatar.url }}" />
                 </div>
                 <div class="profile-info">
                     <h1 class="username">{{ user.username }}</h1>
                     <p class="join-date">
-                        Member since {{user.date_joined|date:"E Y"}}
+                        Member since {{ user.date_joined|date:"d M Y" }}
                     </p>
                 </div>
             </div>
@@ -33,10 +34,14 @@
                 <div class="xp-progress">
                     <span class="xp-text">{{ user.experience }} XP</span>
                     <div class="progress-bar">
-                        <div class="progress-fill" style="width: {{ progress_percentage }}%"></div>
+                        <div
+                            class="progress-fill"
+                            style="width: {{ progress_percentage }}%"
+                        ></div>
                     </div>
                     <span class="next-level">
-                        {{ xp_needed_next_lvl }} XP to level {{ user.level|add:1 }}
+                        {{ xp_needed_next_lvl }} XP to level {{ user.level|add:1
+                        }}
                     </span>
                 </div>
             </div>
@@ -47,13 +52,20 @@
 <div class="main-content">
     <!-- Statistics Section -->
     <div class="stats-section">
-        <h2 class="section-title">Your progress</h2>
+        <h2 class="section-title">
+            {% if request.user == user %}Your progress{% else %}User's
+            progress{% endif %}
+        </h2>
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-icon">🎯</div>
-                <div class="stat-value">{{ lessons_completed_percentage }}%</div>
+                <div class="stat-value">
+                    {{ lessons_completed_percentage }}%
+                </div>
                 <div class="stat-label">Course Progress</div>
-                <div class="stat-sublabel">{{ completed_lessons }}/{{ total_lessons }}</div>
+                <div class="stat-sublabel">
+                    {{ completed_lessons }}/{{ total_lessons }}
+                </div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">⚡</div>
@@ -62,58 +74,209 @@
             </div>
             <div class="stat-card">
                 <div class="stat-icon">🏆</div>
-                <div class="stat-value">{{ achievement_earned_percentage }}%</div>
+                <div class="stat-value">
+                    {{ achievement_earned_percentage }}%
+                </div>
                 <div class="stat-label">Achievements</div>
-                <div class="stat-sublabel">{{ user.achievements.count }}/{{ total_achievements }}</div>
+                <div class="stat-sublabel">
+                    {{ user.achievements.count }}/{{ total_achievements }}
+                </div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">📚</div>
                 <div class="stat-value">{{ words_learned_percentage }}%</div>
                 <div class="stat-label">Words learned</div>
-                <div class="stat-sublabel">{{ words_learned_count }}/{{ total_words_count }}</div>
+                <div class="stat-sublabel">
+                    {{ words_learned_count }}/{{ total_words_count }}
+                </div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">💬</div>
-                <div class="stat-value">{{ sentences_learned_percentage }}%</div>
+                <div class="stat-value">
+                    {{ sentences_learned_percentage }}%
+                </div>
                 <div class="stat-label">Sentences</div>
-                <div class="stat-sublabel">{{ sentences_learned_count }}/{{ total_sentences_count }}</div>
+                <div class="stat-sublabel">
+                    {{ sentences_learned_count }}/{{ total_sentences_count }}
+                </div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">🇪🇸</div>
                 <div class="stat-value">{{ spanish_usage_percentage }}%</div>
                 <div class="stat-label">Use of Spanish</div>
-                <div class="stat-sublabel">{{ user.use_of_spanish }}/{{ total_usage_count }}</div>
+                <div class="stat-sublabel">
+                    {{ user.use_of_spanish }}/{{ total_usage_count }}
+                </div>
             </div>
-
-
         </div>
-
-
     </div>
 
     <!-- Passports Section -->
     <div class="passports-section">
-        <h2 class="section-title">Passports</h2>
-        <div class="passports-grid">
-            <div class="passport-card" {% if "poland" in user.passports_earned %}data-status="earned"{% else %}data-status="locked"{% endif %}>
-                <div class="passport-flag">🇵🇱</div>
-                <div class="passport-name">Poland</div>
-                <div class="passport-status">{% if "poland" in user.passports_earned %}Earned{% else %}Locked{% endif %}</div>
-            </div>
-            <div class="passport-card" {% if "spain" in user.passports_earned %}data-status="earned"{% else %}data-status="locked"{% endif %}>
-                <div class="passport-flag">🇪🇸</div>
-                <div class="passport-name">Spain</div>
-                <div class="passport-status">{% if "spain" in user.passports_earned %}Earned{% else %}Locked{% endif %}</div>
-            </div>
-            <div class="passport-card" {% if "peru" in user.passports_earned %}data-status="earned"{% else %}data-status="locked"{% endif %}>
-                <div class="passport-flag">🇵🇪</div>
-                <div class="passport-name">Peru</div>
-                <div class="passport-status">{% if "peru" in user.passports_earned %}Earned{% else %}Locked{% endif %}</div>
-            </div>
-            <div class="passport-card" {% if "mexico" in user.passports_earned %}data-status="earned"{% else %}data-status="locked"{% endif %}>
-                <div class="passport-flag">🇲🇽</div>
-                <div class="passport-name">Mexico</div>
-                <div class="passport-status">{% if "mexico" in user.passports_earned %}Earned{% else %}Locked{% endif %}</div>
+        <h2 class="section-title">Travel Passports</h2>
+        <div class="passport-book">
+            <!-- Two-page passport book layout -->
+            <div class="passport-spread">
+                <!-- Left page - User Profile -->
+                <div class="passport-page left-page">
+                    <div class="passport-header">
+                        <div class="passport-title">SPANISH LEARNING</div>
+                        <div class="passport-subtitle">PASSPORT</div>
+                        <div class="passport-emblem">🌍</div>
+                    </div>
+
+                    <div class="user-profile-section">
+                        <div class="profile-photo-frame">
+                            <img
+                                src="{{ user.avatar.url }}"
+                                alt="Profile Photo"
+                                class="profile-photo"
+                            />
+                        </div>
+
+                        <div class="user-details">
+                            <div class="detail-row">
+                                <span class="label">Name:</span>
+                                <span class="value"
+                                    >{{ user.username|upper }}</span
+                                >
+                            </div>
+                            <div class="detail-row">
+                                <span class="label">Border crossed:</span>
+                                <span class="value"
+                                    >{{ user.date_joined|date:"d M Y" }}</span
+                                >
+                            </div>
+                            <div class="detail-row">
+                                <span class="label">Level:</span>
+                                <span class="value">{{ user.level }}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="label">Experience:</span>
+                                <span class="value"
+                                    >{{ user.experience }} XP</span
+                                >
+                            </div>
+                            <div class="detail-row">
+                                <span class="label">Highest streak:</span>
+                                <span class="value"
+                                    >{{ user.highest_streak }} days</span
+                                >
+                            </div>
+                        </div>
+
+                        <div class="passport-authority">
+                            <div class="authority-stamp">
+                                <div class="stamp-text">SPANTREK</div>
+                                <div class="stamp-subtext">
+                                    LANGUAGE AUTHORITY
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right page - Country Visa Stickers -->
+                <div class="passport-page right-page">
+                    <div class="page-title">VISAS & STAMPS</div>
+
+                    <div class="visa-stickers-grid">
+                        <!-- Poland Visa Sticker -->
+                        <div
+                            class="visa-sticker {% if 'poland' in user.passports_earned %}earned{% else %}locked{% endif %}"
+                        >
+                            <div class="sticker-flag">🇵🇱</div>
+                            <div class="sticker-info">
+                                <div class="country-code">POL</div>
+                                <div class="country-name">POLAND</div>
+                                <div class="sticker-status">
+                                    {% if "poland" in user.passports_earned %}
+                                    <span class="completed">✓ COMPLETED</span>
+                                    <span class="date"
+                                        >{{ "now"|date:"d/m/Y" }}</span
+                                    >
+                                    {% else %}
+                                    <span class="pending">LOCKED</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Spain Visa Sticker -->
+                        <div
+                            class="visa-sticker {% if 'spain' in user.passports_earned %}earned{% else %}locked{% endif %}"
+                        >
+                            <div class="sticker-flag">🇪🇸</div>
+                            <div class="sticker-info">
+                                <div class="country-code">ESP</div>
+                                <div class="country-name">SPAIN</div>
+                                <div class="sticker-status">
+                                    {% if "spain" in user.passports_earned %}
+                                    <span class="completed">✓ COMPLETED</span>
+                                    <span class="date"
+                                        >{{ "now"|date:"d/m/Y" }}</span
+                                    >
+                                    {% else %}
+                                    <span class="pending">LOCKED</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Peru Visa Sticker -->
+                        <div
+                            class="visa-sticker {% if 'peru' in user.passports_earned %}earned{% else %}locked{% endif %}"
+                        >
+                            <div class="sticker-flag">🇵🇪</div>
+                            <div class="sticker-info">
+                                <div class="country-code">PER</div>
+                                <div class="country-name">PERU</div>
+                                <div class="sticker-status">
+                                    {% if "peru" in user.passports_earned %}
+                                    <span class="completed">✓ COMPLETED</span>
+                                    <span class="date"
+                                        >{{ "now"|date:"d/m/Y" }}</span
+                                    >
+                                    {% else %}
+                                    <span class="pending">LOCKED</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mexico Visa Sticker -->
+                        <div
+                            class="visa-sticker {% if 'mexico' in user.passports_earned %}earned{% else %}locked{% endif %}"
+                        >
+                            <div class="sticker-flag">🇲🇽</div>
+                            <div class="sticker-info">
+                                <div class="country-code">MEX</div>
+                                <div class="country-name">MEXICO</div>
+                                <div class="sticker-status">
+                                    {% if "mexico" in user.passports_earned %}
+                                    <span class="completed">✓ COMPLETED</span>
+                                    <span class="date"
+                                        >{{ "now"|date:"d/m/Y" }}</span
+                                    >
+                                    {% else %}
+                                    <span class="pending">LOCKED</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Entry/Exit Stamps -->
+                    <div class="entry-stamps">
+                        <div class="passport-stamp entry">
+                            <div class="stamp-border">
+                                <div class="stamp-authority">
+                                    SPANTREK IMMIGRATION
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -123,7 +286,9 @@
         <h2 class="section-title">Achievements</h2>
         <div class="achievements-grid">
             {% for achievement in achievements %}
-            <div class="achievement-card {% if achievement.earned %}earned{% else %}locked{% endif %}">
+            <div
+                class="achievement-card {% if achievement.earned %}earned{% else %}locked{% endif %}"
+            >
                 <div class="achievement-badge">
                     {{ achievement.achievement.icon }}
                 </div>
@@ -165,7 +330,11 @@
         </div>
 
         <!-- Expanded Settings View -->
-        <div class="settings-expanded" id="settings-expanded" style="display: none;">
+        <div
+            class="settings-expanded"
+            id="settings-expanded"
+            style="display: none"
+        >
             <div class="settings-grid">
                 <div class="settings-card">
                     <div class="settings-header">
@@ -173,43 +342,117 @@
                     </div>
                     <div class="settings-content" id="profile-content">
                         <div class="profile-edit">
-                            <form method="POST" class="profile-form">
+                            <form
+                                method="POST"
+                                class="profile-form"
+                                enctype="multipart/form-data"
+                            >
                                 {% csrf_token %}
+
+                                <!-- Profile Picture Section -->
+                                <div class="form-group profile-picture-section">
+                                    <label>Profile picture:</label>
+                                    <div class="avatar-upload-container">
+                                        <div class="current-avatar">
+                                            <img
+                                                src="{{ user.avatar.url }}"
+                                                alt="Current Avatar"
+                                                id="avatar-preview"
+                                            />
+                                        </div>
+                                        <div class="avatar-upload-controls">
+                                            <input
+                                                type="file"
+                                                id="avatar-input"
+                                                name="avatar"
+                                                accept=".jpg,.jpeg,.png"
+                                                class="file-input"
+                                            />
+                                            <label
+                                                for="avatar-input"
+                                                class="upload-btn"
+                                            >
+                                                📷 Choose new picture
+                                            </label>
+                                            <small class="upload-hint"
+                                                >JPG, PNG up to 5MB
+                                                <br />
+                                                (drag & drop)</small
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="form-group">
                                     <label for="email-input">Email:</label>
-                                    <input type="email" id="email-input" name="email" value="{{ user.email }}"
-                                        class="profile-input" />
+                                    <input
+                                        type="email"
+                                        id="email-input"
+                                        name="email"
+                                        value="{{ user.email }}"
+                                        class="profile-input"
+                                    />
                                 </div>
                                 <div class="form-group">
-                                    <label for="current-password">Current password:</label>
-                                    <input type="password" id="current-password" name="current_password"
-                                        placeholder="Enter current password" class="profile-input" />
+                                    <label for="current-password"
+                                        >Current password:</label
+                                    >
+                                    <input
+                                        type="password"
+                                        id="current-password"
+                                        name="current_password"
+                                        placeholder="Enter current password"
+                                        class="profile-input"
+                                    />
                                 </div>
                                 <div class="form-group">
-                                    <label for="new-password">New password:</label>
-                                    <input type="password" id="new-password" name="new_password"
-                                        placeholder="Enter new password" class="profile-input" />
+                                    <label for="new-password"
+                                        >New password:</label
+                                    >
+                                    <input
+                                        type="password"
+                                        id="new-password"
+                                        name="new_password"
+                                        placeholder="Enter new password"
+                                        class="profile-input"
+                                    />
                                 </div>
                                 <div class="form-group">
-                                    <label for="confirm-password">Confirm new password:</label>
-                                    <input type="password" id="confirm-password" name="confirm_password"
-                                        placeholder="Confirm new password" class="profile-input" />
+                                    <label for="confirm-password"
+                                        >Confirm new password:</label
+                                    >
+                                    <input
+                                        type="password"
+                                        id="confirm-password"
+                                        name="confirm_password"
+                                        placeholder="Confirm new password"
+                                        class="profile-input"
+                                    />
                                 </div>
                                 <div class="form-actions">
-                                    <button type="submit" class="save-btn">Save changes</button>
-                                    <button type="button" class="cancel-btn"
-                                        onclick="collapseSettings()">Cancel</button>
+                                    <button type="submit" class="save-btn">
+                                        Save changes
+                                    </button>
+                                    <button
+                                        type="button"
+                                        class="cancel-btn"
+                                        onclick="collapseSettings()"
+                                    >
+                                        Cancel
+                                    </button>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
-
             </div>
 
             <!-- Collapse Button -->
             <div class="collapse-settings">
-                <button class="collapse-settings-btn" onclick="collapseSettings()">
+                <button
+                    class="collapse-settings-btn"
+                    onclick="collapseSettings()"
+                >
                     <span class="btn-arrow">←</span>
                     <span class="btn-text">Back to account settings</span>
                 </button>

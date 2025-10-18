@@ -11,6 +11,7 @@ class User(AbstractUser):
     avatar = models.ImageField(default='avatars/default_avatar.png', upload_to='avatars/', null=True, blank=True)
 
     days_streak = models.IntegerField(default=0)
+    highest_streak = models.IntegerField(default=0)
     level = models.IntegerField(default=1)
     experience = models.IntegerField(default=0)
     adventure_progress = models.IntegerField(default=0)
@@ -174,6 +175,11 @@ class User(AbstractUser):
                 break
         
         self.days_streak = current_streak
+        
+        # Update highest streak if needed
+        highest_streak = self.highest_streak
+        if current_streak > highest_streak:
+            self.highest_streak = current_streak
 
 
 class Achievement(models.Model):

@@ -56,14 +56,23 @@ body > *:not(footer) {
 }
 
 .avatar-circle {
-    width: 80px;
-    height: 80px;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
     background: linear-gradient(45deg, #ffa51f, #ff8c00);
     display: flex;
     align-items: center;
     justify-content: center;
     box-shadow: 0 5px 15px rgba(255, 165, 31, 0.3);
+    overflow: hidden;
+    padding: 3px;
+}
+
+.avatar-circle img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 .profile-info {
@@ -213,73 +222,363 @@ body > *:not(footer) {
     font-weight: 500;
 }
 
-/* Passports Section */
+/* Passports Section - Two-Page Passport Book Design */
 .passports-section {
     margin-bottom: 50px;
 }
 
-.passports-grid {
+.passport-book {
+    max-width: 1000px;
+    margin: 0 auto;
+    perspective: 1000px;
+}
+
+.passport-spread {
+    display: flex;
+    gap: 0;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    overflow: hidden;
+    background: #8B4513;
+    padding: 15px;
+}
+
+.passport-page {
+    background: #f8f8f8;
+    padding: 30px;
+    position: relative;
+    min-height: 500px;
+    overflow: hidden;
+}
+
+.left-page {
+    flex: 1;
+    border-radius: 10px 0 0 10px;
+    border-right: 3px dotted #ddd;
+}
+
+.right-page {
+    flex: 1;
+    border-radius: 0 10px 10px 0;
+}
+
+/* Left page hole-punch effect */
+.left-page::before {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 50px;
+    width: 20px;
+    height: 100%;
+    background: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 15px,
+        #8B4513 15px,
+        #8B4513 25px
+    );
+}
+
+/* Right page hole-punch effect */
+.right-page::before {
+    content: '';
+    position: absolute;
+    right: -10px;
+    top: 50px;
+    width: 20px;
+    height: 100%;
+    background: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 15px,
+        #8B4513 15px,
+        #8B4513 25px
+    );
+}
+
+/* Left Page - User Profile Styles */
+.passport-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #ddd;
+}
+
+.passport-title {
+    color: #8B4513;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+    letter-spacing: 2px;
+}
+
+.passport-subtitle {
+    color: #8B4513;
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    letter-spacing: 3px;
+}
+
+.passport-emblem {
+    font-size: 2.5rem;
+    margin: 10px 0;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.user-profile-section {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.profile-photo-frame {
+    align-self: center;
+    width: 120px;
+    height: 150px;
+    border: 3px solid #8B4513;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    background: #fff;
+    padding: 5px;
+}
+
+.profile-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 2px;
+}
+
+.user-details {
+    background: rgba(139, 69, 19, 0.05);
+    border: 1px solid rgba(139, 69, 19, 0.2);
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px dotted #ccc;
+}
+
+.detail-row:last-child {
+    border-bottom: none;
+}
+
+.label {
+    font-weight: 600;
+    color: #333;
+    font-size: 0.9rem;
+}
+
+.value {
+    font-weight: 500;
+    color: #1a1a1a;
+    text-align: right;
+    font-size: 0.9rem;
+}
+
+.passport-authority {
+    margin-top: auto;
+    text-align: center;
+}
+
+.authority-stamp {
+    border: 2px solid #8B4513;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    background: rgba(139, 69, 19, 0.1);
+    transform: rotate(-5deg);
+}
+
+.stamp-text {
+    font-size: 0.7rem;
+    font-weight: bold;
+    color: #8B4513;
+    letter-spacing: 1px;
+}
+
+.stamp-subtext {
+    font-size: 0.5rem;
+    color: #8B4513;
+    text-align: center;
+    margin-top: 2px;
+}
+
+/* Right Page - Visa Stickers Styles */
+.page-title {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #8B4513;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #ddd;
+    letter-spacing: 2px;
+}
+
+.visa-stickers-grid {
     display: grid;
-    grid-template-columns: repeat(2, 2fr);
+    grid-template-columns: 1fr 1fr;
     gap: 20px;
-    max-width: 800px;
+    margin-bottom: 30px;
+}
+
+.visa-sticker {
+    background: linear-gradient(135deg, #fff 0%, #f8f8f8 100%);
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    transform: rotate(-2deg);
+}
+
+.visa-sticker:nth-child(2n) {
+    transform: rotate(2deg);
+}
+
+.visa-sticker.earned {
+    border-color: #28a745;
+    background: linear-gradient(135deg, #f0fff4 0%, #e8f5e8 100%);
+    box-shadow: 0 6px 18px rgba(40, 167, 69, 0.2);
+}
+
+.visa-sticker.locked {
+    opacity: 0.6;
+    background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+    border-color: #999;
+}
+
+.visa-sticker:hover {
+    transform: rotate(0deg) translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.sticker-flag {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.country-code {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #1a1a1a;
+    letter-spacing: 2px;
+    margin-bottom: 5px;
+}
+
+.country-name {
+    font-size: 0.8rem;
+    color: #666;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.sticker-status {
+    border-top: 1px solid #ddd;
+    padding-top: 8px;
+}
+
+.completed {
+    color: #28a745;
+    font-weight: bold;
+    font-size: 0.7rem;
+    display: block;
+    margin-bottom: 3px;
+}
+
+.pending {
+    color: #999;
+    font-weight: bold;
+    font-size: 0.7rem;
+}
+
+.date {
+    font-size: 0.6rem;
+    color: #666;
+    font-style: italic;
+}
+
+/* Entry Stamps */
+.entry-stamps {
+    text-align: center;
+    margin-top: auto;
+}
+
+.passport-stamp {
+    display: inline-block;
+    width: 120px;
+    height: 80px;
+    border: 3px solid #8B4513;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(8deg);
+    background: rgba(139, 69, 19, 0.1);
     margin: 0 auto;
 }
 
-.passport-card {
-    background: #f5f5f5;
-    border-radius: 15px;
-    padding: 30px;
+.passport-stamp .stamp-border {
     text-align: center;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease;
-    position: relative;
-    border: 3px solid transparent;
+    padding: 5px;
 }
 
-.passport-card:hover {
-    transform: translateY(-5px);
-}
-
-.passport-card[data-status="earned"] {
-    border-color: #ffa51f;
-    background: linear-gradient(135deg, #f5f5f5 0%, rgba(255, 165, 31, 0.05) 100%);
-}
-
-.passport-card[data-status="locked"] {
-    opacity: 0.6;
-    background: #e0e0e0;
-}
-
-.passport-flag {
-    font-size: 4rem;
-    margin-bottom: 15px;
-    display: block;
-}
-
-.passport-name {
-    font-size: 1.4rem;
+.passport-stamp .stamp-text {
+    font-size: 0.8rem;
     font-weight: bold;
-    color: #1a1a1a;
-    margin-bottom: 10px;
+    color: #8B4513;
+    margin-bottom: 3px;
 }
 
-.passport-status {
-    font-size: 0.9rem;
-    padding: 5px 15px;
-    border-radius: 20px;
+.passport-stamp .stamp-authority {
+    font-size: 0.5rem;
+    color: #8B4513;
     font-weight: bold;
-    display: inline-block;
 }
 
-.passport-card[data-status="earned"] .passport-status {
-    background: #ffa51f;
-    color: #f5f5f5;
-}
-
-.passport-card[data-status="locked"] .passport-status {
-    background: #999;
-    color: #f5f5f5;
+/* Responsive design */
+@media (max-width: 768px) {
+    .passport-spread {
+        flex-direction: column;
+        gap: 20px;
+        padding: 10px;
+    }
+    
+    .left-page,
+    .right-page {
+        border-radius: 10px;
+        border-right: none;
+    }
+    
+    .left-page::before,
+    .right-page::before {
+        display: none;
+    }
+    
+    .visa-stickers-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .profile-photo-frame {
+        width: 100px;
+        height: 125px;
+    }
 }
 
 /* Achievements Section */
@@ -585,6 +884,85 @@ body > *:not(footer) {
     font-weight: 500;
 }
 
+/* Profile Picture Upload Styles */
+.profile-picture-section {
+    border: 2px dashed #ddd;
+    border-radius: 12px;
+    padding: 20px;
+    background: rgba(255, 165, 31, 0.02);
+    transition: all 0.3s ease;
+}
+
+.profile-picture-section:hover {
+    border-color: #ffa51f;
+    background: rgba(255, 165, 31, 0.05);
+}
+
+.avatar-upload-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.current-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid #ffa51f;
+    box-shadow: 0 4px 12px rgba(255, 165, 31, 0.2);
+    flex-shrink: 0;
+}
+
+.current-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.avatar-upload-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+    min-width: 200px;
+}
+
+.file-input {
+    display: none;
+}
+
+.upload-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background: linear-gradient(45deg, #ffa51f, #ff8c00);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.upload-btn:hover {
+    background: linear-gradient(45deg, #ff8c00, #ff7700);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 165, 31, 0.3);
+}
+
+.upload-hint {
+    color: #666;
+    font-size: 0.8rem;
+    font-style: italic;
+    text-align: center;
+}
+
 .profile-input {
     padding: 12px 15px;
     border: 2px solid #ddd;
@@ -714,8 +1092,37 @@ body > *:not(footer) {
         grid-template-columns: repeat(3, 1fr);
     }
     
-    .passports-grid {
-        grid-template-columns: repeat(3, 1fr);
+    .passport-pages {
+        grid-template-columns: 1fr;
+    }
+    
+    .passport-cover {
+        padding: 30px 20px;
+    }
+    
+    .passport-title {
+        font-size: 1.4rem;
+        letter-spacing: 2px;
+    }
+    
+    .passport-subtitle {
+        font-size: 2rem;
+        letter-spacing: 3px;
+    }
+    
+    .passport-page {
+        min-height: auto;
+        padding: 20px;
+    }
+    
+    .page-content {
+        flex-direction: column;
+        gap: 20px;
+        margin-left: 40px;
+    }
+    
+    .page-header {
+        margin-left: 40px;
     }
     
     .achievements-grid {
@@ -724,6 +1131,15 @@ body > *:not(footer) {
     
     .settings-grid {
         grid-template-columns: 1fr;
+    }
+    
+    .avatar-upload-container {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .current-avatar {
+        align-self: center;
     }
     
     .quick-actions {
@@ -745,9 +1161,44 @@ body > *:not(footer) {
         grid-template-columns: repeat(2, 1fr);
     }
     
-    .passports-grid {
+    .passport-pages {
         grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .passport-page {
+        padding: 15px;
+        margin: 0 10px;
+    }
+    
+    .passport-page::before {
+        width: 30px;
+    }
+    
+    .page-header {
+        margin-left: 35px;
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+    
+    .page-content {
+        margin-left: 35px;
+        flex-direction: column;
         gap: 15px;
+    }
+    
+    .country-flag {
+        font-size: 2.5rem;
+    }
+    
+    .country-name {
+        font-size: 1.4rem;
+    }
+    
+    .visa-stamp {
+        width: 100px;
+        height: 100px;
     }
     
     .calendar-grid {
@@ -756,5 +1207,19 @@ body > *:not(footer) {
     
     .calendar-day {
         font-size: 0.8rem;
+    }
+    
+    .avatar-upload-container {
+        gap: 15px;
+    }
+    
+    .current-avatar {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .upload-btn {
+        font-size: 0.8rem;
+        padding: 10px 16px;
     }
 }

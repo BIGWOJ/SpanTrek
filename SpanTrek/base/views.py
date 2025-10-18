@@ -6,6 +6,7 @@ from .models import User
 from lessons.models import Lesson, Vocabulary, Sentence
 from .forms import My_User_Creation_Form
 from .services import AchievementService
+import os
 
 
 def home_page(request):
@@ -80,16 +81,38 @@ def user_page(request, pk):
     
     # Update settings 
     if request.method == 'POST':
-        if request.POST['email'] != user.email:
+        # Avatar upload
+        if 'avatar' in request.FILES:
+            avatar_file = request.FILES['avatar']
+            
+            # Validate file type despite in HTML accept attribute (can be bypassed)
+            valid_types = ['image/jpg', 'image/jpeg', 'image/png']
+            print(avatar_file.content_type)
+            if avatar_file.content_type not in valid_types:
+                messages.error(request, 'Please select a valid image file (JPG, PNG)')
+                return redirect('user_page', pk=user.id)
+            
+            # Validate file size up to 5MB
+            max_size = 5 * 1024 * 1024
+            if avatar_file.size > max_size:
+                messages.error(request, 'File size must be less than 5MB')
+                return redirect('user_page', pk=user.id)
+                        
+            # If all validations passed, save the file
+            user.avatar = avatar_file
+            user.save()
+            messages.success(request, 'Profile picture updated successfully')
+        
+        if request.POST.get('email') and request.POST['email'] != user.email:
             print(request.POST['email'])
             user.email = request.POST['email']
             user.save()
             messages.success(request, 'Email updated successfully')
 
-        if request.POST['current_password'] != '':
+        if request.POST.get('current_password') and request.POST['current_password'] != '':
             if user.check_password(request.POST['current_password']):
-                new_password = request.POST['new_password']
-                confirm_password = request.POST['confirm_password']
+                new_password = request.POST.get('new_password', '')
+                confirm_password = request.POST.get('confirm_password', '')
                 if new_password == '' or confirm_password == '':
                     messages.error(request, 'New password fields cannot be empty')
                     return redirect('user_page', pk=user.id)

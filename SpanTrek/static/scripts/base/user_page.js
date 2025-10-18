@@ -132,23 +132,23 @@ class ActivityCalendar {
 }
 
 function expandSettings() {
-    const collapsedDiv = document.getElementById('settings-collapsed');
-    const expandedDiv = document.getElementById('settings-expanded');
+    const collapsedDiv = document.getElementById("settings-collapsed");
+    const expandedDiv = document.getElementById("settings-expanded");
 
-    collapsedDiv.style.display = 'none';
-    expandedDiv.style.display = 'block';
+    collapsedDiv.style.display = "none";
+    expandedDiv.style.display = "block";
 }
 
-    // Collapse settings section
+// Collapse settings section
 function collapseSettings() {
-    const collapsedDiv = document.getElementById('settings-collapsed');
-    const expandedDiv = document.getElementById('settings-expanded');
+    const collapsedDiv = document.getElementById("settings-collapsed");
+    const expandedDiv = document.getElementById("settings-expanded");
 
-    expandedDiv.style.display = 'none';
-    collapsedDiv.style.display = 'flex';
+    expandedDiv.style.display = "none";
+    collapsedDiv.style.display = "flex";
 
     // Reset the form when collapsing
-    const form = document.querySelector('.profile-form');
+    const form = document.querySelector(".profile-form");
 }
 
 // Settings functionality
@@ -380,6 +380,57 @@ function initKeyboardShortcuts() {
     });
 }
 
+// Avatar upload functionality
+function initAvatarUpload() {
+    const avatarInput = document.getElementById("avatar-input");
+    const avatarPreview = document.getElementById("avatar-preview");
+
+    if (avatarInput && avatarPreview) {
+        avatarInput.addEventListener("change", function (e) {
+            const file = e.target.files[0];
+
+            if (file) {
+                // Create preview (validation will be done on server-side)
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    avatarPreview.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Drag and drop
+        const uploadContainer = document.querySelector(
+            ".profile-picture-section"
+        );
+        if (uploadContainer) {
+            uploadContainer.addEventListener("dragover", function (e) {
+                e.preventDefault();
+                uploadContainer.style.borderColor = "#ffa51f";
+                uploadContainer.style.background = "rgba(255, 165, 31, 0.1)";
+            });
+
+            uploadContainer.addEventListener("dragleave", function (e) {
+                e.preventDefault();
+                uploadContainer.style.borderColor = "#ddd";
+                uploadContainer.style.background = "rgba(255, 165, 31, 0.02)";
+            });
+
+            uploadContainer.addEventListener("drop", function (e) {
+                e.preventDefault();
+                uploadContainer.style.borderColor = "#ddd";
+                uploadContainer.style.background = "rgba(255, 165, 31, 0.02)";
+
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    avatarInput.files = files;
+                    avatarInput.dispatchEvent(new Event("change"));
+                }
+            });
+        }
+    }
+}
+
 // Initialize all functionality when page loads
 document.addEventListener("DOMContentLoaded", () => {
     // Initialize calendar
@@ -391,7 +442,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initAchievements();
     initToggleSwitches();
     initKeyboardShortcuts();
-    
+    initAvatarUpload();
 });
 
 // Export functions for potential external use
@@ -399,4 +450,5 @@ window.UserPageFunctions = {
     toggleEdit,
     showNotification,
     ActivityCalendar,
+    initAvatarUpload,
 };
