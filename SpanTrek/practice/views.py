@@ -109,7 +109,6 @@ def practice_main(request, index):
 
 @login_required
 def practice_complete(request):
-    request.user.update_progress_after_practice()
     
     practice_items = request.session.get('practice_items', [])
     
@@ -120,9 +119,13 @@ def practice_complete(request):
     practice_type = request.session.get('practice_type', 'vocabulary')
     total_count = len(practice_items)
     
+    request.user.update_progress_after_practice(practice_type=practice_type)
+    request.user.progress_daily_challenges(practice_type=practice_type)
+
     context = {
         'practice_type': practice_type,
         'total_count': total_count,
     }
     
     return render(request, 'practice/practice_complete.html', context=context)
+

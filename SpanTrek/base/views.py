@@ -16,9 +16,13 @@ def home_page(request):
     
 
     all_lessons_count = Lesson.objects.count()
+    completed_daily_challenges_count = sum(1 for challenge in request.user.daily_challenges if challenge['completed'])
+    daily_challenges = request.user.daily_challenges
 
     context = {
         'all_lessons_count': all_lessons_count,
+        'completed_daily_challenges_count': completed_daily_challenges_count,
+        'daily_challenges': daily_challenges,
     }
     return render(request, 'base/home.html', context)
 

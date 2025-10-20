@@ -4,6 +4,9 @@ from django.utils import timezone
 from django.utils.text import slugify
 from datetime import date
 from lessons.models import Lesson
+from practice.models import DailyChallenge
+import random
+
 
 class User(AbstractUser):
     username = models.CharField(max_length=150, unique=True, blank=False, null=False)
@@ -29,11 +32,14 @@ class User(AbstractUser):
     default_sentence_practice_count = models.IntegerField(default=10)
     default_listening_practice_count = models.IntegerField(default=10)
 
-    # Country lessons progress tracking
+    # Country/landmark lessons progress tracking
     country_lessons_progress = models.JSONField(default=dict, blank=True)  # e.g., {"Spain": 3, "Mexico": 5}
-    
     landmark_lessons_progress = models.JSONField(default=dict, blank=True)  # e.g., {"Madrid": 2, "Warsaw": 4}
     
+    # Daily challenges
+    daily_challenges = models.JSONField(default=list, blank=True)
+
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 
@@ -83,19 +89,17 @@ class User(AbstractUser):
                 lesson_number + 1
             )
 
+            self.progress_daily_challenges(lesson=lesson)
             self.save()
 
-    def update_progress_after_practice(self):
-        print(date.today())
-        print(self.last_activity_date)
-        
+    def update_progress_after_practice(self, practice_type):
         if self.is_authenticated:
             if self.last_activity_date != date.today():
-                print('aaa')
                 self.mark_activity_today()
                 self.calculate_streak()
             
             self.experience += 20
+            self.progress_daily_challenges(practice_type=practice_type)
             self.save()
 
     def has_achievement(self, achievement_name):
@@ -180,6 +184,63 @@ class User(AbstractUser):
         highest_streak = self.highest_streak
         if current_streak > highest_streak:
             self.highest_streak = current_streak
+
+    def create_daily_challenges(self):
+        all_challenges = list(DailyChallenge.objects.all())
+        daily_challenges_count = 3
+        selected_challenges = random.sample(all_challenges, k=min(daily_challenges_count, len(all_challenges)))
+        
+        self.daily_challenges = [
+            {
+                'code': challenge.code,
+                'description': challenge.description,
+                'progress': 0,
+                'max_progress': challenge.max_progress,
+                'completed': False
+            }
+            for challenge in selected_challenges
+        ]
+        self.save()
+        
+    def progress_daily_challenges(self, practice_type=None, lesson=None):
+        # Map practice types to challenge prefixes
+        practice_prefixes = {
+            'random': ('RP', 'P'),
+            'vocabulary': ('VP', 'P'), 
+            'sentence': ('SP', 'P'),
+            'listening': ('LP', 'P')
+        }
+        
+        # Get prefixes if practice_type is provided and valid
+        prefixes = practice_prefixes.get(practice_type, ()) if practice_type else ()
+        
+        for challenge in self.daily_challenges:
+             # Experience points challenge
+            if challenge['code'].startswith('EX') and not challenge['completed']:
+                challenge['progress'] += 20
+                
+            # Complete lessons challenge
+            if challenge['code'].startswith('C') and not challenge['completed']:
+                challenge['progress'] += 1
+
+            # Practice challenges
+            if not challenge['completed'] and prefixes and challenge['code'].startswith(prefixes):
+                challenge['progress'] += 1
+
+            # Learn new (vocabularies/sentences/audios) / complete lessons challenge
+            if lesson is not None and challenge['code'].startswith(('C', 'NW', 'NS', 'NA')) and not challenge['completed']:
+                if challenge['code'].startswith('NW'):
+                    challenge['progress'] += lesson.vocabularies.count()
+                elif challenge['code'].startswith('NS'):
+                    challenge['progress'] += lesson.sentences.count()
+                elif challenge['code'].startswith('NA'):
+                    challenge['progress'] += lesson.audios.count()
+
+            # Check if challenge is completed
+            if challenge['progress'] >= challenge['max_progress']:
+                    challenge['completed'] = True
+
+        self.save()
 
 
 class Achievement(models.Model):

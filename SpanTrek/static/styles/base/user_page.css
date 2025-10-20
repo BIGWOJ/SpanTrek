@@ -59,10 +59,10 @@ body > *:not(footer) {
     width: 120px;
     height: 120px;
     border-radius: 50%;
-    background: linear-gradient(45deg, #ffa51f, #ff8c00);
     display: flex;
     align-items: center;
     justify-content: center;
+    border: 3px solid #ffa51f;
     box-shadow: 0 5px 15px rgba(255, 165, 31, 0.3);
     overflow: hidden;
     padding: 3px;

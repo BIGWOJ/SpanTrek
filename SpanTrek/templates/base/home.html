@@ -128,19 +128,29 @@
         <div class="daily-challenge">
             <div class="challenge-card">
                 <div class="challenge-header">
-                    <h3>Daily challenge</h3>
-                    <div class="challenge-reward">+50 XP</div>
+                    <h3>Daily challenges</h3>
+                    <div class="{% if completed_daily_challenges_count == daily_challenges|length %}challenge-reward completed{%else%}challenge-reward{% endif %}">
+                        {% if completed_daily_challenges_count == daily_challenges|length %}
+                            Completed! +75 XP
+                        {% else %}
+                            +75 XP
+                        {% endif %}
+                    </div>
                 </div>
                 <p class="challenge-text">
-                    Complete 3 lessons today to earn bonus XP!
+                    Complete your daily challenges to earn extra XP!
                 </p>
                 <div class="challenge-progress">
                     <div class="challenge-steps">
-                        <div class="step completed">1</div>
-                        <div class="step completed">2</div>
-                        <div class="step">3</div>
+                        {% for challenge in daily_challenges %}
+                            {% if challenge.completed %}
+                            <div class="step completed challenge-step" challenge-description="{{ challenge.description }}">{{ forloop.counter }}</div>
+                            {% else %}
+                            <div class="step challenge-step" challenge-description="{{ challenge.description }}">{{ forloop.counter }}</div>
+                            {% endif %}
+                        {% endfor %}
                     </div>
-                    <span class="challenge-status">2/3 completed</span>
+                    <span class="challenge-status">{{ completed_daily_challenges_count }}/{{ daily_challenges|length }} completed</span>
                 </div>
             </div>
         </div>

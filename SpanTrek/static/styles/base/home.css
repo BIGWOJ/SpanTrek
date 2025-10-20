@@ -392,6 +392,11 @@ body > *:not(footer) {
     font-weight: bold;
 }
 
+.challenge-reward.completed {
+    background: rgba(31, 255, 132, 0.3);
+    color: #f5f5f5;
+}
+
 .challenge-text {
     margin-bottom: 20px;
     opacity: 0.9;
@@ -422,6 +427,53 @@ body > *:not(footer) {
 .challenge-status {
     font-size: 0.9rem;
     opacity: 0.8;
+}
+
+/* Challenge tooltip styles */
+.challenge-tooltip {
+    position: absolute;
+    background: rgba(26, 26, 26, 0.95);
+    color: #f5f5f5;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: 1px solid #ffa51f;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(-50%, -100%) translateY(-10px);
+    transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+    max-width: 250px;
+    text-align: center;
+    line-height: 1.4;
+}
+
+.challenge-tooltip.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -100%) translateY(0);
+}
+
+.challenge-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: #ffa51f;
+}
+
+.challenge-step {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.challenge-step:hover {
+    transform: scale(1.1);
+    box-shadow: 0 2px 8px rgba(255, 165, 31, 0.4);
 }
 
 /* Responsive Design */
