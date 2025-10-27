@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from lessons.models import Lesson, Country
+from lessons.models import Lesson, Country, Landmark
 import json
 import os
 
@@ -31,27 +31,49 @@ class Command(BaseCommand):
 
             for lesson_data in lessons_data:
                 try:
-                    # Remove ManyToMany fields and country from defaults
-                    defaults = {k: v for k, v in lesson_data.items() if k not in ['vocabularies', 'sentences', 'country']}
+                    # Remove ManyToMany fields and ForeignKey fields from defaults
+                    defaults = {k: v for k, v in lesson_data.items() if k not in ['vocabularies', 'sentences', 'country', 'landmark']}
 
+                    # Get the country object
                     country_obj = Country.objects.filter(name=lesson_data['country']).first()
+                    if not country_obj:
+                        self.stdout.write(
+                            self.style.ERROR(f'Country "{lesson_data["country"]}" not found. Please create it first.')
+                        )
+                        continue
+
+                    # Get or create the landmark object
+                    landmark_obj, landmark_created = Landmark.objects.get_or_create(
+                        name=landmark,
+                        country=country_obj,
+                        defaults={'adventure_order': 1}  # You can adjust this default value
+                    )
+                    
+                    if landmark_created:
+                        self.stdout.write(
+                            self.style.SUCCESS(f'Created landmark: {landmark_obj}')
+                        )
 
                     # Try to get existing lesson by landmark and order
                     lesson, created = Lesson.objects.get_or_create(
-                        landmark=landmark,
-                        country=country_obj,
+                        landmark=landmark_obj,
                         order=lesson_data['order'],
-                        defaults=defaults
+                        defaults={**defaults, 'country': country_obj}
                     )
 
                     if not created:
                         # Check if any data needs updating
                         update_needed = False
                         for key, value in lesson_data.items():
-                                if key not in ['vocabularies', 'sentences']:
-                                    if getattr(lesson, key) != value:
-                                        setattr(lesson, key, value)
-                                        update_needed = True
+                            if key not in ['vocabularies', 'sentences', 'country', 'landmark']:
+                                if getattr(lesson, key) != value:
+                                    setattr(lesson, key, value)
+                                    update_needed = True
+                        
+                        # Also check if country needs updating
+                        if lesson.country != country_obj:
+                            lesson.country = country_obj
+                            update_needed = True
 
                         if update_needed:
                             lesson.save()

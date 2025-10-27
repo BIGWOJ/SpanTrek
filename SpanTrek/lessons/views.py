@@ -8,6 +8,10 @@ from .models import Lesson, Country
 
 @login_required
 def world_map(request):
+    # Handle POST request for continue adventure button
+    if request.method == 'POST' and request.POST.get('action') == 'continue_adventure':
+        continue_adventure_button(request)
+    
     progress_bar_progress = request.user.country_lessons_progress
     user_progress = sum(progress_bar_progress.values())
     user_countries_progress = request.user.country_lessons_progress
@@ -17,8 +21,6 @@ def world_map(request):
     countries_lessons_dict = {}
     for country_obj in all_countries:
         countries_lessons_dict[country_obj.name] = Lesson.objects.filter(country=country_obj).count()
-
-    # country_color_class = "lessons_done" if user_countries_progress.get(country_obj.name, 0) > 0 else "spanish-country"
 
     # Calculate completion status for each country
     country_completion_status = {}
@@ -61,8 +63,7 @@ def country_landmark_lesson(request, country, landmark, lesson_number=None, exer
     # If lesson_number is not provided, show intro page first
     if lesson_number is None:
         lesson = Lesson.objects.filter(landmark=landmark, order=landmark_progress).first()
-        print(lesson_number, landmark, landmark_progress)
-        print(lesson)
+
         context = {
             'landmark': landmark,
             'country': country,
@@ -175,6 +176,7 @@ def lesson_complete(request, country, landmark, lesson_number):
 
     return render(request, 'lessons/lesson_complete.html', context=context)
 
+
 @login_required
 def country_complete(request, country):
     """View for country completion page with congratulations and statistics"""  
@@ -190,6 +192,7 @@ def country_complete(request, country):
     
     
     return render(request, 'lessons/country_complete.html', context=context)
+
 
 @login_required
 def check_exercise_done(request):

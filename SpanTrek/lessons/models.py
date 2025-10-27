@@ -15,13 +15,15 @@ class Landmark(models.Model):
     """Places within countries (e.g., Madrid, Warsaw, Macchu Picchu)"""
     country = models.ForeignKey(Country, on_delete=models.CASCADE, related_name='landmarks')
     name = models.CharField(max_length=100)
+    adventure_order = models.IntegerField(default=1)
+
 
     class Meta:
         unique_together = ('country', 'name')
         ordering = ['country', 'name']
 
     def __str__(self):
-        return f"{self.name}, {self.country.name}"
+        return f"{self.country.name}, {self.name}"
 
 
 class AdventureLesson(models.Model):
@@ -47,7 +49,8 @@ class Lesson(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()
     order = models.IntegerField()
-    landmark = models.CharField(max_length=50)  # e.g., szczecin, krakow, etc.
+    adventure_order = models.IntegerField(default=1)
+    landmark = models.ForeignKey(Landmark, on_delete=models.CASCADE, related_name='lessons')
     country = models.ForeignKey(Country, on_delete=models.CASCADE, null=True, blank=True)
     vocabularies = models.ManyToManyField('Vocabulary', blank=True, related_name='lessons')
     sentences = models.ManyToManyField('Sentence', blank=True, related_name='lessons')
@@ -60,7 +63,7 @@ class Lesson(models.Model):
         unique_together = ('landmark', 'order')
 
     def __str__(self):
-        return f"{self.landmark.title()} - {self.title}"
+        return f"{self.landmark.name.title()} - {self.title}"
 
 
 class Vocabulary(models.Model):
