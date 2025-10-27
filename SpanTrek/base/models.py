@@ -189,7 +189,7 @@ class User(AbstractUser):
         all_challenges = list(DailyChallenge.objects.all())
         daily_challenges_count = 3
         selected_challenges = random.sample(all_challenges, k=min(daily_challenges_count, len(all_challenges)))
-        
+                
         self.daily_challenges = [
             {
                 'code': challenge.code,

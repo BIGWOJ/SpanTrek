@@ -14,7 +14,6 @@ def home_page(request):
     if not request.user.is_authenticated:
         return redirect('login_page')
     
-
     all_lessons_count = Lesson.objects.count()
     completed_daily_challenges_count = sum(1 for challenge in request.user.daily_challenges if challenge['completed'])
     daily_challenges = request.user.daily_challenges
