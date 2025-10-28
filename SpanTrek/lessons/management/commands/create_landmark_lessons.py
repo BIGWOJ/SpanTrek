@@ -46,7 +46,7 @@ class Command(BaseCommand):
                     landmark_obj, landmark_created = Landmark.objects.get_or_create(
                         name=landmark,
                         country=country_obj,
-                        defaults={'adventure_order': 1}  # You can adjust this default value
+                        defaults={}
                     )
                     
                     if landmark_created:

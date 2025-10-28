@@ -13,13 +13,6 @@ class LandmarkAdmin(admin.ModelAdmin):
     list_filter = ['country']
     search_fields = ['name']
 
-
-@admin.register(AdventureLesson)  
-class AdventureLessonAdmin(admin.ModelAdmin):
-    list_display = ['lesson_id', 'country', 'order', 'experience_points', 'required_score']
-    list_filter = ['country']
-    ordering = ['country', 'order']
-    
     
 @admin.register(Lesson)
 class LessonAdmin(admin.ModelAdmin):

@@ -7,13 +7,20 @@ from lessons.models import Lesson, Vocabulary, Sentence
 from .forms import My_User_Creation_Form
 from .services import AchievementService
 import os
+from datetime import date
 
 
 def home_page(request):
     # If user is not authenticated, redirect to login page
     if not request.user.is_authenticated:
         return redirect('login_page')
-    
+
+    # Create a new daily challenge for the user
+    if request.user.daily_challenges_creation_date is None or request.user.daily_challenges_creation_date < date.today():
+        request.user.daily_challenges_creation_date = date.today()
+        request.user.create_daily_challenges()
+        request.user.save()
+
     all_lessons_count = Lesson.objects.count()
     completed_daily_challenges_count = sum(1 for challenge in request.user.daily_challenges if challenge['completed'])
     daily_challenges = request.user.daily_challenges

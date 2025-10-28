@@ -1,3 +1,3 @@
 1. Uporządkować achievements
 2. Mega redundant code w mapdata.js do zmieniania kolorów pinów, może osobny plik tylko do tego? Działać działa, ale brzydko totalnie
-3. landmark w class Lesson jest stringiem a nie ForeignKey do class Landmark, naprawić to teraz, bo później więcej kłopotów i roboty
+3. Może jakoś adventure_order zrobić dla Lesson, żeby Continue button działał w world map?

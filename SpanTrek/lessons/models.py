@@ -15,8 +15,6 @@ class Landmark(models.Model):
     """Places within countries (e.g., Madrid, Warsaw, Macchu Picchu)"""
     country = models.ForeignKey(Country, on_delete=models.CASCADE, related_name='landmarks')
     name = models.CharField(max_length=100)
-    adventure_order = models.IntegerField(default=1)
-
 
     class Meta:
         unique_together = ('country', 'name')
@@ -25,31 +23,11 @@ class Landmark(models.Model):
     def __str__(self):
         return f"{self.country.name}, {self.name}"
 
-
-class AdventureLesson(models.Model):
-    """Main lesson model"""
-    
-    lesson_id = models.AutoField(primary_key=True, help_text="Auto-incrementing lesson identifier")
-    country = models.ForeignKey(Country, on_delete=models.CASCADE)
-    order = models.IntegerField(default=1)
-    
-    # Gamification
-    experience_points = models.IntegerField(default=10)
-    required_score = models.IntegerField(default=75, help_text="Minimum score to pass (percentage)")
-
-    class Meta:
-        ordering = ['country', 'order']
-
-    def __str__(self):
-        return f"Lesson {self.lesson_id}: {self.country.name} - Order {self.order}"
-
-
 class Lesson(models.Model):
     """Spanish lessons organized by landmark"""
     title = models.CharField(max_length=200)
     content = models.TextField()
     order = models.IntegerField()
-    adventure_order = models.IntegerField(default=1)
     landmark = models.ForeignKey(Landmark, on_delete=models.CASCADE, related_name='lessons')
     country = models.ForeignKey(Country, on_delete=models.CASCADE, null=True, blank=True)
     vocabularies = models.ManyToManyField('Vocabulary', blank=True, related_name='lessons')
@@ -63,7 +41,7 @@ class Lesson(models.Model):
         unique_together = ('landmark', 'order')
 
     def __str__(self):
-        return f"{self.landmark.name.title()} - {self.title}"
+        return f"{self.landmark.name} - {self.title}"
 
 
 class Vocabulary(models.Model):

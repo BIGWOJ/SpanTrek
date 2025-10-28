@@ -9,7 +9,7 @@ from .models import Lesson, Country
 @login_required
 def world_map(request):
     # Handle POST request for continue adventure button
-    if request.method == 'POST' and request.POST.get('action') == 'continue_adventure':
+    if request.POST.get('action') == 'continue_adventure':
         continue_adventure_button(request)
     
     progress_bar_progress = request.user.country_lessons_progress
@@ -226,3 +226,6 @@ def check_exercise_done(request):
     # Handle GET request
     return JsonResponse({'error': 'Method not allowed'}, status=405)
 
+@login_required
+def continue_adventure_button(request):
+    pass

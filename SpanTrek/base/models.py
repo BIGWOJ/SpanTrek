@@ -26,6 +26,8 @@ class User(AbstractUser):
     last_activity_date = models.DateField(null=True, blank=True)  # Track last activity for streak calculation
     passports_earned = models.JSONField(default=list, blank=True)  # Store list of earned passports
 
+    daily_challenges_creation_date = models.DateField(null=True, blank=True)  # Track last daily challenge creation date
+
     # Default numbers of practice questions 
     default_random_practice_count = models.IntegerField(default=20)  
     default_vocabulary_practice_count = models.IntegerField(default=20)
