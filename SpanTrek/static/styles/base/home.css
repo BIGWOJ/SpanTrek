@@ -222,6 +222,108 @@ body > *:not(footer) {
     padding: 12px 25px;
 }
 
+/* Leaderboard Section */
+.leaderboard-section {
+    margin-bottom: 50px;
+}
+
+.leaderboard-card {
+    max-width: 800px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, #f5f5f5 0%, rgba(255, 165, 31, 0.05) 100%);
+    border: 2px solid #ffa51f;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(255, 165, 31, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+}
+
+.leaderboard-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(255, 165, 31, 0.3);
+}
+
+.leaderboard-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.leaderboard-content {
+    display: flex;
+    align-items: center;
+    padding: 30px;
+    gap: 25px;
+}
+
+.leaderboard-icon {
+    font-size: 4rem;
+    filter: drop-shadow(0 2px 4px rgba(255, 165, 31, 0.3));
+    animation: trophy-glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes trophy-glow {
+    0% { 
+        transform: scale(1);
+        filter: drop-shadow(0 2px 4px rgba(255, 165, 31, 0.3));
+    }
+    100% { 
+        transform: scale(1.05);
+        filter: drop-shadow(0 4px 8px rgba(255, 165, 31, 0.5));
+    }
+}
+
+.leaderboard-info {
+    flex: 1;
+}
+
+.leaderboard-info h3 {
+    color: #1a1a1a;
+    font-size: 1.8rem;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.leaderboard-info p {
+    color: #2d2d2d;
+    font-size: 1rem;
+    margin-bottom: 15px;
+    opacity: 0.8;
+}
+
+.current-rank {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.rank-text {
+    color: #2d2d2d;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.rank-number {
+    background: linear-gradient(45deg, #ffa51f, #ff8c00);
+    color: #f5f5f5;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    box-shadow: 0 2px 8px rgba(255, 165, 31, 0.3);
+}
+
+.leaderboard-arrow {
+    font-size: 2rem;
+    color: #ffa51f;
+    font-weight: bold;
+    transition: transform 0.3s ease;
+}
+
+.leaderboard-card:hover .leaderboard-arrow {
+    transform: translateX(5px);
+}
+
 .lessons-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -494,6 +596,30 @@ body > *:not(footer) {
     .lessons-grid {
         grid-template-columns: 1fr;
         grid-template-rows: auto;
+    }
+    
+    .leaderboard-content {
+        flex-direction: column;
+        text-align: center;
+        padding: 25px;
+        gap: 20px;
+    }
+    
+    .leaderboard-info h3 {
+        font-size: 1.5rem;
+    }
+    
+    .current-rank {
+        justify-content: center;
+    }
+    
+    .leaderboard-arrow {
+        transform: rotate(90deg);
+        font-size: 1.5rem;
+    }
+    
+    .leaderboard-card:hover .leaderboard-arrow {
+        transform: rotate(90deg) translateX(5px);
     }
 }
 

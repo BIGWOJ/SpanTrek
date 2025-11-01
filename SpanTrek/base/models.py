@@ -41,6 +41,9 @@ class User(AbstractUser):
     # Daily challenges
     daily_challenges = models.JSONField(default=list, blank=True)
 
+    # Levels
+    levels = models.JSONField(default=dict, blank=True)  # e.g., {"overall": 10, "poland": 3, "spain": 1}
+
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
@@ -215,6 +218,7 @@ class User(AbstractUser):
         
         # Get prefixes if practice_type is provided and valid
         prefixes = practice_prefixes.get(practice_type, ()) if practice_type else ()
+        print(prefixes)
         
         for challenge in self.daily_challenges:
              # Experience points challenge

@@ -8,13 +8,15 @@ from .forms import My_User_Creation_Form
 from .services import AchievementService
 import os
 from datetime import date
+from django.contrib.auth.decorators import login_required
 
 
+@login_required
 def home_page(request):
     # If user is not authenticated, redirect to login page
     if not request.user.is_authenticated:
         return redirect('login_page')
-
+    request.user.progress_daily_challenges()
     # Create a new daily challenge for the user
     if request.user.daily_challenges_creation_date is None or request.user.daily_challenges_creation_date < date.today():
         request.user.daily_challenges_creation_date = date.today()
@@ -86,6 +88,7 @@ def logout_user(request):
     logout(request)
     return redirect('login_page')
 
+@login_required
 def user_page(request, pk):
     user = User.objects.get(id=pk)
     
@@ -197,3 +200,49 @@ def user_page(request, pk):
     }
 
     return render(request, 'base/user_page.html', context)
+
+@login_required
+def leaderboard_page(request, view_type):
+    all_users_count = User.objects.all().count()
+    
+    top_10_users = []
+    surrounding_users = []
+    country_leaders = []
+    
+    if view_type == 'top':
+        top_10_users = User.objects.all().order_by('-experience')[:10]
+        for i, user in enumerate(top_10_users):
+            user.display_rank = i + 1
+            
+    elif view_type == 'country':
+        # for i, user in enumerate(country_leaders):
+        #     user.display_rank = i + 1
+        pass
+            
+    elif view_type == 'overall':
+        # Get surrounding users (5 below + current user + 5 above)
+        users_below = User.objects.filter(experience__lt=request.user.experience).order_by('-experience')[:5]
+        users_above = User.objects.filter(experience__gt=request.user.experience).order_by('experience')[:5]
+        users_same_exp = User.objects.filter(experience=request.user.experience).exclude(id=request.user.id).order_by('id')
+        
+        # Combine and order properly
+        surrounding_users = list(users_below)[::-1] + list(users_same_exp) + [request.user] + list(users_above)
+        surrounding_users.reverse()
+        
+        # Calculate starting rank for the first user in the list
+        if surrounding_users:
+            first_user = surrounding_users[0]
+            start_rank = User.objects.filter(experience__gt=first_user.experience).count() + 1
+            
+            # Assign ranks
+            for i, user in enumerate(surrounding_users):
+                user.display_rank = start_rank + i
+
+    context = {
+        'all_users_count': all_users_count,
+        'top_10_users': top_10_users,
+        'surrounding_users': surrounding_users,
+        'country_leaders': country_leaders,
+        'view_type': view_type,
+    }
+    return render(request, 'base/leaderboard.html', context)

@@ -62,6 +62,26 @@
         </div>
     </div>
 
+    <div class="leaderboard-section">
+        <h2 class="section-title">Leaderboard</h2>
+        <div class="leaderboard-card">
+            <a href="{% url 'leaderboard' 'overall'%}" class="leaderboard-link">
+                <div class="leaderboard-content">
+                    <div class="leaderboard-icon">🏆</div>
+                    <div class="leaderboard-info">
+                        <h3>Compete with others</h3>
+                        <p>See how you rank among Spanish learners</p>
+                        <div class="current-rank">
+                            <span class="rank-text">Your current rank: </span>
+                            <span class="rank-number">{% if request.user.levels.overall %}{{request.user.levels.overall}}{% else %}Unranked{% endif %}</span>
+                        </div>
+                    </div>
+                    <div class="leaderboard-arrow">→</div>
+                </div>
+            </a>
+        </div>
+    </div>
+
     <div class="review-section">
         <h2 class="section-title">Review & practice</h2>
         <div class="lessons-grid">

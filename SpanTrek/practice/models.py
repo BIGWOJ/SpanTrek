@@ -4,10 +4,10 @@ class DailyChallenge(models.Model):
     """CODES:\n
         CxL - Complete x lessons\n
         Px  - Practice x times\n
-        RPx - Do random practice x times\n
-        VPx - Do vocabulary practice x times\n
-        SPx - Do sentence practice x times\n
-        LPx - Do listening practice x times\n
+        RPx - Do "random practice" x times\n
+        VPx - Do "vocabulary practice" x times\n
+        SPx - Do "sentence practice" x times\n
+        LPx - Do "listening practice" x times\n
         NWx - Learn x new words\n
         NSx - Learn x new sentences\n
         NAx - Learn x new audio clips\n
@@ -19,3 +19,4 @@ class DailyChallenge(models.Model):
 
     def __str__(self):
         return self.code
+

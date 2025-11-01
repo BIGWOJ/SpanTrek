@@ -1,0 +1,77 @@
+{%extends 'base/base.html'%} {% block styles %} {%load static%} {{ block.super }}
+<link
+    rel="stylesheet"
+    type="text/css"
+    href="{% static 'styles/base/leaderboard.css' %}"
+/>
+<script src="{% static 'scripts/base/leaderboard.js' %}"></script>
+{% endblock styles %} {%block content%}
+
+<div class="leaderboard-container">
+    <div class="leaderboard-header">
+        <h1 class="leaderboard-title">Leaderboard</h1>
+        <p class="leaderboard-subtitle">
+            Compete with Spanish learners around the world
+        </p>
+        <div class="users-count-info">
+            <span class="users-count-number">{{ all_users_count }}</span>
+            <span class="users-count-text">Spanish learners competing</span>
+        </div>
+    </div>
+
+    <div class="leaderboard-tabs">
+        <a href="{% url 'leaderboard' 'overall' %}"><button class="tab-button {% if view_type == 'overall' %}active{% endif %}" id="overall-tab">Overall</button></a>
+        <a href="{% url 'leaderboard' 'top' %}"><button class="tab-button {% if view_type == 'top' %}active{% endif %}" id="top10-tab">Top 10</button></a>
+        <a href="{% url 'leaderboard' 'country' %}"><button class="tab-button {% if view_type == 'country' %}active{% endif %}" id="country-tab">Country levels</button></a>
+    </div>
+
+    <div class="leaderboard-content">
+        <div class="surrounding-users-section">
+            <div class="users-list">
+                {% for user in surrounding_users %}
+                <a href="{% url 'user_page' user.id %}">
+                    <div
+                        class="user-row {% if user == request.user %}current-user{% endif %}"
+                    >
+                        <div class="rank">
+                            <span class="rank-number"
+                                >#{{ user.display_rank }}</span
+                            >
+                        </div>
+                        <div class="user-avatar">
+                            <img
+                                src="{{ user.avatar.url }}"
+                                alt="{{ user.username }}"
+                                class="avatar-img"
+                            />
+                        </div>
+                        <div class="user-info">
+                            <div class="username">{{ user.username }}</div>
+                            <div class="user-level">Level {{ user.level }}</div>
+                        </div>
+                        <div class="user-stats">
+                            <div class="experience">
+                                <span class="xp-number"
+                                    >{{ user.experience }}</span
+                                >
+                                <span class="xp-label">XP</span>
+                            </div>
+                            <div class="streak">
+                                <span class="streak-flame">🔥</span>
+                                <span class="streak-number"
+                                    >{{ user.days_streak }}</span
+                                >
+                            </div>
+                        </div>
+                        {% if user == request.user %}
+                        <div class="current-user-badge">YOU</div>
+                        {% endif %}
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{%endblock content%}
