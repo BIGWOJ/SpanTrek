@@ -29,7 +29,7 @@
             <div class="level-section">
                 <div class="level-badge">
                     <span class="level-number">{{ user.level }}</span>
-                    <span class="level-name">Beginner Explorer</span>
+                    <span class="level-name">{{ user_level_name }}</span>
                 </div>
                 <div class="xp-progress">
                     <span class="xp-text">{{ user.experience }} XP</span>
@@ -40,7 +40,7 @@
                         ></div>
                     </div>
                     <span class="next-level">
-                        {{ xp_needed_next_lvl }} XP to level {{ user.level|add:1
+                        {{ xp_for_next_level }} XP to level {{ user.level|add:1
                         }}
                     </span>
                 </div>
@@ -295,6 +295,12 @@
                 <div class="achievement-info">
                     <h4>{{ achievement.achievement.name }}</h4>
                     <p>{{ achievement.achievement.description }}</p>
+                    <div class="achievement-reward">
+                        <span class="xp-amount"
+                            >{{ achievement.achievement.experience_award }}
+                            XP</span
+                        >
+                    </div>
                 </div>
                 <div class="achievement-status">
                     {% if achievement.earned %}Earned{% else %}Locked{% endif %}

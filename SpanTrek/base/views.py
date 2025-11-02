@@ -45,7 +45,6 @@ def login_page(request):
         password = request.POST.get('password')
 
         error_message = False
-        print(email, password)
         
         try:
             user = User.objects.get(email=email)
@@ -100,7 +99,7 @@ def user_page(request, pk):
             
             # Validate file type despite in HTML accept attribute (can be bypassed)
             valid_types = ['image/jpg', 'image/jpeg', 'image/png']
-            print(avatar_file.content_type)
+
             if avatar_file.content_type not in valid_types:
                 messages.error(request, 'Please select a valid image file (JPG, PNG)')
                 return redirect('user_page', pk=user.id)
@@ -117,7 +116,6 @@ def user_page(request, pk):
             messages.success(request, 'Profile picture updated successfully')
         
         if request.POST.get('email') and request.POST['email'] != user.email:
-            print(request.POST['email'])
             user.email = request.POST['email']
             user.save()
             messages.success(request, 'Email updated successfully')
@@ -143,13 +141,14 @@ def user_page(request, pk):
                 messages.error(request, 'Current password is incorrect')
             
 
-    # Calculate some additional stats for the user page
-    xp_for_next_level = ((user.level) * 100) + 200  # Example formula
-    xp_needed_next_lvl = max(0, xp_for_next_level - user.experience)
+    # Experience calculations
+    xp_for_next_level = (user.level * 500) - user.experience
     progress_percentage = min(100, (user.experience / xp_for_next_level) * 100) if xp_for_next_level > 0 else 0
+
+    user_level_name = get_user_level_name(user.level)
     
-    # Get achievements with earned status
-    achievements = AchievementService.get_user_achievements_with_status(user)
+    # Achievements
+    achievements = AchievementService.get_user_achievements_status_exp(user)
 
     achievements_earned_count = sum(1 for ach in achievements if ach['earned'])
     total_achievements_count = len(achievements)
@@ -173,8 +172,9 @@ def user_page(request, pk):
     context = {
         'user': user,
         
-        'xp_needed_next_lvl': xp_needed_next_lvl,
+        'xp_for_next_level': xp_for_next_level,
         'progress_percentage': progress_percentage,
+        'user_level_name': user_level_name,
 
         'completed_lessons': user.adventure_progress,
         'total_lessons': total_lessons_count,
@@ -206,43 +206,53 @@ def leaderboard_page(request, view_type):
     all_users_count = User.objects.all().count()
     
     top_10_users = []
-    surrounding_users = []
+    leaderboard_users = []
     country_leaders = []
     
     if view_type == 'top':
-        top_10_users = User.objects.all().order_by('-experience')[:10]
-        for i, user in enumerate(top_10_users):
+        leaderboard_users = User.objects.all().order_by('-experience')[:10]
+        for i, user in enumerate(leaderboard_users):
             user.display_rank = i + 1
             
-    elif view_type == 'country':
-        # for i, user in enumerate(country_leaders):
-        #     user.display_rank = i + 1
-        pass
-            
-    elif view_type == 'overall':
+    elif view_type == 'user_position':
         # Get surrounding users (5 below + current user + 5 above)
         users_below = User.objects.filter(experience__lt=request.user.experience).order_by('-experience')[:5]
         users_above = User.objects.filter(experience__gt=request.user.experience).order_by('experience')[:5]
         users_same_exp = User.objects.filter(experience=request.user.experience).exclude(id=request.user.id).order_by('id')
         
         # Combine and order properly
-        surrounding_users = list(users_below)[::-1] + list(users_same_exp) + [request.user] + list(users_above)
-        surrounding_users.reverse()
+        leaderboard_users = list(users_below)[::-1] + list(users_same_exp) + [request.user] + list(users_above)
+        leaderboard_users.reverse()
         
         # Calculate starting rank for the first user in the list
-        if surrounding_users:
-            first_user = surrounding_users[0]
+        if leaderboard_users:
+            first_user = leaderboard_users[0]
             start_rank = User.objects.filter(experience__gt=first_user.experience).count() + 1
             
             # Assign ranks
-            for i, user in enumerate(surrounding_users):
+            for i, user in enumerate(leaderboard_users):
                 user.display_rank = start_rank + i
 
     context = {
         'all_users_count': all_users_count,
         'top_10_users': top_10_users,
-        'surrounding_users': surrounding_users,
+        'leaderboard_users': leaderboard_users,
         'country_leaders': country_leaders,
         'view_type': view_type,
     }
     return render(request, 'base/leaderboard.html', context)
+
+def get_user_level_name(level):
+    if level >= 25:
+        return "El Campeón"
+    elif level >= 20:
+        return "Expert Explorer"
+    elif level >= 15:
+        return "Advanced Explorer"
+    elif level >= 10:
+        return "Intermediate Explorer"
+    elif level >= 5:
+        return "Dedicated Learner"
+    else:
+        return "Beginner Explorer"
+    

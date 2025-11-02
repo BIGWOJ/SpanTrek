@@ -84,9 +84,9 @@ class AchievementService:
         return achievements_awarded
     
     @staticmethod
-    def get_user_achievements_with_status(user):
+    def get_user_achievements_status_exp(user):
         """Get all achievements with status (earned/not earned) for a specific user"""
-        all_achievements = Achievement.objects.filter(is_active=True)
+        all_achievements = Achievement.objects.all()
         user_earned_achievements = set(
             user.earned_achievements.values_list('achievement__name', flat=True)
         )
@@ -96,10 +96,11 @@ class AchievementService:
             achievements_data.append({
                 'achievement': achievement,
                 'earned': achievement.name in user_earned_achievements,
+                'experience_award': achievement.experience_award,
             })
-        
-        return achievements_data
-    
+
+        return sorted(achievements_data, key=lambda exp: exp['experience_award'], reverse=True)
+
     @staticmethod
     def award_manual_achievement(user, achievement_name):
         """Manually award an achievement (for admin or special cases)"""

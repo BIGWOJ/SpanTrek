@@ -588,7 +588,7 @@ body > *:not(footer) {
 
 .achievements-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(3, minmax(280px, 1fr));
     gap: 20px;
 }
 
@@ -630,8 +630,21 @@ body > *:not(footer) {
 
 .achievement-info p {
     color: #666;
-    margin: 0;
+    margin: 0 0 10px 0;
     font-size: 0.9rem;
+}
+
+.achievement-reward {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 8px;
+}
+
+.xp-amount {
+    color: #ffa51f;
+    font-weight: bold;
+    font-size: 0.85rem;
 }
 
 .achievement-status {

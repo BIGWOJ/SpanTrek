@@ -59,7 +59,7 @@ class User(AbstractUser):
             
             if self.landmark_lessons_progress.get(landmark, -1) >= lesson_number:
                 return  # No update needed if lesson already completed or in progress
-            self.experience += 50
+            self.experience += 100
             self.adventure_progress += 1
 
             lesson = Lesson.objects.filter(landmark=landmark, order=lesson_number).first()
@@ -250,11 +250,11 @@ class User(AbstractUser):
 
 
 class Achievement(models.Model):
+    code = models.CharField(max_length=50, unique=True)
     name = models.CharField(max_length=100, unique=True)  # Use name as unique identifier
     description = models.TextField()
     icon = models.CharField(max_length=50)
     experience_award = models.IntegerField(default=0)
-    is_active = models.BooleanField(default=True)  # To enable/disable achievements
 
     # Many-to-many relationship with User through UserAchievement
     users = models.ManyToManyField(User, through='UserAchievement', related_name='achievements')

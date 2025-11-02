@@ -330,9 +330,9 @@ function animateProgressBars() {
                 xpText.textContent.replace(" XP", "").replace(",", "")
             );
 
-            // Calculate target width as modulo 100 (experience % 100)
-            const targetWidth = (userExperience % 100) + "%";
-
+            // Calculate target width (500 exp for 1 level))
+            const targetWidth = (userExperience % 500) / 5 + "%";
+            console.log(xpText.textContent, userExperience, targetWidth);
             bar.style.width = "0%";
             setTimeout(() => {
                 bar.style.width = targetWidth;

@@ -20,23 +20,48 @@
     </div>
 
     <div class="leaderboard-tabs">
-        <a href="{% url 'leaderboard' 'overall' %}"><button class="tab-button {% if view_type == 'overall' %}active{% endif %}" id="overall-tab">Overall</button></a>
-        <a href="{% url 'leaderboard' 'top' %}"><button class="tab-button {% if view_type == 'top' %}active{% endif %}" id="top10-tab">Top 10</button></a>
-        <a href="{% url 'leaderboard' 'country' %}"><button class="tab-button {% if view_type == 'country' %}active{% endif %}" id="country-tab">Country levels</button></a>
+        <a href="{% url 'leaderboard' 'user_position' %}"
+            ><button
+                class="tab-button {% if view_type == 'user_position' %}active{% endif %}"
+                id="user_position-tab"
+            >
+                Your position
+            </button></a
+        >
+        <a href="{% url 'leaderboard' 'top' %}"
+            ><button
+                class="tab-button {% if view_type == 'top' %}active{% endif %}"
+                id="top10-tab"
+            >
+                Top 10
+            </button></a
+        >
     </div>
 
     <div class="leaderboard-content">
         <div class="surrounding-users-section">
             <div class="users-list">
-                {% for user in surrounding_users %}
+                {% for user in leaderboard_users %}
                 <a href="{% url 'user_page' user.id %}">
                     <div
-                        class="user-row {% if user == request.user %}current-user{% endif %}"
+                        class="user-row {% if user == request.user %}current-user{% endif %}{% if user.display_rank <= 3 %} podium-position rank-{{ user.display_rank }}{% endif %}"
                     >
                         <div class="rank">
+                            {% if user.display_rank <= 3 %}
+                            <div class="trophy-rank">
+                                {% if user.display_rank == 1 %}
+                                <span class="trophy gold">🥇</span>
+                                {% elif user.display_rank == 2 %}
+                                <span class="trophy silver">🥈</span>
+                                {% elif user.display_rank == 3 %}
+                                <span class="trophy bronze">🥉</span>
+                                {% endif %}
+                            </div>
+                            {% else %}
                             <span class="rank-number"
                                 >#{{ user.display_rank }}</span
                             >
+                            {% endif %}
                         </div>
                         <div class="user-avatar">
                             <img

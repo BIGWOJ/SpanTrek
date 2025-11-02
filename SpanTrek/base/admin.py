@@ -11,8 +11,7 @@ class UserAdmin(admin.ModelAdmin):
 
 @admin.register(Achievement)
 class AchievementAdmin(admin.ModelAdmin):
-    list_display = ['name', 'experience_award', 'is_active']
-    list_filter = ['is_active']
+    list_display = ['name', 'experience_award']
     search_fields = ['name', 'description']
 
 @admin.register(UserAchievement)
