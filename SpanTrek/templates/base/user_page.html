@@ -40,8 +40,7 @@
                         ></div>
                     </div>
                     <span class="next-level">
-                        {{ xp_for_next_level }} XP to level {{ user.level|add:1
-                        }}
+                        {{ xp_for_next_level }} XP to level {{ user.level|add:1 }}
                     </span>
                 </div>
             </div>
@@ -82,15 +81,20 @@
                     {{ user.achievements.count }}/{{ total_achievements }}
                 </div>
             </div>
-            <div class="stat-card">
+            <div class="stat-card {% if lowest_knowledge_section == 'vocabulary' %}needs-improvement{% endif %}">
                 <div class="stat-icon">📚</div>
                 <div class="stat-value">{{ words_learned_percentage }}%</div>
                 <div class="stat-label">Words learned</div>
                 <div class="stat-sublabel">
                     {{ words_learned_count }}/{{ total_words_count }}
                 </div>
+                {% if lowest_knowledge_section == 'vocabulary' %}
+                <div class="improvement-badge">
+                    <span class="improve-text">💪 Strengthen This</span>
+                </div>
+                {% endif %}
             </div>
-            <div class="stat-card">
+            <div class="stat-card {% if lowest_knowledge_section == 'sentences' %}needs-improvement{% endif %}">
                 <div class="stat-icon">💬</div>
                 <div class="stat-value">
                     {{ sentences_learned_percentage }}%
@@ -99,14 +103,24 @@
                 <div class="stat-sublabel">
                     {{ sentences_learned_count }}/{{ total_sentences_count }}
                 </div>
+                {% if lowest_knowledge_section == 'sentences' %}
+                <div class="improvement-badge">
+                    <span class="improve-text">💪 Strengthen This</span>
+                </div>
+                {% endif %}
             </div>
-            <div class="stat-card">
+            <div class="stat-card {% if lowest_knowledge_section == 'usage' %}needs-improvement{% endif %}">
                 <div class="stat-icon">🇪🇸</div>
-                <div class="stat-value">{{ spanish_usage_percentage }}%</div>
+                <div class="stat-value">{{ use_of_spanish_percentage }}%</div>
                 <div class="stat-label">Use of Spanish</div>
                 <div class="stat-sublabel">
                     {{ user.use_of_spanish }}/{{ total_usage_count }}
                 </div>
+                {% if lowest_knowledge_section == 'usage' %}
+                <div class="improvement-badge">
+                    <span class="improve-text">💪 Strengthen This</span>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>

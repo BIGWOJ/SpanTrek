@@ -30,16 +30,16 @@
             <div class="level-info">
                 <h3>Current level</h3>
                 <div class="level-badge">
-                    <span class="level-number">{{user.level}}</span>
-                    <span class="level-name">//level name//</span>
+                    <span class="level-number">{{ user.level }}</span>
+                    <span class="level-name">{{ user_level_name }}</span>
                 </div>
             </div>
             <div class="xp-info">
-                <span class="xp-text">{{user.experience}} XP</span>
+                <span class="xp-text">{{ user.experience }} XP</span>
                 <div class="progress-bar">
-                    <div class="progress-fill" style="width: 65%"></div>
+                    <div class="progress-fill" style="width: {{ progress_percentage }}%"></div>
                 </div>
-                <span class="next-level">XXX levels to //next level name//</span>
+                <span class="next-level">{{ levels_for_next_level }} levels to {{ next_level_name }}</span>
             </div>
         </div>
     </div>
@@ -48,15 +48,32 @@
         <h2 class="section-title">Spanish Trek</h2>
         <div class="main-course-card">
             <a href="{% url 'lessons:world_map' %}" class="lesson-card-link">
-                <div class="lesson-card current main-lesson">
-                    <div class="lesson-icon active">🗺️</div>
+                <div class="lesson-card current main-lesson {% if filled_stars == 3 %}completed-adventure{% endif %}">
+                    <div class="lesson-icon active">
+                        {% if filled_stars == 3 %}
+                        <div class="crown-hat">👑</div>
+                        {% endif %}
+                        🗺️
+                    </div>
                     <h4>Main adventure</h4>
                     <div class="lesson-progress">
-                        <div class="stars">⭐⭐☆</div>
+                        <div class="stars">
+                            {% for i in "012"|make_list %}
+                                {% if forloop.counter0 < filled_stars %}⭐
+                                {% else %}☆
+                                {% endif %}
+                            {% endfor %}
+                        </div>
                         <span class="completion">{{ user.adventure_progress }} / {{ all_lessons_count }}
                             completed</span>
                     </div>
-                    <span class="continue-btn">Continue adventure</span>
+                    <span class="continue-btn">
+                        {% if filled_stars == 3 %}
+                        Repeat adventure
+                        {% else %}
+                        Continue adventure
+                        {% endif %}
+                    </span>
                 </div>
             </a>
         </div>

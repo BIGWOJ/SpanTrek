@@ -27,12 +27,27 @@ def home_page(request):
     completed_daily_challenges_count = sum(1 for challenge in request.user.daily_challenges if challenge['completed'])
     daily_challenges = request.user.daily_challenges
 
+    user_level_name = get_user_level_name(request.user.level)
+    levels_for_next_level = 5 - (request.user.level % 5)
+    next_level_name = get_user_level_name(request.user.level + levels_for_next_level)
+
+    xp_for_next_level = (request.user.level * 500) - request.user.experience
+    progress_percentage = ((500 - xp_for_next_level) / 5 if xp_for_next_level > 0 else 0)
+    
+    main_adventure_progress_percentage = (request.user.adventure_progress / all_lessons_count * 100) if all_lessons_count > 0 else 0
+    filled_stars = int(main_adventure_progress_percentage // 33.33)
+
     context = {
         'all_lessons_count': all_lessons_count,
         'completed_daily_challenges_count': completed_daily_challenges_count,
         'daily_challenges': daily_challenges,
+        'user_level_name': user_level_name,
+        'levels_for_next_level': levels_for_next_level,
+        'next_level_name': next_level_name,
+        'progress_percentage': progress_percentage,
+        'filled_stars': filled_stars
     }
-    return render(request, 'base/home.html', context)
+    return render(request, 'base/home.html', context=context)
 
 def login_page(request):
     page = 'login'
@@ -143,8 +158,7 @@ def user_page(request, pk):
 
     # Experience calculations
     xp_for_next_level = (user.level * 500) - user.experience
-    progress_percentage = min(100, (user.experience / xp_for_next_level) * 100) if xp_for_next_level > 0 else 0
-
+    progress_percentage = ((500 - xp_for_next_level) / 5 if xp_for_next_level > 0 else 0)
     user_level_name = get_user_level_name(user.level)
     
     # Achievements
@@ -167,6 +181,14 @@ def user_page(request, pk):
 
     total_lessons_count = Lesson.objects.count()
     lessons_completed_percentage = (user.adventure_progress / total_lessons_count * 100) if total_lessons_count > 0 else 0
+
+    # Knowledge difference optional information
+    knowledge = [words_learned_percentage, sentences_learned_percentage, use_of_spanish_percentage]
+    knowledge_sections = ['vocabulary', 'sentences', 'usage']
+    
+    min_knowledge = min(knowledge)
+    max_knowledge = max(knowledge)
+    lowest_knowledge_section = knowledge_sections[knowledge.index(min_knowledge)] if max_knowledge - min_knowledge > 20 else ''
 
     
     context = {
@@ -194,7 +216,8 @@ def user_page(request, pk):
 
         'spanish_usage_count': user.use_of_spanish,
         'total_usage_count': total_use_of_spanish,
-        'spanish_usage_percentage': use_of_spanish_percentage,
+        'use_of_spanish_percentage': use_of_spanish_percentage,
+        'lowest_knowledge_section': lowest_knowledge_section,
         
         'user_activity_days': user.activity_days,
     }

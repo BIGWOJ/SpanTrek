@@ -1,0 +1,117 @@
+{%load static%}
+<link
+    rel="stylesheet"
+    type="text/css"
+    href="{% static 'styles/lessons/country_knowledge_progress.css' %}"
+/>
+
+<!-- Knowledge Progress Component -->
+<div class="knowledge-progress-component">
+    <div class="component-header">
+        <h3 class="component-title">🧠 Learning progress</h3>
+        <div class="overall-progress">
+            <span class="overall-text">Overall: {{overall_percentage}}%</span>
+            <div class="overall-bar">
+                <div class="overall-fill" style="width:{{overall_percentage}}%"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="stats-grid">
+        <!-- Vocabulary Stat -->
+        <div class="stat-item">
+            <div class="stat-icon">📚</div>
+            <div class="stat-content">
+                <div class="stat-header">
+                    <span class="stat-label">Vocabulary</span>
+                    <span class="stat-percentage">{% widthratio user_country_progress_dict.vocabularies country_stats_dict.vocabularies 100 %}%</span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-track">
+                        <div
+                            class="progress-fill vocabulary-fill"
+                            style="width: {% widthratio user_country_progress_dict.vocabularies country_stats_dict.vocabularies 100 %}%"
+                        ></div>
+                    </div>
+                    <div class="stat-numbers">
+                        <span class="current">{{user_country_progress_dict.vocabularies}}</span>
+                        <span class="separator">/</span>
+                        <span class="total">{{country_stats_dict.vocabularies}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sentences Stat -->
+        <div class="stat-item">
+            <div class="stat-icon">💬</div>
+            <div class="stat-content">
+                <div class="stat-header">
+                    <span class="stat-label">Sentences</span>
+                    <span class="stat-percentage">{% widthratio user_country_progress_dict.sentences country_stats_dict.sentences 100 %}%</span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-track">
+                        <div
+                            class="progress-fill sentences-fill"
+                            style="width: {% widthratio user_country_progress_dict.sentences country_stats_dict.sentences 100 %}%"
+                        ></div>
+                    </div>
+                    <div class="stat-numbers">
+                        <span class="current">{{user_country_progress_dict.sentences}}</span>
+                        <span class="separator">/</span>
+                        <span class="total">{{country_stats_dict.sentences}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Audio Stat -->
+        <div class="stat-item">
+            <div class="stat-icon">🎧</div>
+            <div class="stat-content">
+                <div class="stat-header">
+                    <span class="stat-label">Audio</span>
+                    <span class="stat-percentage">{% widthratio user_country_progress_dict.audios country_stats_dict.audios 100 %}%</span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-track">
+                        <div
+                            class="progress-fill audio-fill"
+                            style="width: {% widthratio user_country_progress_dict.audios country_stats_dict.audios 100 %}%"
+                        ></div>
+                    </div>
+                    <div class="stat-numbers">
+                        <span class="current">{{user_country_progress_dict.audios}}</span>
+                        <span class="separator">/</span>
+                        <span class="total">{{country_stats_dict.audios}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Usage/Practice Stat -->
+        <div class="stat-item">
+            <div class="stat-icon">🇪🇸</div>
+            <div class="stat-content">
+                <div class="stat-header">
+                    <span class="stat-label">Usage</span>
+                    <span class="stat-percentage">{% widthratio user_country_progress_dict.use_of_spanish country_stats_dict.use_of_spanish 100 %}%</span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-track">
+                        <div
+                            class="progress-fill usage-fill"
+                            style="width: {% widthratio user_country_progress_dict.use_of_spanish country_stats_dict.use_of_spanish 100 %}%"
+                        ></div>
+                    </div>
+                    <div class="stat-numbers">
+                        <span class="current">{{user_country_progress_dict.use_of_spanish}}</span>
+                        <span class="separator">/</span>
+                        <span class="total">{{country_stats_dict.use_of_spanish}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

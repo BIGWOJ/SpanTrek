@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
-from .models import Lesson, Country
-
+from .models import Lesson, Country, Vocabulary, Sentence, Audio
+from django.db.models import Sum
 
 
 @login_required
@@ -40,18 +40,60 @@ def world_map(request):
 
 @login_required
 def country_view(request, country):
-    template_name = f'lessons/{country}/country.html'
     # Get lesson count for this country
     country_obj = Country.objects.filter(name__iexact=country).first()
     country_lessons_count = Lesson.objects.filter(country=country_obj).count() if country_obj else 0
     user_country_progress = request.user.country_lessons_progress.get(country, 0)
+
+
+    # Country learning progress
+    country_lessons = Lesson.objects.filter(country=country_obj)
+
+    country_vocabularies = Vocabulary.objects.filter(lessons__in=country_lessons).distinct()
+    country_sentences = Sentence.objects.filter(lessons__in=country_lessons).distinct()
+    country_audios = Audio.objects.filter(lessons__in=country_lessons).distinct()
+    country_use_of_spanish = country_lessons.aggregate(total=Sum('use_of_spanish'))['total'] or 0
+    
+    country_stats_dict = {
+        'vocabularies': country_vocabularies.count(),
+        'sentences': country_sentences.count(),
+        'audios': country_audios.count(),
+        'use_of_spanish': country_use_of_spanish,
+    }
+
+    user_learned_words = request.user.words_learned or []
+    user_country_vocabularies_count = country_vocabularies.filter(word__in=user_learned_words).count()
+
+    user_learned_sentences = request.user.sentences_learned or []    
+    user_country_sentences_count = country_sentences.filter(sentence__in=user_learned_sentences).count()
+
+    user_learned_audio = request.user.audio_learned or []
+    user_country_audio_count = country_audios.filter(text__in=user_learned_audio).count()
+
+    user_lessons_completed = request.user.country_lessons_progress.get(country, 0)
+    user_use_of_spanish = country_lessons.filter(order__lt=user_lessons_completed).aggregate(total=Sum('use_of_spanish'))['total'] or 0
+    print(user_use_of_spanish)
+
+    user_country_progress_dict = {
+        'vocabularies': user_country_vocabularies_count,
+        'sentences': user_country_sentences_count,
+        'audios': user_country_audio_count,
+        'use_of_spanish': user_use_of_spanish,
+    }
+
+    overall_percentage = round((sum(user_country_progress_dict.values()) / sum(country_stats_dict.values())) * 100 if sum(country_stats_dict.values()) > 0 else 0)
+
     context = {
         'progress_bar_max': country_lessons_count,
         'country': country,
         'progress_bar_progress': user_country_progress,
+        'country_stats_dict': country_stats_dict,
+        'user_country_progress': user_country_progress,
+        'user_country_progress_dict': user_country_progress_dict,
+        'overall_percentage': overall_percentage,
     }
 
-    return render(request, template_name, context)
+    return render(request, f'lessons/{country}/country.html', context=context)
 
 
 @login_required

@@ -1,0 +1,285 @@
+/* Knowledge Progress Component */
+.knowledge-progress-component {
+    background: linear-gradient(135deg, #e8e9ea 0%, #d6d8db 100%);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border: 2px solid rgba(255, 165, 31, 0.1);
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Component Header */
+.component-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid rgba(255, 165, 31, 0.2);
+}
+
+.component-title {
+    color: #2d2d2d;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.overall-progress {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    min-width: 150px;
+}
+
+.overall-text {
+    color: #666;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.overall-bar {
+    width: 120px;
+    height: 8px;
+    background: #e0e0e0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.overall-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #ffa51f, #ff8c00);
+    border-radius: 4px;
+    transition: width 0.8s ease;
+}
+
+/* Stats Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.stat-item {
+    background: rgba(255, 165, 31, 0.03);
+    border: 1px solid rgba(255, 165, 31, 0.15);
+    border-radius: 15px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(255, 165, 31, 0.15);
+    border-color: rgba(255, 165, 31, 0.3);
+}
+
+.stat-icon {
+    font-size: 2.5rem;
+    min-width: 60px;
+    text-align: center;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.stat-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.stat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.stat-label {
+    color: #2d2d2d;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.stat-percentage {
+    color: #ffa51f;
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-left: 5px;
+}
+
+.progress-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.progress-track {
+    height: 8px;
+    background: #e8e8e8;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.8s ease;
+    position: relative;
+}
+
+.progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: progressShine 2s infinite;
+}
+
+@keyframes progressShine {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* Different colors for each stat */
+.vocabulary-fill {
+    background: linear-gradient(90deg, #4caf50, #66bb6a);
+}
+
+.sentences-fill {
+    background: linear-gradient(90deg, #2196f3, #42a5f5);
+}
+
+.audio-fill {
+    background: linear-gradient(90deg, #9c27b0, #ba68c8);
+}
+
+.usage-fill {
+    background: linear-gradient(90deg, #ffa51f, #ff8c00);
+}
+
+.stat-numbers {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 0.9rem;
+}
+
+.current {
+    color: #2d2d2d;
+    font-weight: bold;
+}
+
+.separator {
+    color: #999;
+    font-weight: normal;
+}
+
+.total {
+    color: #666;
+    font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .knowledge-progress-component {
+        padding: 20px;
+        margin: 0 15px;
+    }
+    
+    .component-header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .overall-progress {
+        align-items: center;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .stat-item {
+        padding: 15px;
+    }
+    
+    .stat-icon {
+        font-size: 2rem;
+        min-width: 50px;
+    }
+    
+    .component-title {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .knowledge-progress-component {
+        padding: 15px;
+        border-radius: 15px;
+    }
+    
+    .stat-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+    
+    .stat-content {
+        width: 100%;
+    }
+    
+    .stat-header {
+        justify-content: center;
+        gap: 15px;
+    }
+    
+    .stat-icon {
+        font-size: 2.5rem;
+    }
+}
+
+/* Animation for when component loads */
+.knowledge-progress-component {
+    animation: fadeInUp 0.6s ease;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Hover effects for progress bars */
+.stat-item:hover .progress-fill {
+    filter: brightness(1.1);
+}
+
+.stat-item:hover .stat-icon {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+}

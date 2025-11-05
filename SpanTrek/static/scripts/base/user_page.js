@@ -323,21 +323,14 @@ function initAchievements() {
 function animateProgressBars() {
     const progressBars = document.querySelectorAll(".progress-fill");
     progressBars.forEach((bar) => {
-        // Get user experience from the XP text
-        const xpText = document.querySelector(".xp-text");
-        if (xpText) {
-            const userExperience = parseInt(
-                xpText.textContent.replace(" XP", "").replace(",", "")
-            );
-
-            // Calculate target width (500 exp for 1 level))
-            const targetWidth = (userExperience % 500) / 5 + "%";
-            console.log(xpText.textContent, userExperience, targetWidth);
-            bar.style.width = "0%";
-            setTimeout(() => {
-                bar.style.width = targetWidth;
-            }, 500);
-        }
+        // Get the target width from the inline style set by Django
+        const targetWidth = bar.style.width;
+        
+        // Start from 0% and animate to target
+        bar.style.width = "0%";
+        setTimeout(() => {
+            bar.style.width = targetWidth;
+        }, 500);
     });
 }
 

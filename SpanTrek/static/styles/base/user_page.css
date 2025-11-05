@@ -192,10 +192,23 @@ body > *:not(footer) {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease;
     min-width: 220px;
+    position: relative;
+    overflow: hidden;
 }
 
 .stat-card:hover {
     transform: translateY(-5px);
+}
+
+.stat-card.needs-improvement {
+    border: 2px solid #ffa51f;
+    box-shadow: 0 8px 25px rgba(255, 165, 31, 0.2);
+    animation: subtlePulse 10s infinite;
+}
+
+@keyframes subtlePulse {
+    0%, 100% { box-shadow: 0 8px 25px rgba(255, 165, 31, 0.2); }
+    50% { box-shadow: 0 12px 35px rgba(255, 165, 31, 0.35); }
 }
 
 .stat-icon {
@@ -220,6 +233,40 @@ body > *:not(footer) {
     font-size: 0.8rem;
     margin-top: 3px;
     font-weight: 500;
+}
+
+.improvement-badge {
+    margin-top: 15px;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.improve-text {
+    background: linear-gradient(45deg, #ffa51f, #ff8c00);
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 15px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 3px 10px rgba(255, 165, 31, 0.3);
+    display: inline-block;
+    animation: bounce 3s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
 }
 
 /* Passports Section - Two-Page Passport Book Design */

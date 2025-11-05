@@ -1,4 +1,4 @@
-// Home page JavaScript functionality for SpanTrek
+// Home page JavaScript functionality
 document.addEventListener("DOMContentLoaded", function () {
     
     // Daily challenges tooltip
@@ -86,40 +86,15 @@ document.addEventListener("DOMContentLoaded", function () {
     // Animate progress bars on page load
     const progressBars = document.querySelectorAll(".progress-fill");
     progressBars.forEach((bar) => {
-        // Get user experience from the XP text
-        const xpText = document.querySelector(".xp-text");
-        const userExperience = parseInt(
-            xpText.textContent.replace(" XP", "").replace(",", "")
-        );
-
-        // Calculate target width as modulo 100 (experience % 100)
-        const targetWidth = (userExperience % 100) + "%";
-
+        // Get the target width from the inline style set by Django
+        const targetWidth = bar.style.width;
+        
+        // Start from 0% and animate to target
         bar.style.width = "0%";
         setTimeout(() => {
             bar.style.width = targetWidth;
         }, 500);
     });
-
-    // Add hover effect to streak flame
-    const streakFlame = document.querySelector(".streak-flame");
-    if (streakFlame) {
-        streakFlame.addEventListener("mouseenter", function () {
-            this.style.transform = "scale(1.3) rotate(10deg)";
-        });
-
-        streakFlame.addEventListener("mouseleave", function () {
-            this.style.transform = "";
-        });
-    }
-
-    // Add XP counter animation
-    const xpText = document.querySelector(".xp-text");
-    if (xpText) {
-        xpText.addEventListener("click", function () {
-            animateXPGain(50);
-        });
-    }
 });
 
 // Function to show notifications
@@ -192,77 +167,6 @@ function showNotification(message) {
             notification.remove();
         }, 300);
     }, 3000);
-}
-
-// Function to animate XP gain
-function animateXPGain(xpAmount) {
-    const xpText = document.querySelector(".xp-text");
-    const currentXP = parseInt(
-        xpText.textContent.replace(" XP", "").replace(",", "")
-    );
-    const newXP = currentXP + xpAmount;
-
-    // Create floating XP indicator
-    const floatingXP = document.createElement("div");
-    floatingXP.textContent = `+${xpAmount} XP`;
-    floatingXP.style.cssText = `
-        position: absolute;
-        top: 50%;
-        right: 20px;
-        color: #27ae60;
-        font-weight: bold;
-        font-size: 1.2rem;
-        pointer-events: none;
-        animation: floatUp 2s ease-out;
-        z-index: 100;
-    `;
-
-    // Add float animation
-    const floatStyle = document.createElement("style");
-    floatStyle.textContent = `
-        @keyframes floatUp {
-            0% {
-                transform: translateY(0);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-50px);
-                opacity: 0;
-            }
-        }
-    `;
-    document.head.appendChild(floatStyle);
-
-    // Add to XP section
-    const levelCard = document.querySelector(".level-card");
-    levelCard.style.position = "relative";
-    levelCard.appendChild(floatingXP);
-
-    // Animate XP counter
-    let startXP = currentXP;
-    const duration = 1000; // 1 second
-    const startTime = Date.now();
-
-    function updateXP() {
-        const elapsed = Date.now() - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        const currentDisplayXP = Math.floor(startXP + xpAmount * progress);
-
-        xpText.textContent = currentDisplayXP.toLocaleString() + " XP";
-
-        if (progress < 1) {
-            requestAnimationFrame(updateXP);
-        }
-    }
-
-    updateXP();
-
-    // Remove floating XP after animation
-    setTimeout(() => {
-        floatingXP.remove();
-    }, 2000);
-
-    showNotification(`Great! You earned ${xpAmount} XP! 🌟`);
 }
 
 // Add keyboard shortcuts
