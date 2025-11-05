@@ -37,6 +37,8 @@ def home_page(request):
     main_adventure_progress_percentage = (request.user.adventure_progress / all_lessons_count * 100) if all_lessons_count > 0 else 0
     filled_stars = int(main_adventure_progress_percentage // 33.33)
 
+    xp_for_next_level = (request.user.level * 500) - request.user.experience
+
     context = {
         'all_lessons_count': all_lessons_count,
         'completed_daily_challenges_count': completed_daily_challenges_count,
@@ -45,7 +47,8 @@ def home_page(request):
         'levels_for_next_level': levels_for_next_level,
         'next_level_name': next_level_name,
         'progress_percentage': progress_percentage,
-        'filled_stars': filled_stars
+        'filled_stars': filled_stars,
+        'xp_for_next_level': xp_for_next_level
     }
     return render(request, 'base/home.html', context=context)
 

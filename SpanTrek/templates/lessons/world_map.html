@@ -23,7 +23,7 @@
         </div>
     </div>
 
-    {% include 'lessons/progress_bar.html' with user_country_progress=user_progress country_lessons_count=all_lessons_count %}
+    {% include 'lessons/progress_bar.html' %}
 
     <div class="map-section">
         <div class="map-wrapper">
@@ -2161,13 +2161,6 @@ THE SOFTWARE.
                     <div class="stat-label">Most Spoken Native Language</div>
                 </div>
             </div>
-        </div>
-        <div class="continue-button-container">
-            <form method="post" style="display: inline;">
-                {% csrf_token %}
-                <input type="hidden" name="action" value="continue_adventure">
-                <button type="submit" class="continue-button">Continue adventure</button>
-            </form>
         </div>
     </div>
 </div>

@@ -1,4 +1,3 @@
 środa-piątek call ewentualnie umawiać się
 
 zmniejszyć ilość miast (i krajów) (wrzucanie do bazy danych to sama wisienka na torcie, ważniejsze pokazanie funkcjonalności)
-progress/usystematycować co się nauczył na jakim poziomie

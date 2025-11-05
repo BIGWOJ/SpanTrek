@@ -6,8 +6,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const spanishCountries = document.querySelectorAll(".spanish-country");
     const lessonsDoneCountries = document.querySelectorAll(".lessons-done");
+    const lockedCountries = document.querySelectorAll(".lessons-locked");
 
-    const allCountries = [...spanishCountries, ...lessonsDoneCountries];
+    const allCountries = [...spanishCountries, ...lessonsDoneCountries, ...lockedCountries];
 
     // Add event listeners to each country
     allCountries.forEach((country) => {
@@ -21,33 +22,49 @@ document.addEventListener("DOMContentLoaded", function () {
         const countryData = JSON.parse(country.getAttribute("data-lessons"));
         const isStartingCountry =
             country.classList.contains("starting-country");
+        const isLocked = country.classList.contains("lessons-locked");
         
-        const country_lessons_available =
-            countries_lessons_dict[countryData.name.toLowerCase()] || 0;
-        const user_completed_lessons =
-            user_countries_progress[countryData.name.toLowerCase()] || 0;
-
-        // Calculate completion percentage
-        const percentage = country_lessons_available
-            ? Math.round(
-                  (user_completed_lessons / country_lessons_available) * 100
-              )
-            : 0;
-
-        // Set tooltip content
-        if (isStartingCountry) {
-            tooltip.innerHTML = `
-                <strong style="color: #ff8c00">Poland</strong><br>
-                <span style="color: #4CAF50">Start your journey here!</span><br>
-                Progress: ${percentage}%<br>
-                Completed: ${user_completed_lessons}/${country_lessons_available} lessons
-            `;
-        } else {
+        // Check if country is locked
+        if (isLocked) {
+            const lockedRequirements = {
+                "Spain": "Poland",
+                "Mexico": "Spain", 
+                "Peru": "Mexico"
+            };
+            
+            const requiredCountry = lockedRequirements[countryData.name];
             tooltip.innerHTML = `
                 <strong style="color: #ff8c00">${countryData.name}</strong><br>
-                Progress: ${percentage}%<br>
-                Completed: ${user_completed_lessons}/${country_lessons_available} lessons
+                <span style="color: #f44336">🔒 Lessons locked.<br> Firstly finish all lessons in ${requiredCountry}.</span>
             `;
+        } else {
+            const country_lessons_available =
+                countries_lessons_dict[countryData.name.toLowerCase()] || 0;
+            const user_completed_lessons =
+                user_countries_progress[countryData.name.toLowerCase()] || 0;
+
+            // Calculate completion percentage
+            const percentage = country_lessons_available
+                ? Math.round(
+                      (user_completed_lessons / country_lessons_available) * 100
+                  )
+                : 0;
+
+            // Set tooltip content
+            if (isStartingCountry) {
+                tooltip.innerHTML = `
+                    <strong style="color: #ff8c00">Poland</strong><br>
+                    <span style="color: #4CAF50">Start your journey here!</span><br>
+                    Progress: ${percentage}%<br>
+                    Completed: ${user_completed_lessons}/${country_lessons_available} lessons
+                `;
+            } else {
+                tooltip.innerHTML = `
+                    <strong style="color: #ff8c00">${countryData.name}</strong><br>
+                    Progress: ${percentage}%<br>
+                    Completed: ${user_completed_lessons}/${country_lessons_available} lessons
+                `;
+            }
         }
 
         // Position tooltip

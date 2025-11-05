@@ -14,7 +14,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 totalLessons = parseInt(match[2]);
             }
         }
-        const percent = Math.round((userProgress / totalLessons) * 100);
+        const percent = (Math.round((userProgress / totalLessons) * 100) || 0);
+
         progressBar.style.width = "0%";
         setTimeout(() => {
             progressBar.style.width = percent + "%";
