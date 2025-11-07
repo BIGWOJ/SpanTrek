@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
-from .models import Lesson, Country, Vocabulary, Sentence, Audio
+from .models import Lesson, Country, Vocabulary, Sentence, Audio, Landmark
 from django.db.models import Sum
 
 
@@ -101,10 +101,12 @@ def country_landmark_lesson(request, country, landmark, lesson_number=None, exer
     # Get the current progress for this landmark from the user's profile
     landmark_progress = request.user.landmark_lessons_progress.get(landmark, 0)
     user_landmark_progress = request.user.landmark_lessons_progress.get(landmark, 0)
+    country_obj = Country.objects.filter(name__iexact=country).first()
+    landmark_obj = Landmark.objects.filter(name__iexact=landmark).first()
     
     # If lesson_number is not provided, show intro page first
     if lesson_number is None:
-        lesson = Lesson.objects.filter(landmark=landmark, order=landmark_progress).first()
+        lesson = Lesson.objects.filter(landmark=landmark_obj, country=country_obj, order=landmark_progress).first()
 
         context = {
             'landmark': landmark,
@@ -117,7 +119,7 @@ def country_landmark_lesson(request, country, landmark, lesson_number=None, exer
 
     # Get the lesson
     current_lesson = lesson_number
-    lesson = Lesson.objects.filter(landmark=landmark, order=current_lesson).first()
+    lesson = Lesson.objects.filter(landmark=landmark_obj, order=current_lesson).first()
     
     if not lesson:
         # Handle case where lesson doesn't exist
@@ -189,15 +191,25 @@ def country_landmark_lesson(request, country, landmark, lesson_number=None, exer
 @login_required
 def lesson_complete(request, country, landmark, lesson_number):
     """View for lesson completion page with congratulations message"""
+    # Get the country and landmark objects
+    country_obj = Country.objects.filter(name__iexact=country).first()
+    if not country_obj:
+        return redirect('lessons:world_map')
+    
+    from .models import Landmark
+    landmark_obj = Landmark.objects.filter(name__iexact=landmark, country=country_obj).first()
+    if not landmark_obj:
+        return redirect('lessons:country_map', country=country)
+    
     # Get the completed lesson
-    lesson = Lesson.objects.filter(landmark=landmark, order=lesson_number).first()
+    lesson = Lesson.objects.filter(landmark=landmark_obj, order=lesson_number).first()
 
     if not lesson:
         # If lesson doesn't exist, redirect back to landmark
         return redirect('lessons:country_landmark_lesson', country=country, landmark=landmark)
     
     # Check if there's a next lesson
-    next_lesson = Lesson.objects.filter(landmark=landmark, order=lesson_number + 1).first()
+    next_lesson = Lesson.objects.filter(landmark=landmark_obj, order=lesson_number + 1).first()
     
     request.user.update_progress_after_lesson(landmark, lesson_number)
     

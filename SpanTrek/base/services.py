@@ -1,7 +1,7 @@
 """
 Achievement service for handling achievement logic
 """
-from .models import User, Achievement, UserAchievement
+from lessons.models import Lesson, Country
 
 class AchievementService:
     """Service class to handle achievement checking and awarding"""
@@ -9,83 +9,89 @@ class AchievementService:
     @staticmethod
     def check_and_award_achievements(user):
         """Check all possible achievements for a user and award them if conditions are met"""
-        achievements_awarded = []
         
-        # First Steps - Complete first lesson (has experience > 0)
-        if user.experience > 0 and not user.has_achievement('First Steps'):
-            if user.award_achievement('First Steps'):
-                achievements_awarded.append('First Steps')
-        
-        # Getting Started - Earn 100 experience points
-        if user.experience >= 100 and not user.has_achievement('Getting Started'):
-            if user.award_achievement('Getting Started'):
-                achievements_awarded.append('Getting Started')
-        
-        # Experience Hunter - Earn 1000 experience points
-        if user.experience >= 1000 and not user.has_achievement('Experience Hunter'):
-            if user.award_achievement('Experience Hunter'):
-                achievements_awarded.append('Experience Hunter')
-        
-        # Experience Master - Earn 5000 experience points
-        if user.experience >= 5000 and not user.has_achievement('Experience Master'):
-            if user.award_achievement('Experience Master'):
-                achievements_awarded.append('Experience Master')
-        
-        # Streak Beginner - 3 days streak
-        if user.days_streak >= 3 and not user.has_achievement('Streak Beginner'):
-            if user.award_achievement('Streak Beginner'):
-                achievements_awarded.append('Streak Beginner')
-        
-        # Streak Master - 7 days streak
-        if user.days_streak >= 7 and not user.has_achievement('Streak Master'):
-            if user.award_achievement('Streak Master'):
-                achievements_awarded.append('Streak Master')
-        
-        # Streak Legend - 30 days streak
-        if user.days_streak >= 30 and not user.has_achievement('Streak Legend'):
-            if user.award_achievement('Streak Legend'):
-                achievements_awarded.append('Streak Legend')
-        
-        # Dedicated Student - 30 days streak (same as streak legend for simplicity)
-        if user.days_streak >= 30 and not user.has_achievement('Dedicated Student'):
-            if user.award_achievement('Dedicated Student'):
-                achievements_awarded.append('Dedicated Student')
-        
-        # Level Up - Reach level 5
+        # Level-based
+        if user.level >= 2 and not user.has_achievement('Baby Step'):
+            user.award_achievement('Baby Step')
+
         if user.level >= 5 and not user.has_achievement('Level Up'):
-            if user.award_achievement('Level Up'):
-                achievements_awarded.append('Level Up')
-        
-        # Expert - Reach level 10
+            user.award_achievement('Level Up')
+
         if user.level >= 10 and not user.has_achievement('Expert'):
-            if user.award_achievement('Expert'):
-                achievements_awarded.append('Expert')
-        
-        # Master - Reach level 20
+            user.award_achievement('Expert')
+
         if user.level >= 20 and not user.has_achievement('Master'):
-            if user.award_achievement('Master'):
-                achievements_awarded.append('Master')
+            user.award_achievement('Master')
+
+        # Experience-based
+        if user.experience >= 250 and not user.has_achievement('Getting Started'):
+            user.award_achievement('Getting Started')
+
+        if user.experience >= 2500 and not user.has_achievement('Experience Seeker'):
+            user.award_achievement('Experience Seeker')
+
+        if user.experience >= 5000 and not user.has_achievement('Experience Master'):
+            user.award_achievement('Experience Master')
+
+        # Streak-based
+        if user.days_streak >= 3 and not user.has_achievement('Streak Beginner'):
+            user.award_achievement('Streak Beginner')
+
+        if user.days_streak >= 7 and not user.has_achievement('Streak Master'):
+            user.award_achievement('Streak Master')
+
+        if user.days_streak >= 30 and not user.has_achievement('Streak Legend'):
+            user.award_achievement('Streak Legend')
+
+        # Adventure-based
+        if user.adventure_progress >= 1 and not user.has_achievement('Adventure Hero'):
+            user.award_achievement('Adventure Hero')
+
+        # Knowledge-based
+        if len(user.words_learned) >= 100 and not user.has_achievement('Word Master'):
+            user.award_achievement('Word Master')
         
-        # Adventure Starter - Make progress in adventure
-        if user.adventure_progress > 0 and not user.has_achievement('Adventure Starter'):
-            if user.award_achievement('Adventure Starter'):
-                achievements_awarded.append('Adventure Starter')
+        if len(user.sentences_learned) >= 25 and not user.has_achievement('Sentence Master'):
+            user.award_achievement('Sentence Master')
+
+        if len(user.audio_learned) >= 25 and not user.has_achievement('Audiofile'):
+            user.award_achievement('Audiofile')
+
+        # Country-specific achievements
+        poland_progress = user.country_lessons_progress.get('poland', 0)
+        spain_progress = user.country_lessons_progress.get('spain', 0)
         
-        # Adventure Explorer - Complete 50% of adventure (assuming 100 is full completion)
-        if user.adventure_progress >= 50 and not user.has_achievement('Adventure Explorer'):
-            if user.award_achievement('Adventure Explorer'):
-                achievements_awarded.append('Adventure Explorer')
+        # Get total lessons for each country
+        poland_country = Country.objects.filter(name__iexact='poland').first()
+        spain_country = Country.objects.filter(name__iexact='spain').first()
+
+        total_poland_lessons = Lesson.objects.filter(country=poland_country).count()
+        if total_poland_lessons > 0:
+            poland_percentage = (poland_progress / total_poland_lessons) * 100
+            
+            if poland_percentage >= 50 and not user.has_achievement('Poland Explorer'):
+                user.award_achievement('Poland Explorer')
+
+            if poland_percentage >= 100 and not user.has_achievement('Poland Master'):
+                user.award_achievement('Poland Master')
         
-        # Adventure Hero - Complete adventure (assuming 100 is full completion)
-        if user.adventure_progress >= 100 and not user.has_achievement('Adventure Hero'):
-            if user.award_achievement('Adventure Hero'):
-                achievements_awarded.append('Adventure Hero')
-        
-        return achievements_awarded
+        total_spain_lessons = Lesson.objects.filter(country=spain_country).count()
+        if total_spain_lessons > 0:
+            spain_percentage = (spain_progress / total_spain_lessons) * 100
+            
+            if spain_percentage >= 50 and not user.has_achievement('Spain Explorer'):
+                user.award_achievement('Spain Explorer')
+            
+            if spain_percentage >= 100 and not user.has_achievement('Spain Master'):
+                user.award_achievement('Spain Master')
+    
     
     @staticmethod
     def get_user_achievements_status_exp(user):
         """Get all achievements with status (earned/not earned) for a specific user"""
+        # Importing here to avoid circular import
+        from base.models import Achievement
+        
         all_achievements = Achievement.objects.all()
         user_earned_achievements = set(
             user.earned_achievements.values_list('achievement__name', flat=True)
@@ -100,8 +106,3 @@ class AchievementService:
             })
 
         return sorted(achievements_data, key=lambda exp: exp['experience_award'], reverse=True)
-
-    @staticmethod
-    def award_manual_achievement(user, achievement_name):
-        """Manually award an achievement (for admin or special cases)"""
-        return user.award_achievement(achievement_name)

@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const requiredCountry = lockedRequirements[countryData.name];
             tooltip.innerHTML = `
                 <strong style="color: #ff8c00">${countryData.name}</strong><br>
-                <span style="color: #f44336">🔒 Lessons locked.<br> Firstly finish all lessons in ${requiredCountry}.</span>
+                <span style="color: #f44336">🔒 Country locked.<br> Finish all lessons in ${requiredCountry}.</span>
             `;
         } else {
             const country_lessons_available =

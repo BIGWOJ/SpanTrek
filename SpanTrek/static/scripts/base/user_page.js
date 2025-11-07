@@ -135,8 +135,20 @@ function expandSettings() {
     const collapsedDiv = document.getElementById("settings-collapsed");
     const expandedDiv = document.getElementById("settings-expanded");
 
+    // Hide collapsed view
     collapsedDiv.style.display = "none";
+
+    // Show expanded view with smooth animation
     expandedDiv.style.display = "block";
+    expandedDiv.style.opacity = "0";
+    expandedDiv.style.transform = "translateY(20px)";
+
+    // Force reflow and then animate
+    expandedDiv.offsetHeight;
+
+    expandedDiv.style.transition = "opacity 0.4s ease, transform 0.4s ease";
+    expandedDiv.style.opacity = "1";
+    expandedDiv.style.transform = "translateY(0)";
 }
 
 // Collapse settings section
@@ -144,8 +156,21 @@ function collapseSettings() {
     const collapsedDiv = document.getElementById("settings-collapsed");
     const expandedDiv = document.getElementById("settings-expanded");
 
-    expandedDiv.style.display = "none";
-    collapsedDiv.style.display = "flex";
+    // Add smooth collapse animation
+    expandedDiv.style.transition = "opacity 0.4s ease, transform 0.4s ease";
+    expandedDiv.style.opacity = "0";
+    expandedDiv.style.transform = "translateY(-20px)";
+
+    // Wait for animation to complete before hiding
+    setTimeout(() => {
+        expandedDiv.style.display = "none";
+        collapsedDiv.style.display = "flex";
+
+        // Reset transform and opacity for next expand
+        expandedDiv.style.transform = "";
+        expandedDiv.style.opacity = "";
+        expandedDiv.style.transition = "";
+    }, 400);
 
     // Reset the form when collapsing
     const form = document.querySelector(".profile-form");
@@ -325,7 +350,7 @@ function animateProgressBars() {
     progressBars.forEach((bar) => {
         // Get the target width from the inline style set by Django
         const targetWidth = bar.style.width;
-        
+
         // Start from 0% and animate to target
         bar.style.width = "0%";
         setTimeout(() => {

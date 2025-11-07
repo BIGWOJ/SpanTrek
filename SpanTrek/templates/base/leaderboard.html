@@ -1,4 +1,5 @@
-{%extends 'base/base.html'%} {% block styles %} {%load static%} {{ block.super }}
+{%extends 'base/base.html'%} {% block styles %} {%load static%} 
+{{ block.super }}
 <link
     rel="stylesheet"
     type="text/css"
@@ -41,7 +42,7 @@
     <div class="leaderboard-content">
         <div class="surrounding-users-section">
             <div class="users-list">
-                {% for user in leaderboard_users %}
+                {% if leaderboard_users %} {% for user in leaderboard_users %}
                 <a href="{% url 'user_page' user.id %}">
                     <div
                         class="user-row {% if user == request.user %}current-user{% endif %}{% if user.display_rank <= 3 %} podium-position rank-{{ user.display_rank }}{% endif %}"
@@ -93,7 +94,27 @@
                         {% endif %}
                     </div>
                 </a>
-                {% endfor %}
+                {% endfor %} {% else %}
+                <div class="no-users-section">
+                    <div class="no-users-icon">🎯</div>
+                    <h3 class="no-users-title">Start your spanish journey!</h3>
+                    <p class="no-users-message">
+                        Get your first experience points to appear on the
+                        leaderboard.
+                    </p>
+                    <p class="no-users-subtitle">
+                        Complete lessons and practice to earn XP and compete
+                        with other learners!
+                    </p>
+                    <a
+                        href="{% url 'lessons:world_map' %}"
+                        class="start-learning-btn"
+                    >
+                        <span class="btn-icon">🚀</span>
+                        Start adventure now!
+                    </a>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>

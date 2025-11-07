@@ -1,36 +1,32 @@
 var szczecin_pin_image =
-   landmark_lessons_progress["szczecin"] === 3
+    landmark_lessons_progress["szczecin"] === 3
         ? "/static/images/map_pins/pin1_done.svg"
         : "/static/images/map_pins/pin1.svg";
 
-var poznan_url = 
+var poznan_url =
     landmark_lessons_progress["szczecin"] === 3
         ? "/lessons/poland/poznan/"
         : "";
 
 if (!poznan_url) {
     var poznan_pin_image = "/static/images/map_pins/pin2_locked.svg";
-}
-else {
+} else {
     var poznan_pin_image =
-    landmark_lessons_progress["poznan"] === 3
-        ? "/static/images/map_pins/pin1_done.svg"
-        : "/static/images/map_pins/pin1.svg";
+        landmark_lessons_progress["poznan"] === 3
+            ? "/static/images/map_pins/pin1_done.svg"
+            : "/static/images/map_pins/pin1.svg";
 }
 
-var warsaw_url = 
-    landmark_lessons_progress["poznan"] === 3
-        ? "/lessons/poland/warsaw/"
-        : "";
+var warsaw_url =
+    landmark_lessons_progress["poznan"] === 3 ? "/lessons/poland/warsaw/" : "";
 
 if (!warsaw_url) {
     var warsaw_pin_image = "/static/images/map_pins/pin3_locked.svg";
-}
-else {
+} else {
     var warsaw_pin_image =
-    landmark_lessons_progress["warsaw"] === 3
-        ? "/static/images/map_pins/pin3_done.svg"
-        : "/static/images/map_pins/pin3.svg";
+        landmark_lessons_progress["warsaw"] === 3
+            ? "/static/images/map_pins/pin3_done.svg"
+            : "/static/images/map_pins/pin3.svg";
 }
 
 var simplemaps_countrymap_mapdata = {

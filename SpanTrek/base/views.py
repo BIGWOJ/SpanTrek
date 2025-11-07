@@ -6,7 +6,6 @@ from .models import User
 from lessons.models import Lesson, Vocabulary, Sentence
 from .forms import My_User_Creation_Form
 from .services import AchievementService
-import os
 from datetime import date
 from django.contrib.auth.decorators import login_required
 
@@ -18,7 +17,9 @@ def home_page(request):
         return redirect('login_page')
     request.user.progress_daily_challenges()
     # Create a new daily challenge for the user
-    if request.user.daily_challenges_creation_date is None or request.user.daily_challenges_creation_date < date.today():
+    # Adventure_progress != 0 to avoid creating challenges f.e. with audios which user hasn't learned yet
+    if (request.user.daily_challenges_creation_date is None or 
+        request.user.daily_challenges_creation_date < date.today()) and request.user.adventure_progress != 0:
         request.user.daily_challenges_creation_date = date.today()
         request.user.create_daily_challenges()
         request.user.save()
@@ -39,6 +40,10 @@ def home_page(request):
 
     xp_for_next_level = (request.user.level * 500) - request.user.experience
 
+    leaderboard_user_position = None
+    if request.user.experience > 0:
+        leaderboard_user_position = get_surrounding_leaderboard_users(request, only_user_position=True)
+
     context = {
         'all_lessons_count': all_lessons_count,
         'completed_daily_challenges_count': completed_daily_challenges_count,
@@ -48,7 +53,8 @@ def home_page(request):
         'next_level_name': next_level_name,
         'progress_percentage': progress_percentage,
         'filled_stars': filled_stars,
-        'xp_for_next_level': xp_for_next_level
+        'xp_for_next_level': xp_for_next_level,
+        'leaderboard_user_position': leaderboard_user_position,
     }
     return render(request, 'base/home.html', context=context)
 
@@ -108,7 +114,7 @@ def logout_user(request):
 @login_required
 def user_page(request, pk):
     user = User.objects.get(id=pk)
-    
+
     # Update settings 
     if request.method == 'POST':
         # Avatar upload
@@ -191,7 +197,7 @@ def user_page(request, pk):
     
     min_knowledge = min(knowledge)
     max_knowledge = max(knowledge)
-    lowest_knowledge_section = knowledge_sections[knowledge.index(min_knowledge)] if max_knowledge - min_knowledge > 20 else ''
+    lowest_knowledge_section = knowledge_sections[knowledge.index(min_knowledge)] if max_knowledge - min_knowledge > 25 else ''
 
     
     context = {
@@ -229,35 +235,19 @@ def user_page(request, pk):
 
 @login_required
 def leaderboard_page(request, view_type):
-    all_users_count = User.objects.all().count()
+    all_users_count = User.objects.all().filter(experience__gt=0).count()
     
     top_10_users = []
     leaderboard_users = []
     country_leaders = []
     
     if view_type == 'top':
-        leaderboard_users = User.objects.all().order_by('-experience')[:10]
+        leaderboard_users = User.objects.all().filter(experience__gt=0).order_by('-experience')[:10]
         for i, user in enumerate(leaderboard_users):
             user.display_rank = i + 1
             
     elif view_type == 'user_position':
-        # Get surrounding users (5 below + current user + 5 above)
-        users_below = User.objects.filter(experience__lt=request.user.experience).order_by('-experience')[:5]
-        users_above = User.objects.filter(experience__gt=request.user.experience).order_by('experience')[:5]
-        users_same_exp = User.objects.filter(experience=request.user.experience).exclude(id=request.user.id).order_by('id')
-        
-        # Combine and order properly
-        leaderboard_users = list(users_below)[::-1] + list(users_same_exp) + [request.user] + list(users_above)
-        leaderboard_users.reverse()
-        
-        # Calculate starting rank for the first user in the list
-        if leaderboard_users:
-            first_user = leaderboard_users[0]
-            start_rank = User.objects.filter(experience__gt=first_user.experience).count() + 1
-            
-            # Assign ranks
-            for i, user in enumerate(leaderboard_users):
-                user.display_rank = start_rank + i
+        leaderboard_users = get_surrounding_leaderboard_users(request)
 
     context = {
         'all_users_count': all_users_count,
@@ -281,4 +271,52 @@ def get_user_level_name(level):
         return "Dedicated Learner"
     else:
         return "Beginner Explorer"
+
+def get_surrounding_leaderboard_users(request, only_user_position=False):
+    # If user has no experience, they shouldn't be on leaderboard
+    if request.user.experience == 0:
+        if only_user_position:
+            return None
+        return []
     
+    user_rank = User.objects.filter(experience__gt=request.user.experience).count() + 1
+    
+    if only_user_position:
+        return user_rank
+    
+    # Get all users with experience > 0, ordered by experience (descending) then by id for tie-breaking
+    all_users = User.objects.filter(experience__gt=0).order_by('-experience', 'id')
+    user_list = list(all_users)
+    
+    # Find current user's index in the list
+    user_index = None
+    for i, user in enumerate(user_list):
+        if user.id == request.user.id:
+            user_index = i
+            break
+    
+    if user_index is None:
+        return []
+    
+    # Calculate start and end indices to get 10 users centered around current user
+    total_users = len(user_list)
+    start_index = max(0, user_index - 5)
+    end_index = min(total_users, user_index + 5)
+    
+    # Adjust to get 10 users 
+    if end_index - start_index < 10:
+        if start_index == 0:
+            # User is near the top, extend downward
+            end_index = min(total_users, start_index + 10)
+        elif end_index == total_users:
+            # User is near the bottom, extend upward
+            start_index = max(0, end_index - 10)
+    
+    leaderboard_users = user_list[start_index:end_index]
+    
+    # Display ranks
+    for i, user in enumerate(leaderboard_users):
+        user.display_rank = start_index + i + 1
+            
+    return leaderboard_users
+

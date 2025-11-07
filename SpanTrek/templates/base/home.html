@@ -94,7 +94,22 @@
                         <p>See how you rank among Spanish learners</p>
                         <div class="current-rank">
                             <span class="rank-text">Your current rank: </span>
-                            <span class="rank-number">{% if request.user.levels.overall %}{{request.user.levels.overall}}{% else %}Unranked{% endif %}</span>
+                            {% if leaderboard_user_position %}
+                                {% if leaderboard_user_position <= 3 %}
+                                    <div class="podium-rank rank-{{ leaderboard_user_position }}">
+                                        <div class="podium-medal">
+                                            {% if leaderboard_user_position == 1 %}🥇
+                                            {% elif leaderboard_user_position == 2 %}🥈
+                                            {% elif leaderboard_user_position == 3 %}🥉
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <span class="rank-number">{{ leaderboard_user_position }}</span>
+                                {% endif %}
+                            {% else %}
+                                <span class="rank-number">Unranked</span>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="leaderboard-arrow">→</div>

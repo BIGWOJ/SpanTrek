@@ -5,6 +5,7 @@ from django.utils.text import slugify
 from datetime import date
 from lessons.models import Lesson
 from practice.models import DailyChallenge
+from .services import AchievementService
 import random
 
 
@@ -24,9 +25,7 @@ class User(AbstractUser):
     use_of_spanish = models.IntegerField(default=0)  # Use of Spanish 
     activity_days = models.JSONField(default=list, blank=True)  # Store list of active dates as strings
     last_activity_date = models.DateField(null=True, blank=True)  # Track last activity for streak calculation
-    passports_earned = models.JSONField(default=list, blank=True)  # Store list of earned passports
-
-    daily_challenges_creation_date = models.DateField(null=True, blank=True)  # Track last daily challenge creation date
+    passports_earned = models.JSONField(default=list, blank=True)  # List of earned passports (completed countries)
 
     # Default numbers of practice questions 
     default_random_practice_count = models.IntegerField(default=20)  
@@ -40,10 +39,8 @@ class User(AbstractUser):
     
     # Daily challenges
     daily_challenges = models.JSONField(default=list, blank=True)
-
-    # Levels
-    levels = models.JSONField(default=dict, blank=True)  # e.g., {"overall": 10, "poland": 3, "spain": 1}
-
+    daily_challenges_creation_date = models.DateField(null=True, blank=True)  # Track last daily challenge creation date
+    daily_challenges_completed = models.BooleanField(default=False)  # Track if daily challenges are completed
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
@@ -103,31 +100,26 @@ class User(AbstractUser):
                 self.mark_activity_today()
                 self.calculate_streak()
             
-            self.experience += 20
+            self.experience += 25
             self.progress_daily_challenges(practice_type=practice_type)
             self.save()
 
     def has_achievement(self, achievement_name):
         """Check if user has earned a specific achievement by name"""
-        return self.earned_achievements.filter(achievement__name=achievement_name).exists()
+        return self.earned_achievements.filter(achievement__code=achievement_name).exists()
 
     def award_achievement(self, achievement_name):
-        """Award an achievement to the user if they don't already have it"""
-        try:
-            achievement = Achievement.objects.get(name=achievement_name)
-            user_achievement, created = UserAchievement.objects.get_or_create(
-                user=self,
-                achievement=achievement
-            )
-            if created:
-                # Award experience points
-                self.experience += achievement.experience_award
-                self.save()
-                return True
-        except Achievement.DoesNotExist:
-            pass
-        return False
-
+        """Award an achievement"""
+        # Award experience points
+        achievement = Achievement.objects.filter(name=achievement_name).first()
+        if achievement:
+            self.experience += achievement.experience_award
+            self.check_if_new_level()
+            self.save()
+            return True
+        else:
+            return False
+        
     def mark_activity_today(self):
         """Mark today as an active day and update streak"""
         today = date.today()
@@ -139,7 +131,6 @@ class User(AbstractUser):
             self.last_activity_date = today
             self.calculate_streak()
             self.save()
-            print('bbbbbb')
 
     def calculate_streak(self):
         """Calculate current streak based on activity_days"""
@@ -186,14 +177,13 @@ class User(AbstractUser):
         self.days_streak = current_streak
         
         # Update highest streak if needed
-        highest_streak = self.highest_streak
-        if current_streak > highest_streak:
+        if current_streak > self.highest_streak:
             self.highest_streak = current_streak
 
     def create_daily_challenges(self):
         all_challenges = list(DailyChallenge.objects.all())
         daily_challenges_count = 3
-        selected_challenges = random.sample(all_challenges, k=min(daily_challenges_count, len(all_challenges)))
+        selected_challenges = random.sample(all_challenges, k=daily_challenges_count)
                 
         self.daily_challenges = [
             {
@@ -205,7 +195,14 @@ class User(AbstractUser):
             }
             for challenge in selected_challenges
         ]
+        self.daily_challenges_completed = False
+        
         self.save()
+        
+    def check_if_new_level(self):
+        if self.experience >= self.level * 500:
+            self.level += 1
+            self.save()
         
     def progress_daily_challenges(self, practice_type=None, lesson=None):
         # Map practice types to challenge prefixes
@@ -218,12 +215,14 @@ class User(AbstractUser):
         
         # Get prefixes if practice_type is provided and valid
         prefixes = practice_prefixes.get(practice_type, ()) if practice_type else ()
-        print(prefixes)
         
         for challenge in self.daily_challenges:
-             # Experience points challenge
+            # Experience points challenge
             if challenge['code'].startswith('EX') and not challenge['completed']:
-                challenge['progress'] += 20
+                if lesson is not None:
+                    challenge['progress'] += 100
+                elif practice_type in practice_prefixes.keys():
+                    challenge['progress'] += 25
                 
             # Complete lessons challenge
             if challenge['code'].startswith('C') and not challenge['completed']:
@@ -245,7 +244,16 @@ class User(AbstractUser):
             # Check if challenge is completed
             if challenge['progress'] >= challenge['max_progress']:
                     challenge['completed'] = True
-
+        
+        # Check if all challenges are completed and award bonus XP
+        if not self.daily_challenges_completed:
+            completed_count = sum(1 for challenge in self.daily_challenges if challenge['completed'])
+            if completed_count == len(self.daily_challenges):
+                self.experience += 75
+                self.daily_challenges_completed = True
+               
+        self.check_if_new_level()
+        AchievementService.check_and_award_achievements(self)
         self.save()
 
 

@@ -2,8 +2,12 @@
 footer {
     position: relative;
     bottom: 0;
-    width: 100%;
-    max-width: 100%;
+    width: 100vw;
+    max-width: none;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-left: 0;
+    margin-right: 0;
     overflow: hidden;
     box-sizing: border-box;
     flex-shrink: 0;
@@ -23,7 +27,7 @@ footer {
     justify-content: center;
     align-items: center;
     width: 100%;
-    max-width: 100%;
+    max-width: none;
     margin: 50px 0 0 0;
     box-sizing: border-box;
 }
