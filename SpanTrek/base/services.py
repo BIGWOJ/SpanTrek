@@ -2,6 +2,8 @@
 Achievement service for handling achievement logic
 """
 from lessons.models import Lesson, Country
+from datetime import date
+from django.db import models
 
 class AchievementService:
     """Service class to handle achievement checking and awarding"""
@@ -56,6 +58,18 @@ class AchievementService:
 
         if len(user.audio_learned) >= 25 and not user.has_achievement('Audiofile'):
             user.award_achievement('Audiofile')
+            
+        total_use_of_spanish = Lesson.objects.aggregate(total=models.Sum('use_of_spanish'))['total'] or 0
+        use_of_spanish_percentage = (user.use_of_spanish / total_use_of_spanish * 100) if total_use_of_spanish > 0 else 0
+        if use_of_spanish_percentage >= 50 and not user.has_achievement('Spanish User'):
+            user.award_achievement('Spanish User')
+
+        # Time-based
+        if user.last_activity_date == date.today() and not user.has_achievement('Early Bird') and date.today().hour < 10:
+            user.award_achievement('Early Bird')
+        
+        if user.last_activity_date == date.today() and not user.has_achievement('Night Owl') and date.today().hour >= 22:
+            user.award_achievement('Night Owl')
 
         # Country-specific achievements
         poland_progress = user.country_lessons_progress.get('poland', 0)

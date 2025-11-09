@@ -119,14 +119,14 @@ class Command(BaseCommand):
             {
                 'code': 'lesson_before_10',
                 'name': 'Early Bird',
-                'description': 'Complete a lesson before 10 AM',
+                'description': 'Study before 10 AM',
                 'icon': '🐦',
                 'experience_award': 75,
             },
             {
                 'code': 'lesson_after_22',
                 'name': 'Night Owl',
-                'description': 'Complete a lesson after 10 PM',
+                'description': 'Study after 10 PM',
                 'icon': '🦉',
                 'experience_award': 75,
             },

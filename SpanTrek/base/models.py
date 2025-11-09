@@ -13,19 +13,22 @@ class User(AbstractUser):
     username = models.CharField(max_length=150, unique=True, blank=False, null=False)
     email = models.EmailField(unique=True, blank=False, null=False)
     avatar = models.ImageField(default='avatars/default_avatar.png', upload_to='avatars/', null=True, blank=True)
-
-    days_streak = models.IntegerField(default=0)
-    highest_streak = models.IntegerField(default=0)
     level = models.IntegerField(default=1)
     experience = models.IntegerField(default=0)
     adventure_progress = models.IntegerField(default=0)
-    words_learned = models.JSONField(default=list, blank=True) # Store list of learned words
-    sentences_learned = models.JSONField(default=list, blank=True) # Store list of learned sentences
-    audio_learned = models.JSONField(default=list, blank=True) # Store list of learned audio clips
-    use_of_spanish = models.IntegerField(default=0)  # Use of Spanish 
-    activity_days = models.JSONField(default=list, blank=True)  # Store list of active dates as strings
-    last_activity_date = models.DateField(null=True, blank=True)  # Track last activity for streak calculation
-    passports_earned = models.JSONField(default=list, blank=True)  # List of earned passports (completed countries)
+    passports_earned = models.JSONField(default=list, blank=True)
+    
+    # Knowledge
+    words_learned = models.JSONField(default=list, blank=True)
+    sentences_learned = models.JSONField(default=list, blank=True)
+    audio_learned = models.JSONField(default=list, blank=True)
+    use_of_spanish = models.IntegerField(default=0)
+    
+    # Activity 
+    days_streak = models.IntegerField(default=0)
+    highest_streak = models.IntegerField(default=0)
+    activity_days = models.JSONField(default=list, blank=True)
+    last_activity_date = models.DateField(null=True, blank=True)
 
     # Default numbers of practice questions 
     default_random_practice_count = models.IntegerField(default=20)  
@@ -39,8 +42,8 @@ class User(AbstractUser):
     
     # Daily challenges
     daily_challenges = models.JSONField(default=list, blank=True)
-    daily_challenges_creation_date = models.DateField(null=True, blank=True)  # Track last daily challenge creation date
-    daily_challenges_completed = models.BooleanField(default=False)  # Track if daily challenges are completed
+    daily_challenges_creation_date = models.DateField(null=True, blank=True)
+    daily_challenges_completed = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
@@ -106,14 +109,21 @@ class User(AbstractUser):
 
     def has_achievement(self, achievement_name):
         """Check if user has earned a specific achievement by name"""
-        return self.earned_achievements.filter(achievement__code=achievement_name).exists()
+        return self.earned_achievements.filter(achievement__name=achievement_name).exists()
 
     def award_achievement(self, achievement_name):
-        """Award an achievement"""
-        # Award experience points
-        achievement = Achievement.objects.filter(name=achievement_name).first()
-        if achievement:
-            self.experience += achievement.experience_award
+        """Award and add an achievement to the user"""
+        achievement_obj = Achievement.objects.filter(name=achievement_name).first()
+        if achievement_obj:
+            # Check if user already has this achievement to prevent duplicates
+            if self.earned_achievements.filter(achievement=achievement_obj).exists():
+                return False  # Achievement already earned
+                
+            self.experience += achievement_obj.experience_award
+            new_user_achievement = UserAchievement.objects.create(
+                user=self,
+                achievement=achievement_obj
+            )
             self.check_if_new_level()
             self.save()
             return True
@@ -259,7 +269,7 @@ class User(AbstractUser):
 
 class Achievement(models.Model):
     code = models.CharField(max_length=50, unique=True)
-    name = models.CharField(max_length=100, unique=True)  # Use name as unique identifier
+    name = models.CharField(max_length=100, unique=True)
     description = models.TextField()
     icon = models.CharField(max_length=50)
     experience_award = models.IntegerField(default=0)
