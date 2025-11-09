@@ -1,6 +1,5 @@
 from django.core.management.base import BaseCommand
 from lessons.models import Vocabulary
-from django.db import IntegrityError
 import json
 import os
 

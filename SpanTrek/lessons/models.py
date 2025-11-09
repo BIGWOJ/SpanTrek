@@ -52,9 +52,6 @@ class Vocabulary(models.Model):
     example_sentence = models.TextField(blank=True)
     conjugation = models.TextField(blank=True)
     
-    # Audio
-    audio_url = models.URLField(blank=True)
-    
     class Meta:
         verbose_name_plural = "Vocabulary"
         ordering = ['word']

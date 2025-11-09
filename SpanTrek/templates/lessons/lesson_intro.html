@@ -1,9 +1,10 @@
-{% extends 'base/base.html' %}
-{% load static %}
-{% block content %}
+{% extends 'base/base.html' %} {% load static %} {% block content %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'styles/lessons/lesson_intro.css' %}" />
-
+<link
+    rel="stylesheet"
+    type="text/css"
+    href="{% static 'styles/lessons/lesson_intro.css' %}"
+/>
 
 <div class="lesson-intro">
     {% include 'lessons/back_to_country_map.html' with country=country %}
@@ -12,26 +13,43 @@
         {{lesson.title}}
     </h1>
 
-    <!-- Lesson Statistics -->
     <div class="lesson-statistics">
         <div class="stats-header">To learn</div>
         <div class="stats-items">
             <div class="stat-item">
                 <span class="stat-number">{{ lesson.vocabularies.count }}</span>
-                <span class="stat-label">Words</span>
+                <span class="stat-label">
+                    Words
+                    <span class="stat-icon">📚</span>
+                </span>
             </div>
             <div class="stat-item">
                 <span class="stat-number">{{ lesson.sentences.count }}</span>
-                <span class="stat-label">Sentences</span>
+                <span class="stat-label">
+                    Sentences
+                    <span class="stat-icon">💬</span>
+                </span>
             </div>
             <div class="stat-item">
-                <span class="stat-number">{{ lesson.audios.count }} </span>
-                <span class="stat-label">Audios</span>
+                <span class="stat-number">{{ lesson.audios.count }}</span>
+                <span class="stat-label">
+                    Audios
+                    <span class="stat-icon">🎧</span>
+                </span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">{{ lesson.use_of_spanish }}</span>
+                <span class="stat-label">
+                    Use of Spanish
+                    <span class="stat-icon">🇪🇸</span>
+                </span>
             </div>
         </div>
     </div>
 
-    <a href="{% url 'lessons:landmark_lesson_with_number' country=country landmark=landmark lesson_number=0 %}">Start
-        lesson</a>
+    <a
+        href="{% url 'lessons:landmark_lesson_with_number' country=country landmark=landmark lesson_number=0 %}"
+        >Start lesson</a
+    >
 </div>
 {% endblock %}
