@@ -1,46 +1,98 @@
 [
     {
-        "title": "Daily Routines",
-        "content": "# Daily Routines in Spanish\n\n## Common Activities\n- despertarse - to wake up\n- ducharse - to shower\n- desayunar - to have breakfast\n- trabajar - to work\n- almorzar - to have lunch\n- cenar - to have dinner\n- acostarse - to go to bed\n\n## Practice Exercises\n1. Describe your daily routine\n2. Tell time in Spanish\n3. Use reflexive verbs correctly",
+        "title": "Basic Greetings & Introduction",
+        "content": "# Basic Spanish Greetings\n\n## Essential Greetings\n- hola - hello\n- adiós - goodbye\n- buenos días - good morning\n- buenas tardes - good afternoon\n- buenas noches - good evening/night\n- por favor - please\n- gracias - thank you\n- de nada - you're welcome\n\n## Introducing Yourself\n- Me llamo... - My name is...\n- Soy... - I am...\n- ¿Cómo te llamas? - What's your name?\n- ¿Cómo estás? - How are you?\n- Bien, gracias - Fine, thank you\n\n## Practice Exercises\n1. Learn basic greetings\n2. Practice introductions\n3. Simple conversation starters",
         "order": 0,
         "landmark": "szczecin",
         "country": "poland",
         "vocabularies": [
-            {"word": "despertarse", "translation": "to wake up"},
-            {"word": "ducharse", "translation": "to shower"},
-            {"word": "desayunar", "translation": "to have breakfast"},
-            {"word": "trabajar", "translation": "to work"},
-            {"word": "almorzar", "translation": "to have lunch"},
-            {"word": "cenar", "translation": "to have dinner"},
-            {"word": "acostarse", "translation": "to go to bed"}
+            {"word": "hola", "translation": "hello"},
+            {"word": "adiós", "translation": "goodbye"},
+            {"word": "buenos días", "translation": "good morning"},
+            {"word": "buenas tardes", "translation": "good afternoon"},
+            {"word": "buenas noches", "translation": "good evening/night"},
+            {"word": "por favor", "translation": "please"},
+            {"word": "gracias", "translation": "thank you"},
+            {"word": "de nada", "translation": "you're welcome"},
+            {"word": "me llamo", "translation": "my name is"},
+            {"word": "soy", "translation": "I am"}
         ],
         "sentences": [
-            {"sentence": "Me despierto a las siete de la mañana.", "translation": "I wake up at seven in the morning."},
-            {"sentence": "Después de ducharme, desayuno.", "translation": "After showering, I have breakfast."},
-            {"sentence": "Trabajo de nueve a cinco.", "translation": "I work from nine to five."},
-            {"sentence": "Almuerzo con mis amigos al mediodía.", "translation": "I have lunch with my friends at noon."},
-            {"sentence": "Ceno a las siete de la noche.", "translation": "I have dinner at seven in the evening."},
-            {"sentence": "Me acuesto a las diez de la noche.", "translation": "I go to bed at ten at night."}
+            {"sentence": "Hola, me llamo María.", "translation": "Hello, my name is María."},
+            {"sentence": "Buenos días, ¿cómo estás?", "translation": "Good morning, how are you?"},
+            {"sentence": "Bien, gracias. ¿Y tú?", "translation": "Fine, thank you. And you?"},
+            {"sentence": "Adiós, hasta mañana.", "translation": "Goodbye, see you tomorrow."},
+            {"sentence": "Por favor y gracias.", "translation": "Please and thank you."},
+            {"sentence": "Buenas noches.", "translation": "Good evening."}
         ],
-        "use_of_spanish": 2,
-        "lesson_sequence": {"audio": ["/static/audio/word/hola.mp3", "transcription text"], "image": ["/static/images/colors/green.png", "optional text - spanish text", "optional text - english text"], "text": "link_text", "fill_blank": ["Przykładowa pierwsza część zdania", "CORRECT1", "To jest kontynuacja. Zdanie po odpowiedzi.", "CORRECT2", "text3"], "match": ["1_match1", "4_MATCH4", "2_match2", "3_MATCH3", "3_match3", "2_MATCH2", "4_match4", "1_MATCH1"], "single_choice": ["TUTAJ ZAWSZE pytanie będzie single", "CORRECT", "option2"], "multiple_choice": ["Tutaj zawsze będzie pytanie", "ASD", "option2", "opcja", "CORRECT", "CORRECT"], "input_field": ["question", "CORRECT"], "translate_input_field": ["text to translate", "translate"]}
+        "use_of_spanish": 1,
+        "lesson_sequence": {"audio": ["/static/audio/vocabulary/hola.mp3", "hola"], "image": ["/static/images/greetings/hello.png", "hola", "hello"], "text": "Learn your first Spanish words!", "fill_blank": ["Hola, me", "llamo", "María. ¿Cómo te", "llamas", "?"], "match": ["1_hola", "3_gracias", "2_adiós", "4_buenos días", "2_goodbye", "1_hello", "4_good morning", "3_thank you"], "single_choice": ["How do you say 'hello' in Spanish?", "HOLA", "adiós", "gracias"], "multiple_choice": ["Which of these are greetings?", "HOLA", "ADIÓS", "mesa", "BUENOS DÍAS", "GRACIAS"], "input_field": ["How do you say 'thank you' in Spanish?", "gracias"], "translate_input_field": ["Hello, my name is Ana", "Hola, me llamo Ana"]}
     },
     {
         "title": "Food and Dining",
-        "content": "# Food and Dining Vocabulary\n\n## Food Categories\n- el desayuno - breakfast\n- el almuerzo - lunch\n- la cena - dinner\n- las bebidas - drinks\n- los postres - desserts\n\n## Common Phrases\n- Tengo hambre - I'm hungry\n- Tengo sed - I'm thirsty\n- ¡Buen provecho! - Enjoy your meal!\n\n## Practice Exercises\n1. Order food at a restaurant\n2. Describe your favorite meals\n3. Learn food-related vocabulary",
+        "content": "# Food and Dining Vocabulary\n\n## Basic Foods\n- el pan - bread\n- la leche - milk\n- el agua - water\n- la manzana - apple\n- el queso - cheese\n- la carne - meat\n- el pollo - chicken\n- el pescado - fish\n\n## Meals\n- el desayuno - breakfast\n- el almuerzo - lunch\n- la cena - dinner\n- la comida - food/meal\n\n## Common Phrases\n- Tengo hambre - I'm hungry\n- Tengo sed - I'm thirsty\n- Me gusta - I like\n- No me gusta - I don't like\n- ¿Qué quieres comer? - What do you want to eat?\n- Quiero... - I want...\n\n## Practice Exercises\n1. Name basic foods\n2. Express preferences\n3. Order simple meals",
         "order": 1,
         "landmark": "szczecin",
         "country": "poland",
-        "vocabularies": [],
-        "sentences": []
+        "vocabularies": [
+            {"word": "el pan", "translation": "bread"},
+            {"word": "la leche", "translation": "milk"},
+            {"word": "el agua", "translation": "water"},
+            {"word": "la manzana", "translation": "apple"},
+            {"word": "el queso", "translation": "cheese"},
+            {"word": "la carne", "translation": "meat"},
+            {"word": "el pollo", "translation": "chicken"},
+            {"word": "el pescado", "translation": "fish"},
+            {"word": "el desayuno", "translation": "breakfast"},
+            {"word": "la comida", "translation": "food/meal"},
+            {"word": "tengo hambre", "translation": "I'm hungry"},
+            {"word": "me gusta", "translation": "I like"},
+            {"word": "quiero", "translation": "I want"}
+        ],
+        "sentences": [
+            {"sentence": "Tengo hambre.", "translation": "I'm hungry."},
+            {"sentence": "Quiero pan y queso.", "translation": "I want bread and cheese."},
+            {"sentence": "Me gusta el pollo.", "translation": "I like chicken."},
+            {"sentence": "No me gusta el pescado.", "translation": "I don't like fish."},
+            {"sentence": "¿Qué quieres para el desayuno?", "translation": "What do you want for breakfast?"},
+            {"sentence": "Quiero una manzana y leche.", "translation": "I want an apple and milk."}
+        ],
+        "use_of_spanish": 2,
+        "lesson_sequence": {"audio": ["/static/audio/vocabulary/comida.mp3", "comida"], "image": ["/static/images/food/apple.png", "manzana", "apple"], "text": "Learn about food and express your preferences!", "fill_blank": ["Tengo", "hambre", ". Quiero", "pan", "y queso."], "match": ["1_pan", "3_leche", "2_manzana", "4_queso", "2_apple", "1_bread", "4_cheese", "3_milk"], "single_choice": ["How do you say 'I'm hungry' in Spanish?", "TENGO HAMBRE", "Tengo sed", "Me gusta"], "multiple_choice": ["Which of these are foods?", "PAN", "hola", "MANZANA", "adiós", "QUESO"], "input_field": ["How do you say 'I like' in Spanish?", "me gusta"], "translate_input_field": ["I want chicken and bread", "Quiero pollo y pan"]}
     },
     {
-        "title": "Hobbies and Free Time",
-        "content": "# Hobbies and Free Time Activities\n\n## Common Activities\n- leer - to read\n- ver la televisión - to watch TV\n- escuchar música - to listen to music\n- jugar al fútbol - to play soccer\n- nadar - to swim\n\n## Practice Exercises\n1. Talk about your hobbies\n2. Plan weekend activities\n3. Express preferences (me gusta/no me gusta)",
+        "title": "Numbers, Colors & Basic Descriptions",
+        "content": "# Numbers, Colors & Descriptions\n\n## Numbers 1-10\n- uno - one\n- dos - two\n- tres - three\n- cuatro - four\n- cinco - five\n- seis - six\n- siete - seven\n- ocho - eight\n- nueve - nine\n- diez - ten\n\n## Basic Colors\n- rojo - red\n- azul - blue\n- verde - green\n- amarillo - yellow\n- blanco - white\n- negro - black\n\n## Simple Descriptions\n- grande - big\n- pequeño - small\n- bonito - pretty\n- feo - ugly\n- nuevo - new\n- viejo - old\n\n## Practice Exercises\n1. Count from 1 to 10\n2. Name colors of objects\n3. Describe things with simple adjectives",
         "order": 2,
         "landmark": "szczecin",
         "country": "poland",
-        "vocabularies": [],
-        "sentences": []
+        "vocabularies": [
+            {"word": "uno", "translation": "one"},
+            {"word": "dos", "translation": "two"},
+            {"word": "tres", "translation": "three"},
+            {"word": "cuatro", "translation": "four"},
+            {"word": "cinco", "translation": "five"},
+            {"word": "seis", "translation": "six"},
+            {"word": "siete", "translation": "seven"},
+            {"word": "ocho", "translation": "eight"},
+            {"word": "nueve", "translation": "nine"},
+            {"word": "diez", "translation": "ten"},
+            {"word": "rojo", "translation": "red"},
+            {"word": "azul", "translation": "blue"},
+            {"word": "verde", "translation": "green"},
+            {"word": "amarillo", "translation": "yellow"},
+            {"word": "grande", "translation": "big"},
+            {"word": "pequeño", "translation": "small"}
+        ],
+        "sentences": [
+            {"sentence": "Uno, dos, tres.", "translation": "One, two, three."},
+            {"sentence": "La manzana es roja.", "translation": "The apple is red."},
+            {"sentence": "El cielo es azul.", "translation": "The sky is blue."},
+            {"sentence": "Tengo cinco manzanas.", "translation": "I have five apples."},
+            {"sentence": "La casa es grande.", "translation": "The house is big."},
+            {"sentence": "El gato es pequeño y negro.", "translation": "The cat is small and black."}
+        ],
+        "use_of_spanish": 2,
+        "lesson_sequence": {"audio": ["/static/audio/vocabulary/uno.mp3", "uno"], "image": ["/static/images/numbers/five.png", "cinco", "five"], "text": "Learn numbers, colors and how to describe things!", "fill_blank": ["La manzana es", "roja", ". Tengo", "cinco", "manzanas."], "match": ["1_uno", "3_tres", "2_dos", "4_rojo", "2_two", "1_one", "4_red", "3_three"], "single_choice": ["What color is 'verde' in English?", "GREEN", "red", "blue"], "multiple_choice": ["Which of these are numbers?", "UNO", "rojo", "TRES", "verde", "CINCO"], "input_field": ["How do you say 'big' in Spanish?", "grande"], "translate_input_field": ["The house is small", "La casa es pequeña"]}
     }
 ]

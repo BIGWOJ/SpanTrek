@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     const checkBtn = document.querySelector(".check-btn-fill");
     const resetBtn = document.querySelector(".reset-btn-fill");
+    const showAnswerBtn = document.querySelector(".show-answer-btn-fill");
     const blankInputs = document.querySelectorAll(".blank-input");
 
     // Set correct names for input fields
@@ -100,6 +101,35 @@ document.addEventListener("DOMContentLoaded", function () {
             },
         });
     }
+
+    // Show answer functionality
+    showAnswerBtn.addEventListener("click", function () {
+        blankInputs.forEach((input) => {
+            const correctAnswer = input.getAttribute("data-answer");
+            input.value = correctAnswer;
+            input.classList.remove("incorrect");
+            input.classList.add("correct");
+        });
+
+        // Update check button to show success
+        checkBtn.style.background = "rgba(76, 175, 80, 0.2)";
+        checkBtn.style.borderColor = "#4caf50";
+        checkBtn.style.color = "#4caf50";
+        checkBtn.textContent = "Perfect!";
+
+        // Show the next button
+        const nextBtn =
+            document.getElementById("next-exercise-btn") ||
+            document.getElementById("complete-lesson-btn");
+        if (nextBtn) {
+            nextBtn.style.display = "inline-block";
+            nextBtn.style.opacity = "0";
+            nextBtn.style.transition = "opacity 0.5s ease-in-out";
+            setTimeout(() => {
+                nextBtn.style.opacity = "1";
+            }, 100);
+        }
+    });
 
     // Reset functionality
     resetBtn.addEventListener("click", function (event) {

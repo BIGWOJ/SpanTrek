@@ -1,31 +1,27 @@
 document.addEventListener("DOMContentLoaded", function () {
     const checkBtn = document.querySelector(".check-btn-single");
     const resetBtn = document.querySelector(".reset-btn-single");
+    const showAnswerBtn = document.querySelector(".show-answer-btn-single");
     const choiceItems = document.querySelectorAll(".choice-item");
 
     let selectedChoice = null; // Only one choice can be selected
     let isAnswered = false;
 
-    // Determine correct answers based on content
+    // Determine correct answers based on original content stored in data attribute
     const correctAnswers = new Set();
 
     choiceItems.forEach((item, index) => {
-        const content = item
-            .querySelector(".choice-content")
-            .textContent.trim();
+        // Get the original content before any template filters
+        const originalContent = item.getAttribute("data-original").trim();
 
-        // Check if content is all uppercase (indicating correct answer)
+        // Check if original content is all uppercase (indicating correct answer)
         const isAllUppercase =
-            content === content.toUpperCase() &&
-            content.length > 1 &&
-            /[A-Z]/.test(content);
+            originalContent === originalContent.toUpperCase() &&
+            originalContent.length > 1 &&
+            /[A-Z]/.test(originalContent);
 
         if (isAllUppercase) {
             correctAnswers.add(index);
-            // Convert to normal case for display
-            item.querySelector(".choice-content").textContent =
-                content.charAt(0).toUpperCase() +
-                content.slice(1).toLowerCase();
         }
     });
 
@@ -126,12 +122,48 @@ document.addEventListener("DOMContentLoaded", function () {
                 setTimeout(() => {
                     nextBtn.style.opacity = "1";
                 }, 100);
-            } 
+            }
         } else {
             checkBtn.style.background = "rgba(244, 67, 54, 0.2)";
             checkBtn.style.borderColor = "#f44336";
             checkBtn.style.color = "#f44336";
             checkBtn.textContent = "Try again";
+        }
+    });
+
+    // Show answer functionality
+    showAnswerBtn.addEventListener("click", function () {
+        // Mark as answered to prevent further clicks
+        isAnswered = true;
+
+        // Clear any previous selections and mark correct answer
+        choiceItems.forEach((item, index) => {
+            item.classList.remove("selected", "incorrect");
+            item.classList.add("disabled");
+
+            if (correctAnswers.has(index)) {
+                item.classList.add("correct");
+                selectedChoice = index;
+            }
+        });
+
+        // Update check button to show success
+        checkBtn.style.background = "rgba(76, 175, 80, 0.2)";
+        checkBtn.style.borderColor = "#4caf50";
+        checkBtn.style.color = "#4caf50";
+        checkBtn.textContent = "Perfect!";
+
+        // Show the next button
+        const nextBtn =
+            document.getElementById("next-exercise-btn") ||
+            document.getElementById("complete-lesson-btn");
+        if (nextBtn) {
+            nextBtn.style.display = "inline-block";
+            nextBtn.style.opacity = "0";
+            nextBtn.style.transition = "opacity 0.5s ease-in-out";
+            setTimeout(() => {
+                nextBtn.style.opacity = "1";
+            }, 100);
         }
     });
 

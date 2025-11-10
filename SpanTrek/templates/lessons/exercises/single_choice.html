@@ -24,8 +24,11 @@
                     <div
                         class="choice-item"
                         data-choice="{{ forloop.counter }}"
+                        data-original="{{ choice }}"
                     >
-                        <div class="choice-content">{{ choice }}</div>
+                        <div class="choice-content">
+                            {{ choice|lower|capfirst }}
+                        </div>
                     </div>
                     {% endfor %}
                 </div>
@@ -36,5 +39,6 @@
             <button class="check-btn-single">Check answer</button>
             <button class="reset-btn-single">Reset</button>
         </div>
+        <button class="show-answer-btn-single">Show answer</button>
     </div>
 </div>

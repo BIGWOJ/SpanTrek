@@ -21,7 +21,7 @@
                     {% for item in content %}
                         {% if forloop.counter0|divisibleby:2 %}
                             <div class="match-item" data-match="pair_{{ item|slice:":1" }}">
-                                <div class="match-content">{{ item|slice:"2:" }}</div>
+                                <div class="match-content">{{ item|slice:"2:"|capfirst }}</div>
                             </div>
                         {% endif %}
                     {% endfor %}
@@ -31,12 +31,16 @@
                     {% for item in content %}
                         {% if not forloop.counter0|divisibleby:2 %}
                             <div class="match-item" data-match="pair_{{ item|slice:":1" }}">
-                                <div class="match-content">{{ item|slice:"2:" }}</div>
+                                <div class="match-content">{{ item|slice:"2:"|capfirst }}</div>
                             </div>
                         {% endif %}
                     {% endfor %}
                 </div>
             </div>
+        </div>
+
+        <div class="exercise-actions">
+            <button class="show-answer-btn-match">Show answer</button>
         </div>
     </div>
 </div>

@@ -100,10 +100,11 @@ class Command(BaseCommand):
                 elif audio_from == 'sentences':
                     text = data['sentence']
                 
-                    audio, created = Audio.objects.get_or_create(
-                        text=text,
-                        audio_url=f'static/audio/{audio_from}/{normalize_filename(text)}.mp3'
-                    )
+                audio, created = Audio.objects.get_or_create(
+                    text=text,
+                    audio_url=f'static/audio/{audio_from}/{normalize_filename(text)}.mp3'
+                )
+  
                 create_audio_file(text, audio_from)
     
             self.stdout.write(self.style.SUCCESS('Audio files created successfully'))

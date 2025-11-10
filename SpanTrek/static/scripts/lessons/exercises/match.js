@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     const matchItems = document.querySelectorAll(".match-item");
+    const showAnswerBtn = document.querySelector(".show-answer-btn-match");
 
     let selectedItems = [];
     let matches = [];
@@ -125,6 +126,32 @@ document.addEventListener("DOMContentLoaded", function () {
 
         selectedItems = [];
     }
+
+    // Show answer functionality
+    showAnswerBtn.addEventListener("click", function () {
+        // Clear any selections
+        selectedItems.forEach((item) => item.classList.remove("selected"));
+        selectedItems = [];
+
+        // Match all items automatically
+        matchItems.forEach((item) => {
+            item.classList.remove("selected", "incorrect");
+            item.classList.add("matched");
+        });
+
+        // Show the next button
+        const nextBtn =
+            document.getElementById("next-exercise-btn") ||
+            document.getElementById("complete-lesson-btn");
+        if (nextBtn) {
+            nextBtn.style.display = "inline-block";
+            nextBtn.style.opacity = "0";
+            nextBtn.style.transition = "opacity 0.5s ease-in-out";
+            setTimeout(() => {
+                nextBtn.style.opacity = "1";
+            }, 100);
+        }
+    });
 
     // Keyboard navigation - NUMPAD ONLY - map numpad number keys to match items based on their labels
     document.addEventListener("keydown", function (event) {

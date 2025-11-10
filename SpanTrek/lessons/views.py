@@ -107,7 +107,7 @@ def country_landmark_lesson(request, country, landmark, lesson_number=None, exer
     # If lesson_number is not provided, show intro page first
     if lesson_number is None:
         lesson = Lesson.objects.filter(landmark=landmark_obj, country=country_obj, order=landmark_progress).first()
-
+        print(lesson.vocabularies.all())
         context = {
             'landmark': landmark,
             'country': country,
@@ -126,7 +126,6 @@ def country_landmark_lesson(request, country, landmark, lesson_number=None, exer
         context = {
             'landmark': landmark,
             'country': country,
-            'error': 'Lesson not found'
         }
         return render(request, 'lessons/lesson_base.html', context=context)
     
@@ -236,12 +235,17 @@ def country_complete(request, country):
     """View for country completion page with congratulations and statistics"""  
     country_obj = Country.objects.filter(name__iexact=country).first()
     country_lessons = Lesson.objects.filter(country=country_obj).count()
-    xp_gained = country_lessons * 50
+    country_knowledge = {
+        'vocabularies': Vocabulary.objects.filter(lessons__country=country_obj).distinct().count(),
+        'sentences': Sentence.objects.filter(lessons__country=country_obj).distinct().count(),
+        'audios': Audio.objects.filter(lessons__country=country_obj).distinct().count(),
+        'use_of_spanish': Lesson.objects.filter(country=country_obj).aggregate(total=Sum('use_of_spanish'))['total'] or 0,
+    }
     
     context = {
         'country': country,
         'total_lessons': country_lessons,
-        'xp_gained': xp_gained,
+        'country_knowledge': country_knowledge
     }
     
     

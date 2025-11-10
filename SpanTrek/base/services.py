@@ -2,7 +2,7 @@
 Achievement service for handling achievement logic
 """
 from lessons.models import Lesson, Country
-from datetime import date
+from datetime import date, datetime
 from django.db import models
 
 class AchievementService:
@@ -65,10 +65,11 @@ class AchievementService:
             user.award_achievement('Spanish User')
 
         # Time-based
-        if user.last_activity_date == date.today() and not user.has_achievement('Early Bird') and date.today().hour < 10:
+        current_hour = datetime.now().hour
+        if user.last_activity_date == date.today() and not user.has_achievement('Early Bird') and current_hour < 10:
             user.award_achievement('Early Bird')
         
-        if user.last_activity_date == date.today() and not user.has_achievement('Night Owl') and date.today().hour >= 22:
+        if user.last_activity_date == date.today() and not user.has_achievement('Night Owl') and current_hour >= 22:
             user.award_achievement('Night Owl')
 
         # Country-specific achievements

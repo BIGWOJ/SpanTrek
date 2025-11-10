@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from lessons.models import Lesson, Country, Landmark
+from lessons.models import Lesson, Country, Landmark, Audio
 import json
 import os
 
@@ -84,6 +84,54 @@ class Command(BaseCommand):
                         else:
                             skipped_count += 1
                             self.stdout.write(f'Skipped existing lesson: {lesson.title} (Order: {lesson.order})')
+
+                        # Update ManyToMany relationships for existing lessons
+                        # Update vocabularies
+                        vocab_objs = []
+                        for vocab in lesson_data.get('vocabularies', []):
+                            vocab_obj, _ = lesson.vocabularies.model.objects.get_or_create(
+                                word=vocab['word'],
+                                defaults={
+                                    'translation': vocab.get('translation', ''),
+                                    'pronunciation': vocab.get('pronunciation', ''),
+                                    'example_sentence': vocab.get('example_sentence', ''),
+                                    'conjugation': vocab.get('conjugation', '')
+                                }
+                            )
+                            vocab_objs.append(vocab_obj)
+                        lesson.vocabularies.set(vocab_objs)
+
+                        # Update sentences
+                        sentence_objs = []
+                        for sent in lesson_data.get('sentences', []):
+                            sent_obj, _ = lesson.sentences.model.objects.get_or_create(
+                                sentence=sent['sentence'],
+                                defaults={
+                                    'translation': sent.get('translation', '')
+                                }
+                            )
+                            sentence_objs.append(sent_obj)
+                        lesson.sentences.set(sentence_objs)
+
+                        # Update audio
+                        audio_objs = []
+                        lesson_sequence = lesson_data.get('lesson_sequence', {})
+                        
+                        if 'audio' in lesson_sequence and isinstance(lesson_sequence['audio'], list):
+                            audio_data = lesson_sequence['audio']
+                            if len(audio_data) >= 2:
+                                audio_url = audio_data[0]
+                                audio_text = audio_data[1]
+                                
+                                audio_obj, _ = Audio.objects.get_or_create(
+                                    audio_url=audio_url,
+                                    defaults={
+                                        'text': audio_text
+                                    }
+                                )
+                                audio_objs.append(audio_obj)
+                        
+                        lesson.audios.set(audio_objs)
                     else:
                         created_count += 1
                         self.stdout.write(
@@ -99,8 +147,7 @@ class Command(BaseCommand):
                                     'translation': vocab.get('translation', ''),
                                     'pronunciation': vocab.get('pronunciation', ''),
                                     'example_sentence': vocab.get('example_sentence', ''),
-                                    'conjugation': vocab.get('conjugation', ''),
-                                    'audio_url': vocab.get('audio_url', '')
+                                    'conjugation': vocab.get('conjugation', '')
                                 }
                             )
                             vocab_objs.append(vocab_obj)
@@ -117,6 +164,27 @@ class Command(BaseCommand):
                             )
                             sentence_objs.append(sent_obj)
                         lesson.sentences.set(sentence_objs)
+
+                        # Assign audio ManyToMany
+                        audio_objs = []
+                        lesson_sequence = lesson_data.get('lesson_sequence', {})
+                        
+                        # Extract audio from lesson_sequence
+                        if 'audio' in lesson_sequence and isinstance(lesson_sequence['audio'], list):
+                            audio_data = lesson_sequence['audio']
+                            if len(audio_data) >= 2:  # Ensure we have both URL and text
+                                audio_url = audio_data[0]
+                                audio_text = audio_data[1]
+                                
+                                audio_obj, _ = Audio.objects.get_or_create(
+                                    audio_url=audio_url,
+                                    defaults={
+                                        'text': audio_text
+                                    }
+                                )
+                                audio_objs.append(audio_obj)
+                        
+                        lesson.audios.set(audio_objs)
                 except Exception as e:
                     self.stdout.write(
                         self.style.ERROR(f'Error processing lesson (Order: {lesson_data.get("order")}): {str(e)}')
