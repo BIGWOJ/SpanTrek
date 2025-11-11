@@ -4,8 +4,12 @@
         "translation": "What is your name?"
     },
     {
-        "sentence": "Me llamo Juan.",
-        "translation": "My name is Juan."
+        "sentence": "Me llamo",
+        "translation": "My name"
+    },
+    {
+        "sentence": "De nada",
+        "translation": "You're welcome"
     },
     {
         "sentence": "¿De dónde eres?",

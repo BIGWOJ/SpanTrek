@@ -40,7 +40,8 @@
                         ></div>
                     </div>
                     <span class="next-level">
-                        {{ xp_for_next_level }} XP to level {{ user.level|add:1 }}
+                        {{ xp_for_next_level }} XP to level {{ user.level|add:1
+                        }}
                     </span>
                 </div>
             </div>
@@ -81,7 +82,9 @@
                     {{ user.achievements.count }}/{{ total_achievements }}
                 </div>
             </div>
-            <div class="stat-card {% if lowest_knowledge_section == 'vocabulary' %}needs-improvement{% endif %}">
+            <div
+                class="stat-card {% if lowest_knowledge_section == 'vocabulary' %}needs-improvement{% endif %}"
+            >
                 <div class="stat-icon">📚</div>
                 <div class="stat-value">{{ words_learned_percentage }}%</div>
                 <div class="stat-label">Words learned</div>
@@ -94,7 +97,9 @@
                 </div>
                 {% endif %}
             </div>
-            <div class="stat-card {% if lowest_knowledge_section == 'sentences' %}needs-improvement{% endif %}">
+            <div
+                class="stat-card {% if lowest_knowledge_section == 'sentences' %}needs-improvement{% endif %}"
+            >
                 <div class="stat-icon">💬</div>
                 <div class="stat-value">
                     {{ sentences_learned_percentage }}%
@@ -109,7 +114,9 @@
                 </div>
                 {% endif %}
             </div>
-            <div class="stat-card {% if lowest_knowledge_section == 'usage' %}needs-improvement{% endif %}">
+            <div
+                class="stat-card {% if lowest_knowledge_section == 'usage' %}needs-improvement{% endif %}"
+            >
                 <div class="stat-icon">🇪🇸</div>
                 <div class="stat-value">{{ use_of_spanish_percentage }}%</div>
                 <div class="stat-label">Use of Spanish</div>
@@ -402,7 +409,106 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                <!-- Practice Settings -->
+                                <div class="form-group practice-settings-group">
+                                    <label class="section-label"
+                                        >Practice settings</label
+                                    >
+                                    <div class="practice-settings-grid">
+                                        <div class="practice-input-group">
+                                            <label
+                                                for="random-practice-count"
+                                                class="practice-label"
+                                            >
+                                                <span class="practice-icon"
+                                                    >🎲</span
+                                                >
+                                                Random practice
+                                            </label>
+                                            <input
+                                                type="number"
+                                                id="random-practice-count"
+                                                name="default_random_practice_count"
+                                                value="{{ user.default_random_practice_count }}"
+                                                min="5"
+                                                max="50"
+                                                class="profile-input practice-input"
+                                            />
+                                            <span class="input-suffix"
+                                                >questions</span
+                                            >
+                                        </div>
+                                        <div class="practice-input-group">
+                                            <label
+                                                for="vocabulary-practice-count"
+                                                class="practice-label"
+                                            >
+                                                <span class="practice-icon"
+                                                    >📚</span
+                                                >
+                                                Vocabulary practice
+                                            </label>
+                                            <input
+                                                type="number"
+                                                id="vocabulary-practice-count"
+                                                name="default_vocabulary_practice_count"
+                                                value="{{ user.default_vocabulary_practice_count }}"
+                                                min="5"
+                                                max="50"
+                                                class="profile-input practice-input"
+                                            />
+                                            <span class="input-suffix"
+                                                >questions</span
+                                            >
+                                        </div>
+                                        <div class="practice-input-group">
+                                            <label
+                                                for="sentence-practice-count"
+                                                class="practice-label"
+                                            >
+                                                <span class="practice-icon"
+                                                    >💬</span
+                                                >
+                                                Sentence practice
+                                            </label>
+                                            <input
+                                                type="number"
+                                                id="sentence-practice-count"
+                                                name="default_sentence_practice_count"
+                                                value="{{ user.default_sentence_practice_count }}"
+                                                min="5"
+                                                max="50"
+                                                class="profile-input practice-input"
+                                            />
+                                            <span class="input-suffix"
+                                                >questions</span
+                                            >
+                                        </div>
+                                        <div class="practice-input-group">
+                                            <label
+                                                for="listening-practice-count"
+                                                class="practice-label"
+                                            >
+                                                <span class="practice-icon"
+                                                    >🎧</span
+                                                >
+                                                Listening practice
+                                            </label>
+                                            <input
+                                                type="number"
+                                                id="listening-practice-count"
+                                                name="default_listening_practice_count"
+                                                value="{{ user.default_listening_practice_count }}"
+                                                min="5"
+                                                max="50"
+                                                class="profile-input practice-input"
+                                            />
+                                            <span class="input-suffix"
+                                                >questions</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label for="email-input">Email:</label>
                                     <input
@@ -466,19 +572,20 @@
                     </div>
                 </div>
             </div>
-    </div>
-    {% endif %}
+        </div>
+        {% endif %}
 
-    <!-- Quick Actions -->
-    <div class="quick-actions">
-        <a href="{% url 'lessons:world_map' %}" class="action-btn primary">
-            <span class="btn-icon">🏠</span>
-            Continue learning
-        </a>
-        <a href="/logout" class="action-btn secondary">
-            <span class="btn-icon">🚪</span>
-            Logout
-        </a>
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <a href="{% url 'lessons:world_map' %}" class="action-btn primary">
+                <span class="btn-icon">🏠</span>
+                Continue learning
+            </a>
+            <a href="/logout" class="action-btn secondary">
+                <span class="btn-icon">🚪</span>
+                Logout
+            </a>
+        </div>
     </div>
+    {%endblock content%}
 </div>
-{%endblock content%}

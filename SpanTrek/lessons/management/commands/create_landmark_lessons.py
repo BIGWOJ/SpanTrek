@@ -115,21 +115,21 @@ class Command(BaseCommand):
 
                         # Update audio
                         audio_objs = []
-                        lesson_sequence = lesson_data.get('lesson_sequence', {})
+                        lesson_sequence = lesson_data.get('lesson_sequence', [])
                         
-                        if 'audio' in lesson_sequence and isinstance(lesson_sequence['audio'], list):
-                            audio_data = lesson_sequence['audio']
-                            if len(audio_data) >= 2:
-                                audio_url = audio_data[0]
-                                audio_text = audio_data[1]
-                                
-                                audio_obj, _ = Audio.objects.get_or_create(
-                                    audio_url=audio_url,
-                                    defaults={
-                                        'text': audio_text
-                                    }
-                                )
-                                audio_objs.append(audio_obj)
+                        # New format: [{"type": "audio", "content": [url, text]}, ...]
+                        for item in lesson_sequence:
+                            if isinstance(item, dict) and item.get('type') == 'audio':
+                                audio_data = item.get('content', [])
+                                if len(audio_data) >= 2:
+                                    audio_url = audio_data[0]
+                                    audio_text = audio_data[1]
+                                    
+                                    audio_obj, _ = Audio.objects.get_or_create(
+                                        audio_url=audio_url,
+                                        defaults={'text': audio_text}
+                                    )
+                                    audio_objs.append(audio_obj)
                         
                         lesson.audios.set(audio_objs)
                     else:
@@ -167,22 +167,20 @@ class Command(BaseCommand):
 
                         # Assign audio ManyToMany
                         audio_objs = []
-                        lesson_sequence = lesson_data.get('lesson_sequence', {})
-                        
-                        # Extract audio from lesson_sequence
-                        if 'audio' in lesson_sequence and isinstance(lesson_sequence['audio'], list):
-                            audio_data = lesson_sequence['audio']
-                            if len(audio_data) >= 2:  # Ensure we have both URL and text
-                                audio_url = audio_data[0]
-                                audio_text = audio_data[1]
-                                
-                                audio_obj, _ = Audio.objects.get_or_create(
-                                    audio_url=audio_url,
-                                    defaults={
-                                        'text': audio_text
-                                    }
-                                )
-                                audio_objs.append(audio_obj)
+                        lesson_sequence = lesson_data.get('lesson_sequence', [])
+
+                        for item in lesson_sequence:
+                            if isinstance(item, dict) and item.get('type') == 'audio':
+                                audio_data = item.get('content', [])
+                                if len(audio_data) >= 2:
+                                    audio_url = audio_data[0]
+                                    audio_text = audio_data[1]
+                                    
+                                    audio_obj, _ = Audio.objects.get_or_create(
+                                        audio_url=audio_url,
+                                        defaults={'text': audio_text}
+                                    )
+                                    audio_objs.append(audio_obj)
                         
                         lesson.audios.set(audio_objs)
                 except Exception as e:

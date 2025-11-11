@@ -69,10 +69,11 @@ def country_view(request, country):
 
     user_learned_audio = request.user.audio_learned or []
     user_country_audio_count = country_audios.filter(text__in=user_learned_audio).count()
-
+    print('country audios' ,country_audios)
+    print('learned' ,user_learned_audio)
+    print('user', user_country_audio_count)
     user_lessons_completed = request.user.country_lessons_progress.get(country, 0)
     user_use_of_spanish = country_lessons.filter(order__lt=user_lessons_completed).aggregate(total=Sum('use_of_spanish'))['total'] or 0
-    print(user_use_of_spanish)
 
     user_country_progress_dict = {
         'vocabularies': user_country_vocabularies_count,
@@ -106,13 +107,13 @@ def country_landmark_lesson(request, country, landmark, lesson_number=None, exer
     
     # If lesson_number is not provided, show intro page first
     if lesson_number is None:
-        lesson = Lesson.objects.filter(landmark=landmark_obj, country=country_obj, order=landmark_progress).first()
-        print(lesson.vocabularies.all())
+        # Get all lessons for this landmark
+        landmark_lessons = Lesson.objects.filter(landmark=landmark_obj, country=country_obj).order_by('order')
+
         context = {
             'landmark': landmark,
             'country': country,
-            'lesson': lesson,
-            'start_lesson_url': f"/{country}/{landmark}/{landmark_progress}/",
+            'landmark_lessons': landmark_lessons,
             'user_landmark_progress': user_landmark_progress,
         }
         return render(request, 'lessons/lesson_intro.html', context)
@@ -129,8 +130,9 @@ def country_landmark_lesson(request, country, landmark, lesson_number=None, exer
         }
         return render(request, 'lessons/lesson_base.html', context=context)
     
-    # Get lesson sequence items as a list of tuples
-    lesson_sequence_items = list(lesson.lesson_sequence.items()) if lesson.lesson_sequence else []
+    # Get lesson sequence items
+    lesson_sequence_items = lesson.lesson_sequence or []
+    
     total_exercises = len(lesson_sequence_items)
     
     # If exercise_number is not provided, redirect to first exercise
@@ -162,7 +164,10 @@ def country_landmark_lesson(request, country, landmark, lesson_number=None, exer
     
     # Get current exercise (convert to 0-based index)
     current_exercise_index = exercise_number - 1
-    current_block, current_content = lesson_sequence_items[current_exercise_index]
+    
+    exercise_item = lesson_sequence_items[current_exercise_index]
+    current_block = exercise_item.get('type')
+    current_content = exercise_item.get('content')
 
     context = {
         'landmark': landmark,
@@ -203,14 +208,19 @@ def lesson_complete(request, country, landmark, lesson_number):
     # Get the completed lesson
     lesson = Lesson.objects.filter(landmark=landmark_obj, order=lesson_number).first()
 
+    # If lesson doesn't exist, redirect back to landmark map
     if not lesson:
-        # If lesson doesn't exist, redirect back to landmark
         return redirect('lessons:country_landmark_lesson', country=country, landmark=landmark)
     
     # Check if there's a next lesson
     next_lesson = Lesson.objects.filter(landmark=landmark_obj, order=lesson_number + 1).first()
+
+    lesson_completed_before = request.user.landmark_lessons_progress.get(landmark, 0) >= lesson_number+1
     
-    request.user.update_progress_after_lesson(landmark, lesson_number)
+    request.user.update_progress_after_lesson(landmark, lesson_number, lesson_completed_before)
+    
+    # Calculate total exercises
+    total_exercises = len(lesson.lesson_sequence)
     
     context = {
         'landmark': landmark,
@@ -219,12 +229,14 @@ def lesson_complete(request, country, landmark, lesson_number):
         'lesson_number': lesson_number,
         'next_lesson_number': lesson_number + 1 if next_lesson else None,
         'has_next_lesson': next_lesson is not None,
-        'total_exercises': len(list(lesson.lesson_sequence.items())) if lesson.lesson_sequence else 0,
+        'total_exercises': total_exercises,
+        'lesson_completed_before': lesson_completed_before,
     }
 
-    country_lessons = Lesson.objects.filter(country__name__iexact=country).count()    
+    country_lessons = Lesson.objects.filter(country__name__iexact=country).count()  
+      
     # Country completed
-    if request.user.country_lessons_progress.get(country, 0) >= country_lessons:
+    if request.user.country_lessons_progress.get(country, 0) >= country_lessons and not lesson_completed_before:
         return country_complete(request, country)
 
     return render(request, 'lessons/lesson_complete.html', context=context)

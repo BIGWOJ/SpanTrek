@@ -144,6 +144,36 @@ def user_page(request, pk):
             user.save()
             messages.success(request, 'Email updated successfully')
 
+        # Update practice settings
+        practice_settings_updated = False
+        if request.POST.get('default_random_practice_count'):
+            new_value = int(request.POST['default_random_practice_count'])
+            if 5 <= new_value <= 50 and new_value != user.default_random_practice_count:
+                user.default_random_practice_count = new_value
+                practice_settings_updated = True
+        
+        if request.POST.get('default_vocabulary_practice_count'):
+            new_value = int(request.POST['default_vocabulary_practice_count'])
+            if 5 <= new_value <= 50 and new_value != user.default_vocabulary_practice_count:
+                user.default_vocabulary_practice_count = new_value
+                practice_settings_updated = True
+        
+        if request.POST.get('default_sentence_practice_count'):
+            new_value = int(request.POST['default_sentence_practice_count'])
+            if 5 <= new_value <= 50 and new_value != user.default_sentence_practice_count:
+                user.default_sentence_practice_count = new_value
+                practice_settings_updated = True
+        
+        if request.POST.get('default_listening_practice_count'):
+            new_value = int(request.POST['default_listening_practice_count'])
+            if 5 <= new_value <= 50 and new_value != user.default_listening_practice_count:
+                user.default_listening_practice_count = new_value
+                practice_settings_updated = True
+        
+        if practice_settings_updated:
+            user.save()
+            messages.success(request, 'Practice settings updated successfully')
+
         if request.POST.get('current_password') and request.POST['current_password'] != '':
             if user.check_password(request.POST['current_password']):
                 new_password = request.POST.get('new_password', '')

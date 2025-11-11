@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
 from django.utils.text import slugify
 from datetime import date
-from lessons.models import Lesson
+from lessons.models import Landmark, Lesson
 from practice.models import DailyChallenge
 from .services import AchievementService
 import random
@@ -51,34 +51,52 @@ class User(AbstractUser):
     def __str__(self):
         return self.username
 
-    def update_progress_after_lesson(self, landmark, lesson_number):
+    def update_progress_after_lesson(self, landmark, lesson_number, lesson_completed_before=False):
         if self.is_authenticated:
             if self.last_activity_date != date.today():
                 self.mark_activity_today()
                 self.calculate_streak()
-            
-            if self.landmark_lessons_progress.get(landmark, -1) >= lesson_number:
-                return  # No update needed if lesson already completed or in progress
+
+            if self.landmark_lessons_progress.get(landmark, -1) >= lesson_number+1:
+                self.experience += 50
+                self.save()
+                # No more updates needed if lesson already completed
+                return
             self.experience += 100
-            self.adventure_progress += 1
+            
+            if not lesson_completed_before:
+                self.adventure_progress += 1
 
-            lesson = Lesson.objects.filter(landmark=landmark, order=lesson_number).first()
+            landmark_obj = Landmark.objects.filter(name=landmark).first()
+            lesson = Lesson.objects.filter(landmark=landmark_obj, order=lesson_number).first()
 
-            # Add new words to user's learned words list
+            # Add knowledge from lesson to user's learned lists
+            # Words
             lesson_words = set(vocab.word for vocab in lesson.vocabularies.all())
-            # Ensure words_learned is a list (safety check)
             if not isinstance(self.words_learned, list):
                 self.words_learned = []
             new_words = lesson_words - set(self.words_learned)
             self.words_learned.extend(new_words)
 
-            # Add new sentences to user's learned sentences list
+            # Sentences
             lesson_sentences = set(sentence.sentence for sentence in lesson.sentences.all()) 
-            # Ensure sentences_learned is a list (safety check)
             if not isinstance(self.sentences_learned, list):
                 self.sentences_learned = []
             new_sentences = lesson_sentences - set(self.sentences_learned)
             self.sentences_learned.extend(new_sentences)
+
+            # Audio files
+            lesson_audios = set(audio.text for audio in lesson.audios.all())
+            if not isinstance(self.audio_learned, list):
+                self.audio_learned = []
+            print(lesson_audios)
+            new_audios = lesson_audios - set(self.audio_learned)
+            print('new', new_audios)
+            print(set(self.audio_learned))
+            self.audio_learned.extend(new_audios)
+            
+            # Use of Spanish
+            self.use_of_spanish += lesson.use_of_spanish
 
             # Update country progress (increment by 1, but don't exceed total lessons)
             country_lessons_counter = Lesson.objects.filter(country=lesson.country).count()

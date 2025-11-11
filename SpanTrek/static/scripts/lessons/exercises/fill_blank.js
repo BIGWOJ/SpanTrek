@@ -25,16 +25,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Visual feedback
         blankInputs.forEach((input) => {
-            const userAnswer = input.value.trim().toLowerCase();
-            const correctAnswer = input
-                .getAttribute("data-answer")
-                .toLowerCase();
+            const userAnswer = input.value.trim();
+            const correctAnswer = input.getAttribute("data-answer");
+
+            // Normalize and compare (case-insensitive, accent-insensitive)
+            const normalizedUserAnswer = normalizeSpanishText(
+                userAnswer.toLowerCase()
+            );
+            const normalizedCorrectAnswer = normalizeSpanishText(
+                correctAnswer.toLowerCase()
+            );
 
             // Remove previous classes
             input.classList.remove("correct", "incorrect");
 
             // Add appropriate class based on answer
-            if (userAnswer === correctAnswer) {
+            if (normalizedUserAnswer === normalizedCorrectAnswer) {
                 input.classList.add("correct");
             } else if (userAnswer !== "") {
                 input.classList.add("incorrect");

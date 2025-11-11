@@ -184,6 +184,14 @@
     box-shadow: 0 4px 15px rgba(255, 165, 31, 0.3);
 }
 
+/* Green hover effect when all answers are correct */
+.check-btn-multi[style*="rgb(76, 175, 80)"]:hover,
+.check-btn-multi[style*="rgba(76, 175, 80"]:hover {
+    background: rgba(76, 175, 80, 0.3) !important;
+    border-color: #45a049 !important;
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4) !important;
+}
+
 .check-btn-multi:active, .reset-btn-multi:active {
     transform: translateY(0);
 }

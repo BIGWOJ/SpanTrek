@@ -8,7 +8,7 @@
 <div class="lesson-complete-container">
     <div class="congratulations-card">
         <div class="celebration-icon">🎉</div>
-         <h1 class="congratulations-title">Congratulations!</h1>
+        <h1 class="congratulations-title">Congratulations!</h1>
 
         <p class="completion-message">
             You have successfully completed<br />
@@ -21,7 +21,8 @@
                 <span class="stat-label">Exercises completed</span>
             </div>
             <div class="stat-item">
-                <span class="stat-number">50</span>
+                <span class="stat-number">
+                    {% if lesson_completed_before %}50{% else %}100{% endif %}</span>
                 <span class="stat-label">XP Gained</span>
             </div>
         </div>
@@ -33,9 +34,7 @@
             <span class="separator">•</span>
             <span class="lesson-number">Lesson {{ lesson_number|add:1 }}</span>
         </div>
-        {% if country_complete %}
-        {%else%}
-        {%endif%}
+        {% if country_complete %} {%else%} {%endif%}
         <div class="completion-actions">
             {% if has_next_lesson %}
             <a
@@ -44,9 +43,15 @@
             >
                 Next lesson <span class="arrow">→</span>
             </a>
+            <a
+                href="{% url 'lessons:country_map' country=country %}"
+                class="btn btn-outline back-to-map-link"
+            >
+                Back to {{country|title}} map
+            </a>
             {% else %}
             <div class="all-lessons-complete">
-                <p>🏆 You've completed all lessons for {{ landmark|title }}!</p>
+                <p>🏆 You've completed all lessons in {{ landmark|title }}!</p>
                 <a
                     href="{% url 'lessons:country_map' country=country %}"
                     class="btn btn-secondary back-to-map-btn"
@@ -55,13 +60,6 @@
                 </a>
             </div>
             {% endif %}
-            <br />
-            <a
-                href="{% url 'lessons:country_map' country=country %}"
-                class="btn btn-outline back-to-map-link"
-            >
-                Back to {{country|title}} map
-            </a>
         </div>
     </div>
 </div>

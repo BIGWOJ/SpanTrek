@@ -17,8 +17,15 @@ document.addEventListener("DOMContentLoaded", function () {
         // Remove previous classes
         userInput.classList.remove("correct", "incorrect");
 
-        // Check if answer is correct (case-insensitive comparison)
-        if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+        // Normalize and compare (case-insensitive, accent-insensitive)
+        const normalizedUserAnswer = normalizeSpanishText(
+            userAnswer.toLowerCase()
+        );
+        const normalizedCorrectAnswer = normalizeSpanishText(
+            correctAnswer.toLowerCase()
+        );
+
+        if (normalizedUserAnswer === normalizedCorrectAnswer) {
             userInput.classList.add("correct");
             checkBtn.style.background = "rgba(76, 175, 80, 0.2)";
             checkBtn.style.borderColor = "#4caf50";
