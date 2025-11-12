@@ -76,6 +76,14 @@
         "translation": "I like this city."
     },
     {
+        "sentence": "Me gusta",
+        "translation": "I like."
+    },
+    {
+        "sentence": "No me gusta",
+        "translation": "I don't like."
+    },
+    {
         "sentence": "¿Dónde está la estación?",
         "translation": "Where is the station?"
     },

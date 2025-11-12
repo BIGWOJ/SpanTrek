@@ -24,10 +24,134 @@
         "example_sentence": "¿Me puedes ayudar, por favor?"
     },
     {
+        "word": "desayuno",
+        "translation": "breakfast",
+        "pronunciation": "deh-sah-YOO-no",
+        "example_sentence": "Me gusta el desayuno por la mañana."
+    },
+    {
+        "word": "almuerzo",
+        "translation": "lunch",
+        "pronunciation": "al-mwer-SO",
+        "example_sentence": "Me gusta el almuerzo al mediodía."
+    },
+    {
+        "word": "cena",
+        "translation": "dinner",
+        "pronunciation": "SEH-na",
+        "example_sentence": "Me gusta la cena por la noche."
+    },
+    {
+        "word": "manzana",
+        "translation": "apple",
+        "pronunciation": "man-THA-na",
+        "example_sentence": "Me gusta comer una manzana."
+    },
+    {
+        "word": "pollo",
+        "translation": "chicken",
+        "pronunciation": "POH-yo",
+        "example_sentence": "Me gusta comer pollo asado."
+    },
+    {
+        "word": "pescado",
+        "translation": "fish",
+        "pronunciation": "pes-KA-do",
+        "example_sentence": "Me gusta comer pescado fresco."
+    },
+    {
+        "word": "queso",
+        "translation": "cheese",
+        "pronunciation": "KEH-so",
+        "example_sentence": "Me gusta el queso en mi sándwich."
+    },
+    {
+        "word": "leche",
+        "translation": "milk",
+        "pronunciation": "LEH-che",
+        "example_sentence": "Me gusta la leche fría."
+    },
+    {
+        "word": "pan",
+        "translation": "bread",
+        "pronunciation": "pan",
+        "example_sentence": "Me gusta el pan fresco."
+    },
+    {
+        "word": "uno",
+        "translation": "one",
+        "pronunciation": "OO-no",
+        "example_sentence": "Tengo uno."
+    },
+    {
+        "word": "dos",
+        "translation": "two",
+        "pronunciation": "DOS",
+        "example_sentence": "Tengo dos."
+    },
+    {
+        "word": "tres",
+        "translation": "three",
+        "pronunciation": "TRES",
+        "example_sentence": "Tengo tres."
+    },
+    {
+        "word": "cuatro",
+        "translation": "four",
+        "pronunciation": "KWA-tro",
+        "example_sentence": "Tengo cuatro."
+    },
+    {
+        "word": "cinco",
+        "translation": "five",
+        "pronunciation": "SEEN-ko",
+        "example_sentence": "Tengo cinco."
+    },
+    {
+        "word": "seis",
+        "translation": "six",
+        "pronunciation": "SEIS",
+        "example_sentence": "Tengo seis."
+    },
+    {
+        "word": "siete",
+        "translation": "seven",
+        "pronunciation": "SYE-te",
+        "example_sentence": "Tengo siete."
+    },
+    {
+        "word": "ocho",
+        "translation": "eight",
+        "pronunciation": "O-cho",
+        "example_sentence": "Tengo ocho."
+    },
+    {
+        "word": "nueve",
+        "translation": "nine",
+        "pronunciation": "NWE-ve",
+        "example_sentence": "Tengo nueve."
+    },
+    {
+        "word": "diez",
+        "translation": "ten",
+        "pronunciation": "DYES",
+        "example_sentence": "Tengo diez."
+    },
+
+
+
+
+    {
         "word": "sí",
         "translation": "yes",
         "pronunciation": "SEE",
         "example_sentence": "Sí, quiero ir contigo."
+    },
+    {
+        "word": "quiero",
+        "translation": "I want",
+        "pronunciation": "kee-EH-ro",
+        "example_sentence": "Quiero aprender español."
     },
     {
         "word": "no",
