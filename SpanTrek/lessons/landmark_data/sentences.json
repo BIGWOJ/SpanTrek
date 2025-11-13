@@ -1,5 +1,20 @@
 [
     {
+        "sentence": "Tengo hermanos.",
+        "translation": "I have siblings."
+    },
+    {
+        "sentence": "Mi hermano es mayor.",
+        "translation": "My brother is older."
+    },
+    {
+        "sentence": "Mi hermana es menor.",
+        "translation": "My sister is younger."
+    },
+
+
+
+    {
         "sentence": "¿Cómo te llamas?",
         "translation": "What is your name?"
     },

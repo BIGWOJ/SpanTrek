@@ -14,32 +14,31 @@ def practice_intro(request, practice_type):
     request.session['question_count'] = question_count  
 
     practice_set = []
+    learned_words = request.user.words_learned or []
+    learned_sentences = request.user.sentences_learned or []
+    learned_audios = request.user.audio_learned or []
+    all_vocabularies = Vocabulary.objects.filter(word__in=learned_words).distinct()
+    all_sentences = Sentence.objects.filter(sentence__in=learned_sentences).distinct()
+    all_audios = Audio.objects.filter(text__in=learned_audios).distinct()
     match practice_type:
         case 'random':
-            learned_words = request.user.words_learned or []
-            learned_sentences = request.user.sentences_learned or []
-            learned_audios = request.user.audio_learned or []
-            all_vocabularies = Vocabulary.objects.filter(word__in=learned_words)
-            all_sentences = Sentence.objects.filter(sentence__in=learned_sentences)
-            all_audios = Audio.objects.filter(text__in=learned_audios)
             practice_set = random.sample(
                 list(all_vocabularies) + list(all_sentences) + list(all_audios), 
                 k=min(int(question_count), len(all_vocabularies) + len(all_sentences) + len(all_audios))
             ) 
         case 'vocabulary':
-            # Filter vocabularies to only include words the user has learned
-            learned_words = request.user.words_learned or []
-            entire_set = Vocabulary.objects.filter(word__in=learned_words)
+            entire_set = all_vocabularies
         case 'sentence':
-            # Filter sentences to only include sentences the user has learned
-            learned_sentences = request.user.sentences_learned or []
-            entire_set = Sentence.objects.filter(sentence__in=learned_sentences)
+            entire_set = all_sentences
         case 'listening':
-            learned_audios = request.user.audio_learned or []
-            entire_set = Audio.objects.filter(text__in=learned_audios)
+            entire_set = all_audios
 
     practice_set = practice_set or random.sample(list(entire_set), k=min(int(question_count), len(entire_set)))
-
+    print('l',learned_audios)
+    print('all_audios', all_audios)
+    print('entire_set', entire_set)
+    print(request.user.audio_learned)
+    print(practice_set)
     if request.method == 'POST':
         # Store practice type and practice set in session for navigation
         request.session['practice_type'] = practice_type

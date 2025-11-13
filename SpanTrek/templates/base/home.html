@@ -187,7 +187,11 @@
                     <h3>Daily challenges</h3>
                     <div class="{% if completed_daily_challenges_count == daily_challenges|length %}challenge-reward completed{%else%}challenge-reward{% endif %}">
                         {% if completed_daily_challenges_count == daily_challenges|length %}
-                            Completed! +75 XP
+                            {% if user.adventure_progress == 0%}
+                                Start adventure to unlock daily challenges!
+                            {% else %}
+                                Completed! +75 XP
+                            {% endif %}
                         {% else %}
                             +75 XP
                         {% endif %}
@@ -206,7 +210,9 @@
                             {% endif %}
                         {% endfor %}
                     </div>
-                    <span class="challenge-status">{{ completed_daily_challenges_count }}/{{ daily_challenges|length }} completed</span>
+                    {% if user.adventure_progress != 0 %}
+                        <span class="challenge-status">{{ completed_daily_challenges_count }}/{{ daily_challenges|length }} completed</span>
+                    {% endif %}
                 </div>
             </div>
         </div>

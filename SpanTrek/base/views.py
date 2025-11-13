@@ -15,8 +15,8 @@ def home_page(request):
     # If user is not authenticated, redirect to login page
     if not request.user.is_authenticated:
         return redirect('login_page')
-    request.user.progress_daily_challenges()
-    # Create a new daily challenge for the user
+    
+    # Create new daily challenges for the user
     # Adventure_progress != 0 to avoid creating challenges f.e. with audios which user hasn't learned yet
     if (request.user.daily_challenges_creation_date is None or 
         request.user.daily_challenges_creation_date < date.today()) and request.user.adventure_progress != 0:

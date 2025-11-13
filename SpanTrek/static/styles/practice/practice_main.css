@@ -45,12 +45,6 @@ html, body {
     font-style: italic;
 }
 
-.pronunciation {
-    color: #28a745;
-    font-size: 1.1em;
-    margin-bottom: 10px;
-}
-
 .example-sentence {
     background-color: #e9ecef;
     padding: 15px;

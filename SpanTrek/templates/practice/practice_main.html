@@ -17,8 +17,6 @@
         {% elif current_exercise.0 == 'audio' %}
             {% include 'lessons/content/audio.html' with content=current_exercise|slice:"1:2" %}
             {% comment %} Passing list 1:2, so one-element list, but audio block gets list of items, thats why not used current_exercise.1 {% endcomment %}
-            {{current_exercise|slice:"2:4"}}
-
             {% include 'lessons/exercises/input_field.html' with content=current_exercise|slice:"2:4" %}
         {% endif %}
     </div>

@@ -48,9 +48,6 @@ class Vocabulary(models.Model):
     """Vocabulary words introduced in lessons"""
     word = models.CharField(max_length=100)
     translation = models.CharField(max_length=100)
-    pronunciation = models.CharField(max_length=150, blank=True)
-    example_sentence = models.TextField(blank=True)
-    conjugation = models.TextField(blank=True)
     
     class Meta:
         verbose_name_plural = "Vocabulary"

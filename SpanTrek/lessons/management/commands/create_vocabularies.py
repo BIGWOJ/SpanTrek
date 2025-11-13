@@ -33,10 +33,7 @@ class Command(BaseCommand):
                     vocab_entry, created = Vocabulary.objects.get_or_create(
                         word=word,
                         defaults={
-                            'translation': entry['translation'],
-                            'pronunciation': entry.get('pronunciation', ''),
-                            'example_sentence': entry.get('example_sentence', ''),
-                            "conjugation": entry.get('conjugation', ''),
+                            'translation': entry['translation']
                         }
                     )
 
@@ -45,11 +42,7 @@ class Command(BaseCommand):
                         updated = False
                         if vocab_entry.translation != entry['translation']:
                             vocab_entry.translation = entry['translation']
-                            updated = True
-                        if vocab_entry.pronunciation != entry.get('pronunciation', ''):
-                            vocab_entry.pronunciation = entry.get('pronunciation', '')
-                            updated = True
-                        
+                            updated = True                        
                         if updated:
                             vocab_entry.save()
                             updated_count += 1

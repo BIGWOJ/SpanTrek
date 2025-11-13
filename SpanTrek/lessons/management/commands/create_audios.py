@@ -102,7 +102,7 @@ class Command(BaseCommand):
                 
                 audio, created = Audio.objects.get_or_create(
                     text=text,
-                    audio_url=f'static/audio/{audio_from}/{normalize_filename(text)}.mp3'
+                    audio_url=f'/static/audio/{audio_from}/{normalize_filename(text)}.mp3'
                 )
                 if created:
                     create_audio_file(text, audio_from)

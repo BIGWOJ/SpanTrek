@@ -13,8 +13,8 @@ if (!poznan_url) {
 } else {
     var poznan_pin_image =
         landmark_lessons_progress["poznan"] === 3
-            ? "/static/images/map_pins/pin1_done.svg"
-            : "/static/images/map_pins/pin1.svg";
+            ? "/static/images/map_pins/pin2_done.svg"
+            : "/static/images/map_pins/pin2.svg";
 }
 
 var warsaw_url =

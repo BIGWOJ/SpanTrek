@@ -92,10 +92,7 @@ class Command(BaseCommand):
                             vocab_obj, _ = lesson.vocabularies.model.objects.get_or_create(
                                 word=vocab['word'],
                                 defaults={
-                                    'translation': vocab.get('translation', ''),
-                                    'pronunciation': vocab.get('pronunciation', ''),
-                                    'example_sentence': vocab.get('example_sentence', ''),
-                                    'conjugation': vocab.get('conjugation', '')
+                                    'translation': vocab.get('translation', '')
                                 }
                             )
                             vocab_objs.append(vocab_obj)
@@ -117,19 +114,17 @@ class Command(BaseCommand):
                         audio_objs = []
                         lesson_sequence = lesson_data.get('lesson_sequence', [])
                         
-                        # New format: [{"type": "audio", "content": [url, text]}, ...]
                         for item in lesson_sequence:
-                            if isinstance(item, dict) and item.get('type') == 'audio':
-                                audio_data = item.get('content', [])
-                                if len(audio_data) >= 2:
-                                    audio_url = audio_data[0]
-                                    audio_text = audio_data[1]
-                                    
-                                    audio_obj, _ = Audio.objects.get_or_create(
-                                        audio_url=audio_url,
-                                        defaults={'text': audio_text}
-                                    )
-                                    audio_objs.append(audio_obj)
+                            audio_data = item.get('content', [])
+                            if len(audio_data) >= 2:
+                                audio_url = audio_data[0]
+                                audio_text = audio_data[1]
+                                
+                                audio_obj, _ = Audio.objects.get_or_create(
+                                    audio_url=audio_url,
+                                    defaults={'text': audio_text}
+                                )
+                                audio_objs.append(audio_obj)
                         
                         lesson.audios.set(audio_objs)
                     else:
@@ -144,10 +139,7 @@ class Command(BaseCommand):
                             vocab_obj, _ = lesson.vocabularies.model.objects.get_or_create(
                                 word=vocab['word'],
                                 defaults={
-                                    'translation': vocab.get('translation', ''),
-                                    'pronunciation': vocab.get('pronunciation', ''),
-                                    'example_sentence': vocab.get('example_sentence', ''),
-                                    'conjugation': vocab.get('conjugation', '')
+                                    'translation': vocab.get('translation', '')
                                 }
                             )
                             vocab_objs.append(vocab_obj)
@@ -181,8 +173,8 @@ class Command(BaseCommand):
                                         defaults={'text': audio_text}
                                     )
                                     audio_objs.append(audio_obj)
-                        
                         lesson.audios.set(audio_objs)
+                        
                 except Exception as e:
                     self.stdout.write(
                         self.style.ERROR(f'Error processing lesson (Order: {lesson_data.get("order")}): {str(e)}')

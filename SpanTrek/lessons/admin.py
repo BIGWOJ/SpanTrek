@@ -24,7 +24,7 @@ class LessonAdmin(admin.ModelAdmin):
 
 @admin.register(Vocabulary)
 class VocabularyAdmin(admin.ModelAdmin):
-    list_display = ['word', 'translation', 'pronunciation', 'example_sentence']
+    list_display = ['word', 'translation']
     search_fields = ['word', 'translation']
     
 
