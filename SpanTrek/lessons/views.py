@@ -69,9 +69,7 @@ def country_view(request, country):
 
     user_learned_audio = request.user.audio_learned or []
     user_country_audio_count = country_audios.filter(text__in=user_learned_audio).count()
-    print('country audios' ,country_audios)
-    print('learned' ,user_learned_audio)
-    print('user', user_country_audio_count)
+    
     user_lessons_completed = request.user.country_lessons_progress.get(country, 0)
     user_use_of_spanish = country_lessons.filter(order__lt=user_lessons_completed).aggregate(total=Sum('use_of_spanish'))['total'] or 0
 

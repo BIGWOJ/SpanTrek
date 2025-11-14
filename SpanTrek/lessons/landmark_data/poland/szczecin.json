@@ -83,14 +83,18 @@
             {"word": "el pollo", "translation": "chicken"},
             {"word": "el pescado", "translation": "fish"},
             {"word": "el desayuno", "translation": "breakfast"},
+            {"word": "el almuerzo", "translation": "lunch"},
+            {"word": "la cena", "translation": "dinner"},
             {"word": "la comida", "translation": "food/meal"},
-            {"word": "tengo hambre", "translation": "I'm hungry"},
             {"word": "me gusta", "translation": "I like"},
+            {"word": "no me gusta", "translation": "I don't like"},
             {"word": "quiero", "translation": "I want"}
         ],
         "sentences": [
             {"sentence": "Tengo hambre.", "translation": "I'm hungry."},
+            {"sentence": "Tengo sed.", "translation": "I'm thirsty."},
             {"sentence": "Quiero pan y queso.", "translation": "I want bread and cheese."},
+            {"sentence": "Quiero pollo y pan.", "translation": "I want chicken and bread."},
             {"sentence": "Me gusta el pollo.", "translation": "I like chicken."},
             {"sentence": "No me gusta el pescado.", "translation": "I don't like fish."},
             {"sentence": "¿Qué quieres para el desayuno?", "translation": "What do you want for breakfast?"},
@@ -174,8 +178,14 @@
             {"word": "azul", "translation": "blue"},
             {"word": "verde", "translation": "green"},
             {"word": "amarillo", "translation": "yellow"},
+            {"word": "blanco", "translation": "white"},
+            {"word": "negro", "translation": "black"},
             {"word": "grande", "translation": "big"},
-            {"word": "pequeño", "translation": "small"}
+            {"word": "pequeño", "translation": "small"},
+            {"word": "bonito", "translation": "pretty"},
+            {"word": "feo", "translation": "ugly"},
+            {"word": "nuevo", "translation": "new"},
+            {"word": "viejo", "translation": "old"}
         ],
         "sentences": [
             {"sentence": "Uno, dos, tres.", "translation": "One, two, three."},

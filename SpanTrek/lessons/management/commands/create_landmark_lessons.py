@@ -115,17 +115,18 @@ class Command(BaseCommand):
                         lesson_sequence = lesson_data.get('lesson_sequence', [])
                         
                         for item in lesson_sequence:
-                            audio_data = item.get('content', [])
-                            if len(audio_data) >= 2:
-                                audio_url = audio_data[0]
-                                audio_text = audio_data[1]
-                                
-                                audio_obj, _ = Audio.objects.get_or_create(
-                                    audio_url=audio_url,
-                                    defaults={'text': audio_text}
-                                )
-                                audio_objs.append(audio_obj)
-                        
+                            if item.get('type') == 'audio':
+                                audio_data = item.get('content', [])
+                                if len(audio_data) >= 2:
+                                    audio_url = audio_data[0]
+                                    audio_text = audio_data[1]
+                                    
+                                    audio_obj, _ = Audio.objects.get_or_create(
+                                        audio_url=audio_url,
+                                        defaults={'text': audio_text}
+                                    )
+                                    audio_objs.append(audio_obj)
+                            
                         lesson.audios.set(audio_objs)
                     else:
                         created_count += 1

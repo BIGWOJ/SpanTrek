@@ -34,11 +34,7 @@ def practice_intro(request, practice_type):
             entire_set = all_audios
 
     practice_set = practice_set or random.sample(list(entire_set), k=min(int(question_count), len(entire_set)))
-    print('l',learned_audios)
-    print('all_audios', all_audios)
-    print('entire_set', entire_set)
-    print(request.user.audio_learned)
-    print(practice_set)
+
     if request.method == 'POST':
         # Store practice type and practice set in session for navigation
         request.session['practice_type'] = practice_type
@@ -77,7 +73,7 @@ def practice_intro(request, practice_type):
 @login_required
 def practice_main(request, index):
     practice_items = request.session.get('practice_items', [])
-    
+
     if not practice_items or index >= len(practice_items):
         return redirect('practice:practice_intro', practice_type='vocabulary')
     

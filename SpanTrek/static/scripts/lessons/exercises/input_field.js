@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Get correct answer from data attribute
     const correctAnswer = userInput.getAttribute("data-answer") || "";
-
     // Check answer functionality
     checkBtn.addEventListener("click", function () {
         const userAnswer = userInput.value.trim();
@@ -25,13 +24,16 @@ document.addEventListener("DOMContentLoaded", function () {
             correctAnswer.toLowerCase()
         );
 
+        console.log(normalizedUserAnswer);
+        console.log(normalizedCorrectAnswer);
+        console.log(normalizedCorrectAnswer === normalizedUserAnswer);
         if (normalizedUserAnswer === normalizedCorrectAnswer) {
             userInput.classList.add("correct");
             checkBtn.style.background = "rgba(76, 175, 80, 0.2)";
             checkBtn.style.borderColor = "#4caf50";
             checkBtn.style.color = "#4caf50";
             checkBtn.textContent = "Perfect!";
-
+            console.log("Correct answer!");
             // Show the next button when exercise is completed successfully
             const nextBtn =
                 document.getElementById("next-exercise-btn") ||
@@ -45,6 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }, 100);
             }
         } else {
+            console.log("Incorrect answer.");
             userInput.classList.add("incorrect");
             checkBtn.style.background = "rgba(244, 67, 54, 0.2)";
             checkBtn.style.borderColor = "#f44336";

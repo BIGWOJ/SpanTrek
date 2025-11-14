@@ -56,10 +56,22 @@ function normalizeSpanishText(text) {
         Ñ: "N",
         Ç: "C",
     };
+    // Remove leading/trailing whitespace
+    let normalized = text.trim();
 
-    let normalized = text;
     for (const [spanish, english] of Object.entries(spanishToEnglish)) {
         normalized = normalized.replace(new RegExp(spanish, "g"), english);
     }
-    return normalized;
+
+    // Remove Spanish inverted question and exclamation marks
+    normalized = normalized.replace(/¿/g, "");
+    normalized = normalized.replace(/¡/g, "");
+
+    // Remove all commas (both in middle and at end of sentence)
+    normalized = normalized.replace(/,/g, "");
+
+    // Remove trailing punctuation (periods, exclamation, question marks at the end)
+    normalized = normalized.replace(/[.!?]+$/, "");
+
+    return normalized.trim();
 }

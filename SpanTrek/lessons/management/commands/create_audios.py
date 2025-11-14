@@ -5,7 +5,7 @@ from django.core.management.base import BaseCommand
 from gtts import gTTS
 import os
 import re
-from lessons.models import Audio
+from lessons.models import Audio, Vocabulary, Sentence
 
 def normalize_filename(text):
     """
@@ -45,6 +45,10 @@ def normalize_filename(text):
     normalized = re.sub(r'[^\w\s-]', '', normalized)  # Remove special chars except spaces and hyphens
     normalized = re.sub(r'[\s-]+', '_', normalized)   # Replace spaces and hyphens with underscores
     normalized = normalized.lower()                    # Convert to lowercase
+     
+    # If the filename is a Windows reserved name, add prefix
+    if normalized == 'con':
+        normalized = f'word_{normalized}'
     
     return normalized
 
@@ -79,35 +83,46 @@ class Command(BaseCommand):
         ) 
     
     def handle(self, *args, **options):
-        base_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-        
         audio_from = options.get('audio_from')
-        json_data = ''
         
-        json_data = os.path.join(base_dir, 'landmark_data', f'{audio_from}.json')
-        
-        if not os.path.exists(json_data):
-            self.stdout.write(self.style.ERROR('No audios.json data file found'))
+        if not audio_from or audio_from not in ['vocabulary', 'sentences']:
+            self.stdout.write(self.style.ERROR('Please specify --audio-from with either "vocabulary" or "sentences"'))
             return
     
         try:
-            with open(json_data, 'r', encoding='utf-8') as f:
-                audio_data = json.load(f)
-    
-            for data in audio_data:
+            # Get data from database instead of JSON files
+            if audio_from == 'vocabulary':
+                items = Vocabulary.objects.all()
+                self.stdout.write(self.style.SUCCESS(f'Found {items.count()} vocabulary items in database'))
+            elif audio_from == 'sentences':
+                items = Sentence.objects.all()
+                self.stdout.write(self.style.SUCCESS(f'Found {items.count()} sentence items in database'))
+            
+            created_count = 0
+            skipped_count = 0
+            
+            for item in items:
+                # Get the text based on audio_from type
                 if audio_from == 'vocabulary':
-                    text = data['word']
+                    text = item.word
                 elif audio_from == 'sentences':
-                    text = data['sentence']
+                    text = item.sentence
                 
+                # Create or get audio object
                 audio, created = Audio.objects.get_or_create(
                     text=text,
                     audio_url=f'/static/audio/{audio_from}/{normalize_filename(text)}.mp3'
                 )
+                
                 if created:
                     create_audio_file(text, audio_from)
-    
-            self.stdout.write(self.style.SUCCESS('Audio files created successfully'))
+                    created_count += 1
+                else:
+                    skipped_count += 1
+            
+            self.stdout.write(self.style.SUCCESS(
+                f'Audio processing complete: {created_count} created, {skipped_count} already existed'
+            ))
         except Exception as e:
             self.stdout.write(
                 self.style.ERROR(f'Error processing audio data: {str(e)}')
