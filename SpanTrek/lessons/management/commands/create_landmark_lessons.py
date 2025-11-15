@@ -2,6 +2,49 @@ from django.core.management.base import BaseCommand
 from lessons.models import Lesson, Country, Landmark, Audio
 import json
 import os
+import re
+
+def normalize_filename(text):
+    """
+    Convert Spanish characters to English equivalents for filenames
+    Matches the normalization in create_audios.py
+    """
+    spanish_to_english = {
+        'á': 'a', 'à': 'a', 'ä': 'a', 'â': 'a',
+        'é': 'e', 'è': 'e', 'ë': 'e', 'ê': 'e',
+        'í': 'i', 'ì': 'i', 'ï': 'i', 'î': 'i',
+        'ó': 'o', 'ò': 'o', 'ö': 'o', 'ô': 'o',
+        'ú': 'u', 'ù': 'u', 'ü': 'u', 'û': 'u',
+        'ñ': 'n',
+        'ç': 'c',
+        'Á': 'A', 'À': 'A', 'Ä': 'A', 'Â': 'A',
+        'É': 'E', 'È': 'E', 'Ë': 'E', 'Ê': 'E',
+        'Í': 'I', 'Ì': 'I', 'Ï': 'I', 'Î': 'I',
+        'Ó': 'O', 'Ò': 'O', 'Ö': 'O', 'Ô': 'O',
+        'Ú': 'U', 'Ù': 'U', 'Ü': 'U', 'Û': 'U',
+        'Ñ': 'N',
+        'Ç': 'C'
+    }
+    
+    normalized = text
+    for spanish_char, english_char in spanish_to_english.items():
+        normalized = normalized.replace(spanish_char, english_char)
+    
+    normalized = re.sub(r'[^\w\s-]', '', normalized)
+    normalized = re.sub(r'[\s-]+', '_', normalized)
+    normalized = normalized.lower()
+    
+    # Remove Spanish articles from the beginning
+    articles = ['el_', 'la_', 'los_', 'las_', 'un_', 'una_', 'unos_', 'unas_']
+    for article in articles:
+        if normalized.startswith(article):
+            normalized = normalized[len(article):]
+            break
+    
+    if normalized == 'con':
+        normalized = f'word_{normalized}'
+    
+    return normalized
 
 class Command(BaseCommand):
     help = 'Creates Spanish lessons for a specific landmark'
@@ -118,9 +161,16 @@ class Command(BaseCommand):
                             if item.get('type') == 'audio':
                                 audio_data = item.get('content', [])
                                 if len(audio_data) >= 2:
-                                    audio_url = audio_data[0]
+                                    # audio_data[0] is the path, audio_data[1] is the text
                                     audio_text = audio_data[1]
+                                    # Determine audio type from the path
+                                    audio_path = audio_data[0]
+                                    audio_type = 'vocabulary' if '/vocabulary/' in audio_path else 'sentences'
+                                    # Generate normalized URL using the same function as create_audios.py
+                                    audio_url = f'/static/audio/{audio_type}/{normalize_filename(audio_text)}.mp3'
                                     
+                                    # Use only audio_url as unique key to avoid duplicates
+                                    # (e.g., "me gusta" vs "Me gusta" should use same Audio object)
                                     audio_obj, _ = Audio.objects.get_or_create(
                                         audio_url=audio_url,
                                         defaults={'text': audio_text}
@@ -166,9 +216,16 @@ class Command(BaseCommand):
                             if isinstance(item, dict) and item.get('type') == 'audio':
                                 audio_data = item.get('content', [])
                                 if len(audio_data) >= 2:
-                                    audio_url = audio_data[0]
+                                    # audio_data[0] is the path, audio_data[1] is the text
                                     audio_text = audio_data[1]
+                                    # Determine audio type from the path
+                                    audio_path = audio_data[0]
+                                    audio_type = 'vocabulary' if '/vocabulary/' in audio_path else 'sentences'
+                                    # Generate normalized URL using the same function as create_audios.py
+                                    audio_url = f'/static/audio/{audio_type}/{normalize_filename(audio_text)}.mp3'
                                     
+                                    # Use only audio_url as unique key to avoid duplicates
+                                    # (e.g., "me gusta" vs "Me gusta" should use same Audio object)
                                     audio_obj, _ = Audio.objects.get_or_create(
                                         audio_url=audio_url,
                                         defaults={'text': audio_text}

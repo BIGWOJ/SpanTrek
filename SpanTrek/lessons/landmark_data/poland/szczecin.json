@@ -1,7 +1,6 @@
 [
     {
         "title": "Basic Greetings & Introduction",
-        "content": "# Basic Spanish Greetings\n\n## Essential Greetings\n- hola - hello\n- adiós - goodbye\n- buenos días - good morning\n- buenas tardes - good afternoon\n- buenas noches - good evening/night\n- por favor - please\n- gracias - thank you\n- de nada - you're welcome\n\n## Introducing Yourself\n- Me llamo... - My name is...\n- Soy... - I am...\n- ¿Cómo te llamas? - What's your name?\n- ¿Cómo estás? - How are you?\n- Bien, gracias - Fine, thank you\n\n## Practice Exercises\n1. Learn basic greetings\n2. Practice introductions\n3. Simple conversation starters",
         "order": 0,
         "landmark": "szczecin",
         "country": "poland",
@@ -69,7 +68,6 @@
     },
     {
         "title": "Food and Dining",
-        "content": "# Food and Dining Vocabulary\n\n## Basic Foods\n- el pan - bread\n- la leche - milk\n- el agua - water\n- la manzana - apple\n- el queso - cheese\n- la carne - meat\n- el pollo - chicken\n- el pescado - fish\n\n## Meals\n- el desayuno - breakfast\n- el almuerzo - lunch\n- la cena - dinner\n- la comida - food/meal\n\n## Common Phrases\n- Tengo hambre - I'm hungry\n- Tengo sed - I'm thirsty\n- Me gusta - I like\n- No me gusta - I don't like\n- ¿Qué quieres comer? - What do you want to eat?\n- Quiero... - I want...\n\n## Practice Exercises\n1. Name basic foods\n2. Express preferences\n3. Order simple meals",
         "order": 1,
         "landmark": "szczecin",
         "country": "poland",
@@ -85,7 +83,7 @@
             {"word": "el desayuno", "translation": "breakfast"},
             {"word": "el almuerzo", "translation": "lunch"},
             {"word": "la cena", "translation": "dinner"},
-            {"word": "la comida", "translation": "food/meal"},
+            {"word": "la comida", "translation": "food"},
             {"word": "me gusta", "translation": "I like"},
             {"word": "no me gusta", "translation": "I don't like"},
             {"word": "quiero", "translation": "I want"}
@@ -144,8 +142,8 @@
             {"type": "match", "content": ["1_desayuno", "3_cena", "2_almuerzo", "4_comida", "2_lunch", "1_breakfast", "4_food", "3_dinner"]},
             {"type": "text", "content": "Excellent! Now let's learn how to express what you like."},
             {"type": "text", "content": "Me gusta = I like \n No me gusta = I don't like"},
-            {"type": "audio", "content": ["/static/audio/sentences/me_gusta.mp3", "Me gusta"]},
-            {"type": "audio", "content": ["/static/audio/sentences/no_me_gusta.mp3", "No me gusta"]},
+            {"type": "audio", "content": ["/static/audio/vocabulary/me_gusta.mp3", "Me gusta"]},
+            {"type": "audio", "content": ["/static/audio/vocabulary/no_me_gusta.mp3", "No me gusta"]},
             {"type": "text", "content": "For example: \nMe gusta el pollo = I like chicken \n No me gusta el pescado = I don't like fish"},
             {"type": "single_choice", "content": ["What does 'No me gusta' mean?", "I DON'T LIKE", "I like", "I want", "I have"]},
             {"type": "input_field", "content": ["How do you say 'I like' in Spanish?", "me gusta"]},
@@ -159,7 +157,6 @@
     },
     {
         "title": "Numbers, Colors & Basic Descriptions",
-        "content": "# Numbers, Colors & Descriptions\n\n## Numbers 1-10\n- uno - one\n- dos - two\n- tres - three\n- cuatro - four\n- cinco - five\n- seis - six\n- siete - seven\n- ocho - eight\n- nueve - nine\n- diez - ten\n\n## Basic Colors\n- rojo - red\n- azul - blue\n- verde - green\n- amarillo - yellow\n- blanco - white\n- negro - black\n\n## Simple Descriptions\n- grande - big\n- pequeño - small\n- bonito - pretty\n- feo - ugly\n- nuevo - new\n- viejo - old\n\n## Practice Exercises\n1. Count from 1 to 10\n2. Name colors of objects\n3. Describe things with simple adjectives",
         "order": 2,
         "landmark": "szczecin",
         "country": "poland",

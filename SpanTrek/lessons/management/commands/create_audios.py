@@ -42,9 +42,19 @@ def normalize_filename(text):
         normalized = normalized.replace(spanish_char, english_char)
     
     # Replace spaces with underscores and remove special characters
-    normalized = re.sub(r'[^\w\s-]', '', normalized)  # Remove special chars except spaces and hyphens
-    normalized = re.sub(r'[\s-]+', '_', normalized)   # Replace spaces and hyphens with underscores
-    normalized = normalized.lower()                    # Convert to lowercase
+    # Remove special chars except spaces and hyphens
+    normalized = re.sub(r'[^\w\s-]', '', normalized)  
+    # Replace spaces and hyphens with underscores
+    normalized = re.sub(r'[\s-]+', '_', normalized)   
+    # Convert to lowercase
+    normalized = normalized.lower()                    
+    
+    # Remove Spanish articles (el, la, los, las, un, una, unos, unas) from the beginning
+    articles = ['el_', 'la_', 'los_', 'las_', 'un_', 'una_', 'unos_', 'unas_']
+    for article in articles:
+        if normalized.startswith(article):
+            normalized = normalized[len(article):]
+            break
      
     # If the filename is a Windows reserved name, add prefix
     if normalized == 'con':
@@ -108,17 +118,20 @@ class Command(BaseCommand):
                 elif audio_from == 'sentences':
                     text = item.sentence
                 
-                # Create or get audio object
+                # Create or get audio object (using audio_url as unique key to avoid duplicates)
+                audio_url = f'/static/audio/{audio_from}/{normalize_filename(text)}.mp3'
                 audio, created = Audio.objects.get_or_create(
-                    text=text,
-                    audio_url=f'/static/audio/{audio_from}/{normalize_filename(text)}.mp3'
+                    audio_url=audio_url,
+                    defaults={'text': text}
                 )
                 
                 if created:
-                    create_audio_file(text, audio_from)
                     created_count += 1
                 else:
                     skipped_count += 1
+                
+                if not os.path.exists(os.path.join('static', 'audio', audio_from, f'{normalize_filename(text)}.mp3')):
+                    create_audio_file(text, audio_from)
             
             self.stdout.write(self.style.SUCCESS(
                 f'Audio processing complete: {created_count} created, {skipped_count} already existed'
