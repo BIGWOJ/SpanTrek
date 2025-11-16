@@ -4,6 +4,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const showAnswerBtn = document.querySelector(".show-answer-btn-fill");
     const blankInputs = document.querySelectorAll(".blank-input");
 
+    // Clear all input fields on page load (after F5 refresh)
+    blankInputs.forEach((input) => {
+        input.value = "";
+        input.classList.remove("correct", "incorrect");
+    });
+
     // Set correct names for input fields
     blankInputs.forEach((input, index) => {
         input.name = `answer_${index + 1}`;

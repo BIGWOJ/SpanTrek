@@ -3,6 +3,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const checkBtn = document.querySelector(".check-btn-input");
     const resetBtn = document.querySelector(".reset-btn-input");
     const showAnswerBtn = document.querySelector(".show-answer-btn-input");
+    const inputs = document.querySelectorAll(".input-field");
+
+    // Clear all input fields on page load (after F5 refresh)
+    inputs.forEach((input) => {
+        input.value = "";
+        input.classList.remove("correct", "incorrect");
+    });
 
     // Get correct answer from data attribute
     const correctAnswer = userInput.getAttribute("data-answer") || "";

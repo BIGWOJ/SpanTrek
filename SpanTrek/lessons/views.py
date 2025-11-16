@@ -232,7 +232,7 @@ def lesson_complete(request, country, landmark, lesson_number):
     }
 
     country_lessons = Lesson.objects.filter(country__name__iexact=country).count()  
-      
+
     # Country completed
     if request.user.country_lessons_progress.get(country, 0) >= country_lessons and not lesson_completed_before:
         return country_complete(request, country)
@@ -252,10 +252,19 @@ def country_complete(request, country):
         'use_of_spanish': Lesson.objects.filter(country=country_obj).aggregate(total=Sum('use_of_spanish'))['total'] or 0,
     }
     
+    app_version_end = False
+    if country == 'poland':
+        app_version_end = True
+
+    if country not in request.user.passports_earned:
+        request.user.passports_earned.append(country)
+        request.user.save()
+
     context = {
         'country': country,
         'total_lessons': country_lessons,
-        'country_knowledge': country_knowledge
+        'country_knowledge': country_knowledge,
+        'app_version_end': app_version_end,
     }
     
     

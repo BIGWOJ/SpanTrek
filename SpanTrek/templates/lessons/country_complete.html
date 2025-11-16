@@ -24,6 +24,27 @@
         </p>
     </div>
 
+    {% if app_version_end == True %}
+        <div class="app-version-end-section">
+            <div class="version-end-card">
+                <div class="version-end-icon">🎓</div>
+                <h3>End of Engineering Thesis version</h3>
+                <p class="version-end-message">
+                    Congratulations! You've reached the end of the content available
+                    in this Engineering Thesis version of SpanTrek.
+                </p>
+                <p class="version-end-info">
+                    This application was developed as part of an Engineering Thesis
+                    project by <strong>Wojciech Latos</strong>. <br>More countries and
+                    lessons may be added in future versions.
+                </p>
+                <div class="version-end-thanks">
+                    <strong>Thank you for learning with SpanTrek!<br>¡Gracias!</strong>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
     <div class="stats-section">
         <h3 class="stats-title">Your journey trough {{ country|title }}</h3>
         <div class="progress-showcase">
