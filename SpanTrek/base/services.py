@@ -121,3 +121,8 @@ class AchievementService:
             })
 
         return sorted(achievements_data, key=lambda exp: exp['experience_award'], reverse=True)
+
+    @staticmethod
+    def clear_achievements(user):
+        """Clear all achievements for a user (for testing purposes)"""
+        user.earned_achievements.all().delete()

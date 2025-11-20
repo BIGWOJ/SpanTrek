@@ -8,3 +8,10 @@
 3. All images come from these websites (map_pins generated via generate_pins.js script)
     https://www.freepik.com/
     https://pixabay.com/
+4. Login details for all demo accounts in database:
+    {username}@email.com'
+    testpassword
+
+    For admin:
+    admin@email.com
+    admin

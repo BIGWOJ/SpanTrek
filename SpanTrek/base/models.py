@@ -37,8 +37,8 @@ class User(AbstractUser):
     default_listening_practice_count = models.IntegerField(default=10)
 
     # Country/landmark lessons progress tracking
-    country_lessons_progress = models.JSONField(default=dict, blank=True)  # e.g., {"Spain": 3, "Mexico": 5}
-    landmark_lessons_progress = models.JSONField(default=dict, blank=True)  # e.g., {"Madrid": 2, "Warsaw": 4}
+    country_lessons_progress = models.JSONField(default=dict, blank=True)  # e.g., {"spain": 3, "mexico": 5}
+    landmark_lessons_progress = models.JSONField(default=dict, blank=True)  # e.g., {"madrid": 2, "warsaw": 4}
     
     # Daily challenges
     daily_challenges = models.JSONField(default=list, blank=True)
@@ -89,10 +89,7 @@ class User(AbstractUser):
             lesson_audios = set(audio.text for audio in lesson.audios.all())
             if not isinstance(self.audio_learned, list):
                 self.audio_learned = []
-            print(lesson_audios)
             new_audios = lesson_audios - set(self.audio_learned)
-            print('new', new_audios)
-            print(set(self.audio_learned))
             self.audio_learned.extend(new_audios)
             
             # Use of Spanish

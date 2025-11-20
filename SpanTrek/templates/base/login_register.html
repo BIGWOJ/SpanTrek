@@ -9,10 +9,13 @@
 {% endblock styles %} {% block content %}
 
 <div class="center-content">
+    <div class="hero-image">
+        <img src="{% static 'images/spantrek_logo.png' %}" 
+             alt="SpanTrek logo" 
+             class="background-image"
+             onerror="this.style.display='none';">
+    </div>
     <div class="content-wrapper">
-        <div class="logo-circle">
-            <span class="logo-text">SpanTrek</span>
-        </div>
 
         {%if page == 'login'%}
         <form method="POST" action="" class="login-form">
