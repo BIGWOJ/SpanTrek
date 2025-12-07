@@ -351,58 +351,6 @@
     animation: bounce 2s infinite;
 }
 
-
-.app-version-end-section {
-    margin: 40px 0;
-
-}
-
-.version-end-card {
-    background: linear-gradient(135deg, rgba(255, 215, 0, 0.15) 0%, rgba(255, 165, 31, 0.15) 100%);
-    border: 2px solid rgba(255, 215, 0, 0.4);
-    border-radius: 20px;
-    padding: 40px;
-    text-align: center;
-    box-shadow: 0 8px 32px rgba(255, 215, 0, 0.2);
-}
-
-.version-end-icon {
-    font-size: 4em;
-    margin-bottom: 20px;
-    animation: float 3s ease-in-out infinite;
-}
-
-.version-end-card h3 {
-    color: #ffd700;
-    font-size: 2em;
-    margin: 0 0 20px 0;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-.version-end-message {
-    font-size: 1.2em;
-    color: #f0f0f0;
-    margin: 15px 0;
-    line-height: 1.6;
-}
-
-.version-end-info {
-    font-size: 1em;
-    color: #cccccc;
-    margin: 15px 0;
-    line-height: 1.5;
-    font-style: italic;
-}
-
-.version-end-thanks {
-    margin-top: 30px;
-    padding: 20px;
-    background: rgba(255, 165, 31, 0.2);
-    border-radius: 10px;
-    font-size: 1.3em;
-    color: #ffa51f;
-}
-
 @keyframes float {
     0%, 100% {
         transform: translateY(0px);

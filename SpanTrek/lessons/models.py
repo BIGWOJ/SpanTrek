@@ -27,6 +27,7 @@ class Lesson(models.Model):
     """Spanish lessons organized by landmark"""
     title = models.CharField(max_length=200)
     order = models.IntegerField()
+    country_order = models.IntegerField()
     landmark = models.ForeignKey(Landmark, on_delete=models.CASCADE, related_name='lessons')
     country = models.ForeignKey(Country, on_delete=models.CASCADE, null=True, blank=True)
     vocabularies = models.ManyToManyField('Vocabulary', blank=True, related_name='lessons')

@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 from .models import Lesson, Country, Vocabulary, Sentence, Audio, Landmark
-from django.db.models import Sum
+from django.db.models import Sum, Case, When, Value, IntegerField
 
 
 @login_required
@@ -45,7 +45,6 @@ def country_view(request, country):
     country_lessons_count = Lesson.objects.filter(country=country_obj).count() if country_obj else 0
     user_country_progress = request.user.country_lessons_progress.get(country, 0)
 
-
     # Country learning progress
     country_lessons = Lesson.objects.filter(country=country_obj)
 
@@ -70,8 +69,11 @@ def country_view(request, country):
     user_learned_audio = request.user.audio_learned or []
     user_country_audio_count = country_audios.filter(text__in=user_learned_audio).count()
     
+    # Get lessons ordered by landmark id and then by lesson order within landmark
+    all_lessons_in_order = Lesson.objects.filter(country=country_obj).order_by('country_order', 'order')
+    
     user_lessons_completed = request.user.country_lessons_progress.get(country, 0)
-    user_use_of_spanish = country_lessons.filter(order__lt=user_lessons_completed).aggregate(total=Sum('use_of_spanish'))['total'] or 0
+    user_use_of_spanish = all_lessons_in_order[:user_lessons_completed].aggregate(total=Sum('use_of_spanish'))['total'] or 0
 
     user_country_progress_dict = {
         'vocabularies': user_country_vocabularies_count,
@@ -214,7 +216,7 @@ def lesson_complete(request, country, landmark, lesson_number):
     next_lesson = Lesson.objects.filter(landmark=landmark_obj, order=lesson_number + 1).first()
 
     lesson_completed_before = request.user.landmark_lessons_progress.get(landmark, 0) >= lesson_number+1
-    
+    print(request.user.landmark_lessons_progress.get(landmark, 0), lesson_number+1)
     request.user.update_progress_after_lesson(landmark, lesson_number, lesson_completed_before)
     
     # Calculate total exercises
@@ -252,10 +254,6 @@ def country_complete(request, country):
         'use_of_spanish': Lesson.objects.filter(country=country_obj).aggregate(total=Sum('use_of_spanish'))['total'] or 0,
     }
     
-    app_version_end = False
-    if country == 'poland':
-        app_version_end = True
-
     if country not in request.user.passports_earned:
         request.user.passports_earned.append(country)
         request.user.save()
@@ -264,7 +262,6 @@ def country_complete(request, country):
         'country': country,
         'total_lessons': country_lessons,
         'country_knowledge': country_knowledge,
-        'app_version_end': app_version_end,
     }
     
     

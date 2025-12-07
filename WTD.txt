@@ -1,4 +1,2 @@
 1. normalize.js -> zapewnić walidację dla dwuznacznych wyrazów np la mañana = morning/tomorrow, żeby morning i tomorrow wchodziło jako dobre
-2. zdjęcia zrobione do Poznań #2 włącznie, Poznan #3 na jugar skończone
-3. przeskalować obrazy do wspólnych MAŁYCH rozmiarów (waga zdjęć), może jakimś skryptem?
-4. promotor call
+2. sprawdzić dodawany exp jak wcześniej skończona lekcje/nie

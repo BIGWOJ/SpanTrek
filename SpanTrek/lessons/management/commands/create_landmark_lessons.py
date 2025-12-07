@@ -101,6 +101,7 @@ class Command(BaseCommand):
                     lesson, created = Lesson.objects.get_or_create(
                         landmark=landmark_obj,
                         order=lesson_data['order'],
+                        country_order=lesson_data['country_order'],
                         defaults={**defaults, 'country': country_obj}
                     )
 

@@ -3,10 +3,11 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
+    overflow-y: hidden;
 }
 
 .lesson-intro {
-    min-height: calc(100vh - 160px);
+    min-height: calc(100vh - 225px);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -138,7 +139,7 @@ html, body {
 @media (max-width: 768px) {
     .lesson-intro {
         padding: 20px 15px;
-        min-height: calc(100vh - 140px);
+        min-height: calc(100vh - 180px);
     }
     
     .lesson-intro h1 {
@@ -172,7 +173,7 @@ html, body {
 @media (max-width: 480px) {
     .lesson-intro {
         padding: 15px 10px;
-        min-height: calc(100vh - 120px);
+        min-height: calc(100vh - 160px);
     }
     
     .lesson-intro h1 {

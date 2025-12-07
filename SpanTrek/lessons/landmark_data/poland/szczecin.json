@@ -2,6 +2,7 @@
     {
         "title": "Basic Greetings & Introduction",
         "order": 0,
+        "country_order": 0,
         "landmark": "szczecin",
         "country": "poland",
         "vocabularies": [
@@ -71,6 +72,7 @@
     {
         "title": "Food and Dining",
         "order": 1,
+        "country_order": 1,
         "landmark": "szczecin",
         "country": "poland",
         "vocabularies": [
@@ -162,6 +164,7 @@
     {
         "title": "Numbers, Colors & Basic Descriptions",
         "order": 2,
+        "country_order": 2,
         "landmark": "szczecin",
         "country": "poland",
         "vocabularies": [

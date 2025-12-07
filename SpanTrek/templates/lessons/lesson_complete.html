@@ -45,6 +45,13 @@
                 Next lesson <span class="arrow">→</span>
             </a>
             <a
+                href="{% url 'practice:practice_intro' 'random' %}"
+                class="btn btn-secondary"
+            >
+                <div class="next-step-icon">💪</div>
+                Practice Mode
+            </a>
+            <a
                 href="{% url 'lessons:country_map' country=country %}"
                 class="btn btn-outline back-to-map-link"
             >
@@ -55,9 +62,16 @@
                 <p>🏆 You've completed all lessons in {{ landmark|title }}!</p>
                 <a
                     href="{% url 'lessons:country_map' country=country %}"
-                    class="btn btn-secondary back-to-map-btn"
+                    class="btn btn-outline back-to-map-link"
                 >
                     Back to {{ country|title }} map
+                </a>
+                <a
+                    href="{% url 'practice:practice_intro' 'random' %}"
+                    class="btn btn-secondary"
+                >
+                    <div class="next-step-icon">💪</div>
+                    Practice Mode
                 </a>
             </div>
             {% endif %}

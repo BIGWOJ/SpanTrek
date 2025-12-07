@@ -2,6 +2,7 @@
     {
         "title": "Family & Relationships",
         "order": 0,
+        "country_order": 3,
         "landmark": "poznan",
         "country": "poland",
         "vocabularies": [
@@ -166,6 +167,7 @@
     {
         "title": "Home & Rooms",
         "order": 1,
+        "country_order": 4,
         "landmark": "poznan",
         "country": "poland",
         "vocabularies": [
@@ -365,6 +367,7 @@
     {
         "title": "Daily Activities & Time",
         "order": 2,
+        "country_order": 5,
         "landmark": "poznan",
         "country": "poland",
         "vocabularies": [

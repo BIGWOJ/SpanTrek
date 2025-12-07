@@ -9,7 +9,7 @@
     https://www.freepik.com/
     https://pixabay.com/
 4. Login details for all demo accounts in database:
-    {username}@email.com'
+    {username}@email.com -> list of usernames can be seen in database logging via admin or in leaderboard
     testpassword
 
     For admin:
