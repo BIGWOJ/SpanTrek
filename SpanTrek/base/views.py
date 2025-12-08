@@ -10,12 +10,8 @@ from datetime import date
 from django.contrib.auth.decorators import login_required
 
 
-@login_required
-def home_page(request):
-    # If user is not authenticated, redirect to login page
-    if not request.user.is_authenticated:
-        return redirect('login_page')
-    
+@login_required(login_url='login_page')
+def home_page(request):   
     # Create new daily challenges for the user
     # Adventure_progress != 0 to avoid creating challenges f.e. with audios which user hasn't learned yet
     if (request.user.daily_challenges_creation_date is None or 
@@ -111,7 +107,7 @@ def logout_user(request):
     logout(request)
     return redirect('login_page')
 
-@login_required
+@login_required(login_url='login_page')
 def user_page(request, pk):
     user = User.objects.get(id=pk)
 
@@ -263,7 +259,7 @@ def user_page(request, pk):
 
     return render(request, 'base/user_page.html', context)
 
-@login_required
+@login_required(login_url='login_page')
 def leaderboard_page(request, view_type):
     all_users_count = User.objects.all().filter(experience__gt=0).count()
     

@@ -4,7 +4,7 @@ from lessons.models import Vocabulary, Sentence, Audio
 import random
 
 
-@login_required
+@login_required(login_url='login_page')
 def practice_intro(request, practice_type):
     # Get default count using dynamic attribute access
     default_count_attr = f'default_{practice_type}_practice_count'
@@ -70,7 +70,7 @@ def practice_intro(request, practice_type):
 
     return render(request, 'practice/intro.html', context=context)
 
-@login_required
+@login_required(login_url='login_page')
 def practice_main(request, index):
     practice_items = request.session.get('practice_items', [])
 
@@ -102,7 +102,7 @@ def practice_main(request, index):
     
     return render(request, 'practice/practice_main.html', context=context)
 
-@login_required
+@login_required(login_url='login_page')
 def practice_complete(request):
     
     practice_items = request.session.get('practice_items', [])

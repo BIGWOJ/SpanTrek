@@ -6,7 +6,7 @@ from .models import Lesson, Country, Vocabulary, Sentence, Audio, Landmark
 from django.db.models import Sum, Case, When, Value, IntegerField
 
 
-@login_required
+@login_required(login_url='login_page')
 def world_map(request):
     # Handle POST request for continue adventure button
     if request.POST.get('action') == 'continue_adventure':
@@ -38,7 +38,7 @@ def world_map(request):
     return render(request, "lessons/world_map.html", context=context)
 
 
-@login_required
+@login_required(login_url='login_page')
 def country_view(request, country):
     # Get lesson count for this country
     country_obj = Country.objects.filter(name__iexact=country).first()
@@ -97,7 +97,7 @@ def country_view(request, country):
     return render(request, f'lessons/{country}/country.html', context=context)
 
 
-@login_required
+@login_required(login_url='login_page')
 def country_landmark_lesson(request, country, landmark, lesson_number=None, exercise_number=None):
     # Get the current progress for this landmark from the user's profile
     landmark_progress = request.user.landmark_lessons_progress.get(landmark, 0)
@@ -192,7 +192,7 @@ def country_landmark_lesson(request, country, landmark, lesson_number=None, exer
     return render(request, 'lessons/lesson_base.html', context=context)
 
 
-@login_required
+@login_required(login_url='login_page')
 def lesson_complete(request, country, landmark, lesson_number):
     """View for lesson completion page with congratulations message"""
     # Get the country and landmark objects
@@ -242,7 +242,7 @@ def lesson_complete(request, country, landmark, lesson_number):
     return render(request, 'lessons/lesson_complete.html', context=context)
 
 
-@login_required
+@login_required(login_url='login_page')
 def country_complete(request, country):
     """View for country completion page with congratulations and statistics"""  
     country_obj = Country.objects.filter(name__iexact=country).first()
@@ -268,7 +268,7 @@ def country_complete(request, country):
     return render(request, 'lessons/country_complete.html', context=context)
 
 
-@login_required
+@login_required(login_url='login_page')
 def check_exercise_done(request):
     """Handle exercise completion - supports both AJAX and regular form submission"""
     if request.method == 'POST':
@@ -300,6 +300,6 @@ def check_exercise_done(request):
     # Handle GET request
     return JsonResponse({'error': 'Method not allowed'}, status=405)
 
-@login_required
+@login_required(login_url='login_page')
 def continue_adventure_button(request):
     pass
