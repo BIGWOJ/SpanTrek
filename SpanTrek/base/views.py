@@ -98,7 +98,7 @@ def register_page(request):
             login(request, user)
             return redirect('home_page')
         else:
-            messages.error(request, 'Coś poszło nie tak. Spróbuj ponownie')
+            messages.error(request, 'Something went wrong. Please try again')
 
     context = {'register_form': form, 'page': page}
     return render(request, 'base/login_register.html', context)
