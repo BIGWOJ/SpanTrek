@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Check answers functionality
     checkBtn.addEventListener("click", function (event) {
-        event.preventDefault(); // Prevent default form submission
+        event.preventDefault();
 
         let userAnswered = false;
         blankInputs.forEach((input) => {
@@ -42,7 +42,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 correctAnswer.toLowerCase()
             );
 
-            // Remove previous classes
             input.classList.remove("correct", "incorrect");
 
             // Add appropriate class based on answer
@@ -213,7 +212,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Additional Enter key handler specifically for input fields
+    // Enter key navigation
     blankInputs.forEach((input) => {
         input.addEventListener("keydown", function (event) {
             if (event.key === "Enter") {
