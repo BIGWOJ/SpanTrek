@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const resetBtn = document.querySelector(".reset-btn-input");
     const showAnswerBtn = document.querySelector(".show-answer-btn-input");
     const inputs = document.querySelectorAll(".input-field");
-
     // Clear all input fields on page load (after F5 refresh)
     inputs.forEach((input) => {
         input.value = "";
