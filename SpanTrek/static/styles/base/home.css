@@ -10,7 +10,6 @@ body {
     flex-direction: column;
 }
 
-/* Make main content grow to fill space, pushing footer down */
 body > *:not(footer) {
     flex-shrink: 0;
 }
@@ -213,7 +212,6 @@ body > *:not(footer) {
     color: #2d2d2d;
 }
 
-/* Section titles */
 .section-title {
     color: #f5f5f5;
     font-size: 1.8rem;
@@ -222,7 +220,6 @@ body > *:not(footer) {
     text-align: center;
 }
 
-/* Main Course Section */
 .main-course-section {
     margin-bottom: 50px;
 }
@@ -241,7 +238,6 @@ body > *:not(footer) {
     position: relative;
 }
 
-/* Completed Adventure Styling */
 .main-lesson.completed-adventure {
     background: linear-gradient(135deg, #fff8e1 0%, #fff3c4 50%, #ffecb3 100%);
     border: 3px solid #ffa51f;
@@ -267,7 +263,6 @@ body > *:not(footer) {
     }
 }
 
-/* Crown Animation */
 .crown-hat {
     position: absolute;
     top: -15px;
@@ -318,7 +313,6 @@ body > *:not(footer) {
     100% { transform: scale(1.02); }
 }
 
-/* Leaderboard Section */
 .leaderboard-section {
     margin-bottom: 50px;
 }
@@ -409,7 +403,6 @@ body > *:not(footer) {
     box-shadow: 0 2px 8px rgba(255, 165, 31, 0.3);
 }
 
-/* Podium Rank Styles */
 .podium-rank {
     display: flex;
     align-items: center;
@@ -425,7 +418,6 @@ body > *:not(footer) {
     border: 3px solid;
 }
 
-/* 1st Place - Gold */
 .podium-rank.rank-1 {
     background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FF8C00 100%);
     border-color: #FFD700;
@@ -444,7 +436,6 @@ body > *:not(footer) {
         inset 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 
-/* 2nd Place - Silver */
 .podium-rank.rank-2 {
     background: linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 50%, #A8A8A8 100%);
     border-color: #C0C0C0;
@@ -463,7 +454,6 @@ body > *:not(footer) {
         inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
-/* 3rd Place - Bronze */
 .podium-rank.rank-3 {
     background: linear-gradient(135deg, #CD7F32 0%, #B8860B 50%, #A0522D 100%);
     border-color: #CD7F32;
@@ -504,7 +494,6 @@ body > *:not(footer) {
     45% { transform: rotateY(180deg); }
 }
 
-/* Enhanced hover effects for podium ranks */
 .podium-rank {
     transition: all 0.3s ease;
     cursor: pointer;
@@ -728,7 +717,6 @@ body > *:not(footer) {
     opacity: 0.8;
 }
 
-/* Challenge tooltip styles */
 .challenge-tooltip {
     position: absolute;
     background: rgba(26, 26, 26, 0.95);
@@ -775,7 +763,6 @@ body > *:not(footer) {
     box-shadow: 0 2px 8px rgba(255, 165, 31, 0.4);
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .welcome-title {
         font-size: 2rem;

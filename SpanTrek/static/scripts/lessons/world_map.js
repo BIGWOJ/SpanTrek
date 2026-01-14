@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Create tooltip element
+    // Tooltip element
     const tooltip = document.createElement("div");
     tooltip.className = "country-tooltip";
     document.body.appendChild(tooltip);
@@ -10,13 +10,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const allCountries = [...spanishCountries, ...lessonsDoneCountries, ...lockedCountries];
 
-    // Add event listeners to each country
     allCountries.forEach((country) => {
         country.addEventListener("mousemove", showTooltip);
         country.addEventListener("mouseleave", hideTooltip);
     });
 
-    // Show tooltip function
+    // Show tooltip
     function showTooltip(e) {
         const country = e.target;
         const countryData = JSON.parse(country.getAttribute("data-lessons"));
@@ -43,14 +42,14 @@ document.addEventListener("DOMContentLoaded", function () {
             const user_completed_lessons =
                 user_countries_progress[countryData.name.toLowerCase()] || 0;
 
-            // Calculate completion percentage
+            // Completion percentage
             const percentage = country_lessons_available
                 ? Math.round(
                       (user_completed_lessons / country_lessons_available) * 100
                   )
                 : 0;
 
-            // Set tooltip content
+            // Tooltip content
             if (isStartingCountry) {
                 tooltip.innerHTML = `
                     <strong style="color: #ff8c00">Poland</strong><br>
@@ -73,7 +72,6 @@ document.addEventListener("DOMContentLoaded", function () {
         const scrollLeft =
             window.scrollX || document.documentElement.scrollLeft;
 
-        // Calculate position 20 pixels above the country's top edge
         const tooltipX = rect.left + rect.width / 2 + scrollLeft;
         const tooltipY = rect.top + scrollTop - 20;
 

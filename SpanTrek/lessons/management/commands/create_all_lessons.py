@@ -1,7 +1,6 @@
 from django.core.management.base import BaseCommand
 from django.core.management import call_command
 from io import StringIO
-from django.core.management.base import OutputWrapper
 from contextlib import redirect_stdout
 import re
 
@@ -23,7 +22,6 @@ class Command(BaseCommand):
             'warsaw'
         ]
 
-        # Track overall statistics
         total_created = 0
         total_updated = 0
         total_skipped = 0
@@ -32,16 +30,13 @@ class Command(BaseCommand):
         for landmark in cities:
             self.stdout.write(f'\nProcessing Spanish lessons for {landmark.title()}...')
             try:
-                # Capture output from create_landmark_lessons command
                 output = StringIO()
                 with redirect_stdout(output):
                     call_command('create_landmark_lessons', landmark)
                 
-                # Print the captured output
                 output_str = output.getvalue()
                 self.stdout.write(output_str)
                 
-                # Extract statistics from the output
                 created, updated, skipped = self.extract_statistics(output_str)
                 total_created += created
                 total_updated += updated
@@ -54,7 +49,7 @@ class Command(BaseCommand):
                 )
                 raise
 
-        # Print overall summary
+        # Print summary
         self.stdout.write('\n' + '='*50)
         self.stdout.write(self.style.SUCCESS('Overall Lesson Import Summary:'))
         self.stdout.write(f'Cities processed: {processed_cities}')

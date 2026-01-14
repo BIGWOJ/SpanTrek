@@ -12,7 +12,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         User = get_user_model()
         
-        # Get all users except superusers
+        # Get all users except superuser
         users = User.objects.filter(is_superuser=False)
         
         if not users.exists():
@@ -29,7 +29,7 @@ class Command(BaseCommand):
         updated_count_0_progress = 0
         for user in users:
             try:                                                
-                # Random adventure progress)
+                # Random adventure progress
                 adventure_progress = random.randint(0, 9)
                 
                 # Only if adventure progress is not zero, randomize data (not possible to get experience without lessons)
@@ -95,21 +95,21 @@ class Command(BaseCommand):
                     )
 
                     for lesson in all_lessons_in_order[:poland_progress]:
-                        # Words learned
+                        # Words
                         lesson_words = set(vocab.word for vocab in lesson.vocabularies.all())
                         if not isinstance(user.words_learned, list):
                             user.words_learned = []
                         new_words = lesson_words - set(user.words_learned)
                         user.words_learned.extend(new_words)
                         
-                        # Sentences learned
+                        # Sentences
                         lesson_sentences = set(sentence.sentence for sentence in lesson.sentences.all()) 
                         if not isinstance(user.sentences_learned, list):
                             user.sentences_learned = []
                         new_sentences = lesson_sentences - set(user.sentences_learned)
                         user.sentences_learned.extend(new_sentences)
 
-                        # Audio files
+                        # Audio
                         lesson_audios = set(audio.text for audio in lesson.audios.all())
                         if not isinstance(user.audio_learned, list):
                             user.audio_learned = []
@@ -128,7 +128,7 @@ class Command(BaseCommand):
                 # Random avatar from 15 available
                 user.avatar = f'avatars/{random.randint(1, 15)}.png'
                 
-                # Save user first before checking achievements
+                # Save user first before setting achievements
                 user.save()
                 
                 # Check and award achievements

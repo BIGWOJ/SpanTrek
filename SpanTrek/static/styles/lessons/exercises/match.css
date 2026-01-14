@@ -1,4 +1,3 @@
-/* Match Exercise Styles */
 .exercise-container {
     display: flex;
     justify-content: center;
@@ -122,12 +121,10 @@
     transition: all 0.3s ease;
 }
 
-/* Left column items - number on right border */
 .left-column .match-item::before {
     right: -12px;
 }
 
-/* Right column items - number on left border */
 .right-column .match-item::before {
     left: -12px;
 }
@@ -245,14 +242,12 @@
     transform: translateY(0);
 }
 
-/* Animations */
 @keyframes shake {
     0%, 100% { transform: translateX(0); }
     25% { transform: translateX(-5px); }
     75% { transform: translateX(5px); }
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .exercise-container {
         padding: 15px;

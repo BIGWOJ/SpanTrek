@@ -179,7 +179,6 @@ html, body {
     transform: translateX(3px);
 }
 
-/* Responsive design */
 @media (max-width: 600px) {
     .practice-intro-wrapper {
         padding: 30px 20px;

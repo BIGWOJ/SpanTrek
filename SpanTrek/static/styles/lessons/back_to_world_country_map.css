@@ -54,7 +54,6 @@
     box-shadow: 0 3px 10px rgba(255, 165, 31, 0.3);
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .continue-button {
         padding: 12px 28px;

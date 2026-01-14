@@ -5,20 +5,18 @@ document.addEventListener("DOMContentLoaded", function () {
     let selectedItems = [];
     let matches = [];
 
-    // Initialize match functionality and add choice labels
+    // Initialize match exercise and add choice labels
     matchItems.forEach((item, index) => {
         item.addEventListener("click", handleItemClick);
 
-        // Add choice labels based on actual DOM structure:
+        // Add labels based on DOM structure:
         const totalItems = matchItems.length;
         const itemsPerColumn = totalItems / 2;
 
         let label;
         if (index < itemsPerColumn) {
-            // Left column items: indices 0 to itemsPerColumn-1
             label = (index * 2 + 1).toString();
         } else {
-            // Right column items: indices itemsPerColumn to totalItems-1
             const rightColumnPosition = index - itemsPerColumn;
             label = ((rightColumnPosition + 1) * 2).toString();
         }
@@ -40,11 +38,10 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById("next-exercise-btn") ||
             document.getElementById("complete-lesson-btn");
         if (nextBtn && selectedItems.length === 0) {
-            // Only hide on first selection to avoid hiding during matching process
             nextBtn.style.display = "none";
         }
 
-        // Remove any previous incorrect styling
+        // Remove previous incorrect styling
         item.classList.remove("incorrect");
 
         // If item is already selected, deselect it
@@ -56,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        // If we already have 2 items selected, deselect all
+        // If already have 2 items selected, deselect all
         if (selectedItems.length >= 2) {
             selectedItems.forEach((selected) =>
                 selected.classList.remove("selected")
@@ -68,7 +65,6 @@ document.addEventListener("DOMContentLoaded", function () {
         item.classList.add("selected");
         selectedItems.push(item);
 
-        // If we have 2 items selected, check if they match
         if (selectedItems.length === 2) {
             setTimeout(() => {
                 checkMatch();
@@ -85,13 +81,11 @@ document.addEventListener("DOMContentLoaded", function () {
         const match2 = item2.getAttribute("data-match");
 
         if (match1 === match2) {
-            // Items match
             item1.classList.remove("selected");
             item2.classList.remove("selected");
             item1.classList.add("matched");
             item2.classList.add("matched");
 
-            // Store the match
             matches.push({ item1, item2, correct: true });
 
             // Check if all items are matched
@@ -99,8 +93,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 item.classList.contains("matched")
             );
 
+            // Show the next button when all matches are completed
             if (allMatched) {
-                // Show the next button when all matches are completed
                 const nextBtn =
                     document.getElementById("next-exercise-btn") ||
                     document.getElementById("complete-lesson-btn");
@@ -114,7 +108,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             }
         } else {
-            // Items don't match - show briefly then deselect
             item1.classList.add("incorrect");
             item2.classList.add("incorrect");
 
@@ -127,13 +120,13 @@ document.addEventListener("DOMContentLoaded", function () {
         selectedItems = [];
     }
 
-    // Show answer functionality
+    // Show answer
     showAnswerBtn.addEventListener("click", function () {
-        // Clear any selections
+        // Clear selections
         selectedItems.forEach((item) => item.classList.remove("selected"));
         selectedItems = [];
 
-        // Match all items automatically
+        // Match all items
         matchItems.forEach((item) => {
             item.classList.remove("selected", "incorrect");
             item.classList.add("matched");
@@ -153,18 +146,16 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Keyboard navigation - NUMPAD ONLY - map numpad number keys to match items based on their labels
+    // Keyboard navigation
     document.addEventListener("keydown", function (event) {
         const code = event.code;
 
-        // Handle ONLY numpad numbers (1, 2, 3, etc.) - numpad navigation only
         if (code.startsWith("Numpad") && event.key >= "1" && event.key <= "9") {
             const keyNumber = parseInt(event.key);
 
             if (keyNumber >= 1 && keyNumber <= matchItems.length) {
                 event.preventDefault();
 
-                // Find the item with the matching data-choice label
                 const targetItem = Array.from(matchItems).find(
                     (item) =>
                         item.getAttribute("data-choice") ===

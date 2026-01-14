@@ -67,7 +67,6 @@ class Command(BaseCommand):
             with open(lesson_json_data, 'r', encoding='utf-8') as f:
                 lessons_data = json.load(f)
 
-            # Track statistics
             created_count = 0
             skipped_count = 0
             updated_count = 0
@@ -105,8 +104,8 @@ class Command(BaseCommand):
                         defaults={**defaults, 'country': country_obj}
                     )
 
+                    # Check if any data needs updating
                     if not created:
-                        # Check if any data needs updating
                         update_needed = False
                         for key, value in lesson_data.items():
                             if key not in ['vocabularies', 'sentences', 'country', 'landmark']:
@@ -167,7 +166,7 @@ class Command(BaseCommand):
                                     # Determine audio type from the path
                                     audio_path = audio_data[0]
                                     audio_type = 'vocabulary' if '/vocabulary/' in audio_path else 'sentences'
-                                    # Generate normalized URL using the same function as create_audios.py
+                                    # Generate normalized URL using the same function as in create_audios.py
                                     audio_url = f'/static/audio/{audio_type}/{normalize_filename(audio_text)}.mp3'
                                     
                                     # Use only audio_url as unique key to avoid duplicates
@@ -226,7 +225,6 @@ class Command(BaseCommand):
                                     audio_url = f'/static/audio/{audio_type}/{normalize_filename(audio_text)}.mp3'
                                     
                                     # Use only audio_url as unique key to avoid duplicates
-                                    # (e.g., "me gusta" vs "Me gusta" should use same Audio object)
                                     audio_obj, _ = Audio.objects.get_or_create(
                                         audio_url=audio_url,
                                         defaults={'text': audio_text}
@@ -239,7 +237,7 @@ class Command(BaseCommand):
                         self.style.ERROR(f'Error processing lesson (Order: {lesson_data.get("order")}): {str(e)}')
                     )
 
-            # Print summary for this landmark
+            # Print summary
             self.stdout.write(f'\nLesson import summary for {landmark.title()}:')
             self.stdout.write(self.style.SUCCESS(f'Created: {created_count}'))
             self.stdout.write(self.style.WARNING(f'Updated: {updated_count}'))

@@ -3,10 +3,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const checkBtn = document.querySelector(".check-btn-input");
     const resetBtn = document.querySelector(".reset-btn-input");
 
-    // Get correct answer from data attribute
+    // Get correct answer
     const correctAnswer = userInput.getAttribute("data-answer") || "";
 
-    // Check answer functionality
+    // Check answer
     checkBtn.addEventListener("click", function () {
         const userAnswer = userInput.value.trim();
 
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Remove previous classes
         userInput.classList.remove("correct", "incorrect");
 
-        // Check if answer is correct (case-insensitive comparison)
+        // Check if answer is correct
         if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
             userInput.classList.add("correct");
             checkBtn.style.background = "rgba(76, 175, 80, 0.2)";
@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
             checkBtn.style.color = "#4caf50";
             checkBtn.textContent = "Perfect!";
 
-            // Show the next button when exercise is completed successfully
+            // Show the next button only when exercise is completed successfully
             const nextBtn = document.querySelector(".next-btn");
             if (nextBtn) {
                 // Auto-advance to next exercise after 2 seconds
@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
             checkBtn.style.color = "#f44336";
             checkBtn.textContent = "Try again";
 
-            // Reset button appearance after 2 seconds
+            // Reset button after 2 seconds
             setTimeout(() => {
                 checkBtn.style.background = "";
                 checkBtn.style.borderColor = "";
@@ -49,12 +49,11 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Reset functionality
+    // Reset
     resetBtn.addEventListener("click", function () {
         // Clear input
         userInput.value = "";
 
-        // Remove state classes
         userInput.classList.remove("correct", "incorrect");
 
         // Reset button
@@ -69,7 +68,6 @@ document.addEventListener("DOMContentLoaded", function () {
             nextBtn.style.display = "none";
         }
 
-        // Add brief highlight effect
         userInput.style.transition = "all 0.3s ease";
         userInput.style.backgroundColor = "rgba(255, 165, 31, 0.2)";
 
@@ -96,7 +94,6 @@ document.addEventListener("DOMContentLoaded", function () {
     document.addEventListener("keydown", function (event) {
         const code = event.code;
 
-        // Handle Enter key (both main Enter and numpad Enter)
         if (event.key === "Enter" || code === "NumpadEnter") {
             event.preventDefault();
             if (checkBtn && !checkBtn.disabled) {
@@ -105,7 +102,6 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        // Handle Delete key (both main Delete and numpad Delete/Decimal)
         if (
             event.key === "Delete" ||
             code === "NumpadDelete" ||
@@ -119,7 +115,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Enter key specifically for input field
+    // Enter key for check answer
     userInput.addEventListener("keydown", function (event) {
         if (event.key === "Enter") {
             event.preventDefault();

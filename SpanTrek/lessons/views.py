@@ -8,10 +8,6 @@ from django.db.models import Sum, Case, When, Value, IntegerField
 
 @login_required(login_url='login_page')
 def world_map(request):
-    # Handle POST request for continue adventure button
-    if request.POST.get('action') == 'continue_adventure':
-        continue_adventure_button(request)
-    
     progress_bar_progress = request.user.country_lessons_progress
     user_progress = sum(progress_bar_progress.values())
     user_countries_progress = request.user.country_lessons_progress
@@ -40,7 +36,7 @@ def world_map(request):
 
 @login_required(login_url='login_page')
 def country_view(request, country):
-    # Get lesson count for this country
+    # Get lesson count for country
     country_obj = Country.objects.filter(name__iexact=country).first()
     country_lessons_count = Lesson.objects.filter(country=country_obj).count() if country_obj else 0
     user_country_progress = request.user.country_lessons_progress.get(country, 0)
@@ -99,7 +95,7 @@ def country_view(request, country):
 
 @login_required(login_url='login_page')
 def country_landmark_lesson(request, country, landmark, lesson_number=None, exercise_number=None):
-    # Get the current progress for this landmark from the user's profile
+    # Get the current progress for landmark
     landmark_progress = request.user.landmark_lessons_progress.get(landmark, 0)
     user_landmark_progress = request.user.landmark_lessons_progress.get(landmark, 0)
     country_obj = Country.objects.filter(name__iexact=country).first()
@@ -107,7 +103,7 @@ def country_landmark_lesson(request, country, landmark, lesson_number=None, exer
     
     # If lesson_number is not provided, show intro page first
     if lesson_number is None:
-        # Get all lessons for this landmark
+        # Get all lessons for landmark
         landmark_lessons = Lesson.objects.filter(landmark=landmark_obj, country=country_obj).order_by('order')
 
         context = {
@@ -200,7 +196,9 @@ def lesson_complete(request, country, landmark, lesson_number):
     if not country_obj:
         return redirect('lessons:world_map')
     
+    # Import here to avoid circular imports
     from .models import Landmark
+    
     landmark_obj = Landmark.objects.filter(name__iexact=landmark, country=country_obj).first()
     if not landmark_obj:
         return redirect('lessons:country_map', country=country)
@@ -270,7 +268,7 @@ def country_complete(request, country):
 
 @login_required(login_url='login_page')
 def check_exercise_done(request):
-    """Handle exercise completion - supports both AJAX and regular form submission"""
+    """Handle exercise completion"""
     if request.method == 'POST':
         # Get all answer fields
         answers = {}
@@ -293,13 +291,8 @@ def check_exercise_done(request):
             }
             return JsonResponse(response_data)
         else:
-            # Handle regular form submission (redirect or render)
-            # You might want to redirect to next exercise or show results
-            return redirect('lessons:world_map')  # or wherever you want to redirect
+            # Handle regular form submission
+            return redirect('lessons:world_map')
 
     # Handle GET request
     return JsonResponse({'error': 'Method not allowed'}, status=405)
-
-@login_required(login_url='login_page')
-def continue_adventure_button(request):
-    pass

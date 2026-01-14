@@ -6,7 +6,7 @@ import random
 
 @login_required(login_url='login_page')
 def practice_intro(request, practice_type):
-    # Get default count using dynamic attribute access
+    # Get default questions count
     default_count_attr = f'default_{practice_type}_practice_count'
     question_count = getattr(request.user, default_count_attr)
     question_count = request.POST.get('question_count', question_count)
@@ -35,25 +35,28 @@ def practice_intro(request, practice_type):
 
     practice_set = practice_set or random.sample(list(entire_set), k=min(int(question_count), len(entire_set)))
 
+    # Store practice type and practice set in session for navigation
     if request.method == 'POST':
-        # Store practice type and practice set in session for navigation
         request.session['practice_type'] = practice_type
         practice_items = []
         for item in practice_set:
             item_data = {
                 'type': item.__class__.__name__.lower(),
             }
-            if hasattr(item, 'word'):  # Vocabulary
+            # Vocabulary
+            if hasattr(item, 'word'):  
                 item_data.update({
                     'word': item.word,
                     'translation': item.translation,
                 })
-            elif hasattr(item, 'sentence'):  # Sentence
+            # Sentence
+            elif hasattr(item, 'sentence'):
                 item_data.update({
                     'sentence': item.sentence,
                     'translation': item.translation,
                 })
-            elif hasattr(item, 'audio_url'):  # Audio
+            # Audio
+            elif hasattr(item, 'audio_url'):  
                 item_data.update({
                     'audio_url': item.audio_url,
                     'text': item.text,

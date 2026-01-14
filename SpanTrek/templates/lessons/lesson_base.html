@@ -87,7 +87,6 @@
                 {% elif current_block == "multiple_choice" %}
                     {% include 'lessons/exercises/multiple_choice.html' with content=current_content %}
                 {% else %}
-                    <!-- Unknown block type: {{ current_block }} -->
                     <div class="error-block">Unknown content type: {{ current_block }}</div>
                 {% endif %}
             </div>

@@ -5,7 +5,7 @@ html, body {
 }
 
 .practice-complete-container {
-    height: calc(100vh - 160px); /* Adjust for header/footer/navbar height */
+    height: calc(100vh - 160px);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -190,7 +190,6 @@ html, body {
     font-weight: bold;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .congratulations-card {
         padding: 30px 20px;

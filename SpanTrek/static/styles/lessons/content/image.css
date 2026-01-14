@@ -1,4 +1,3 @@
-/* Image Display Styles */
 .image-container {
     display: flex;
     justify-content: center;
@@ -39,7 +38,6 @@
     line-height: 1.4;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .image-container {
         padding: 15px;

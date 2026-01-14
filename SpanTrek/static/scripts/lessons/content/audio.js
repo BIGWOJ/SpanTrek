@@ -12,13 +12,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Initialize audio when page loads
     function initializeAudio() {
-        // Get audio URL from the content variable (this would be passed from Django template)
-        const audioUrl = window.audioContentUrl; // This will be set from the template
+        // Get audio URL from the content variable
+        const audioUrl = window.audioContentUrl;
 
         if (audioUrl && audioUrl !== "link_audio") {
             audio = new Audio(audioUrl);
 
-            // Set up audio event listeners
             audio.addEventListener("loadedmetadata", function () {
                 updateDuration();
             });
@@ -43,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Play/Pause button functionality
+    // Play/Pause button
     playPauseBtn.addEventListener("click", function () {
         if (!audio) {
             return;
@@ -125,16 +124,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
             audio.currentTime = percentage * audio.duration;
             updateProgress();
-        }
-    });
-
-    // Keyboard navigation
-    document.addEventListener("keydown", function (event) {
-        // Handle Space key for play/pause
-        if (event.key === " " || event.key === "Spacebar") {
-            event.preventDefault();
-            playPauseBtn.click();
-            return;
         }
     });
 

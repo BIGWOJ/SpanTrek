@@ -4,17 +4,16 @@ document.addEventListener("DOMContentLoaded", function () {
     const showAnswerBtn = document.querySelector(".show-answer-btn-single");
     const choiceItems = document.querySelectorAll(".choice-item");
 
-    let selectedChoice = null; // Only one choice can be selected
+    let selectedChoice = null;
     let isAnswered = false;
 
-    // Determine correct answers based on original content stored in data attribute
+    // Determine correct answers
     const correctAnswers = new Set();
 
     choiceItems.forEach((item, index) => {
-        // Get the original content before any template filters
         const originalContent = item.getAttribute("data-original").trim();
 
-        // Check if original content is all uppercase (indicating correct answer)
+        // Check if original content is all uppercase (correct answer)
         const isAllUppercase =
             originalContent === originalContent.toUpperCase() &&
             originalContent.length > 1 &&
@@ -25,16 +24,15 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // If no correct answers found using above methods, fall back to last item
     if (correctAnswers.size === 0) {
         correctAnswers.add(choiceItems.length - 1);
     }
 
-    // Initialize choice functionality
+    // Initialize choice
     choiceItems.forEach((item, index) => {
         item.addEventListener("click", () => handleChoiceClick(item, index));
 
-        // Add choice labels (1, 2, 3, etc.)
+        // Choice labels
         const label = (index + 1).toString();
         item.setAttribute("data-choice", label);
     });
@@ -69,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
         item.classList.add("selected");
     }
 
-    // Check answer functionality
+    // Check answer
     checkBtn.addEventListener("click", function () {
         if (isAnswered) return;
 
@@ -90,11 +88,10 @@ document.addEventListener("DOMContentLoaded", function () {
         choiceItems.forEach((item, index) => {
             item.classList.remove("selected");
 
+            // Only show correct answer if user got it right
             if (isCorrect && correctAnswers.has(index)) {
-                // Only show correct answer if user got it right
                 item.classList.add("correct");
             } else if (index === selectedChoice) {
-                // Mark the selected choice as incorrect if it's wrong
                 if (isCorrect) {
                     item.classList.add("correct");
                 } else {
@@ -104,13 +101,12 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         if (isCorrect) {
-            // Correct answer selected
             checkBtn.style.background = "rgba(76, 175, 80, 0.2)";
             checkBtn.style.borderColor = "#4caf50";
             checkBtn.style.color = "#4caf50";
             checkBtn.textContent = "Perfect!";
 
-            // Show the next button when exercise is completed successfully
+            // Show the next button only when exercise is completed successfully
             const nextBtn =
                 document.getElementById("next-exercise-btn") ||
                 document.getElementById("complete-lesson-btn");
@@ -131,9 +127,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Show answer functionality
+    // Show answer
     showAnswerBtn.addEventListener("click", function () {
-        // Mark as answered to prevent further clicks
+        // Mark as answered to prevent clicks
         isAnswered = true;
 
         // Clear any previous selections and mark correct answer
@@ -167,7 +163,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Reset functionality
+    // Reset
     resetBtn.addEventListener("click", function () {
         // Reset all states
         isAnswered = false;
@@ -182,7 +178,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 "disabled"
             );
 
-            // Add brief highlight effect to show reset
             item.style.transition = "all 0.3s ease";
             item.style.backgroundColor = "rgba(255, 165, 31, 0.2)";
 
@@ -206,11 +201,10 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Keyboard navigation - NUMPAD ONLY
+    // Keyboard navigation
     document.addEventListener("keydown", function (event) {
         const code = event.code;
 
-        // Handle Enter key (both main Enter and numpad Enter)
         if (event.key === "Enter" || code === "NumpadEnter") {
             event.preventDefault();
             if (checkBtn && !checkBtn.disabled) {
@@ -219,7 +213,6 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        // Handle Delete key (both main Delete and numpad Delete/Decimal)
         if (
             event.key === "Delete" ||
             code === "NumpadDelete" ||
@@ -234,7 +227,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (isAnswered) return;
 
-        // Handle ONLY numpad numbers (1, 2, 3, 4) - numpad navigation only
+        // Numpad navigation for choices
         if (code.startsWith("Numpad") && event.key >= "1" && event.key <= "9") {
             const keyNumber = parseInt(event.key);
             const index = keyNumber - 1;

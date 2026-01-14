@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const showAnswerBtn = document.querySelector(".show-answer-btn-fill");
     const blankInputs = document.querySelectorAll(".blank-input");
 
-    // Clear all input fields on page load (after F5 refresh)
+    // Clear all input fields on page load
     blankInputs.forEach((input) => {
         input.value = "";
         input.classList.remove("correct", "incorrect");
@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
         input.name = `answer_${index + 1}`;
     });
 
-    // Check answers functionality
+    // Check answers
     checkBtn.addEventListener("click", function (event) {
         event.preventDefault();
 
@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const userAnswer = input.value.trim();
             const correctAnswer = input.getAttribute("data-answer");
 
-            // Normalize and compare (case-insensitive, accent-insensitive)
+            // Normalize and compare
             const normalizedUserAnswer = normalizeSpanishText(
                 userAnswer.toLowerCase()
             );
@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             input.classList.remove("correct", "incorrect");
 
-            // Add appropriate class based on answer
+            // Class based on answer
             if (normalizedUserAnswer === normalizedCorrectAnswer) {
                 input.classList.add("correct");
             } else if (userAnswer !== "") {
@@ -56,14 +56,14 @@ document.addEventListener("DOMContentLoaded", function () {
             input.classList.contains("correct")
         );
 
-        // Visual button feedback
+        // Visual feedback
         if (allCorrect) {
             checkBtn.style.background = "rgba(76, 175, 80, 0.2)";
             checkBtn.style.borderColor = "#4caf50";
             checkBtn.style.color = "#4caf50";
             checkBtn.textContent = "Perfect!";
 
-            // Show the next button when exercise is completed successfully
+            // Show the next button only when exercise is completed successfully
             const nextBtn =
                 document.getElementById("next-exercise-btn") ||
                 document.getElementById("complete-lesson-btn");
@@ -91,11 +91,10 @@ document.addEventListener("DOMContentLoaded", function () {
             }, 2000);
         }
 
-        // Send data to backend
         sendAnswersToBackend(allCorrect);
     });
 
-    // Function to send answers to backend
+    // Send answers to backend
     function sendAnswersToBackend(allCorrect) {
         const form = document.querySelector("form");
         const formData = new FormData(form);
@@ -113,7 +112,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Show answer functionality
+    // Show answer
     showAnswerBtn.addEventListener("click", function () {
         blankInputs.forEach((input) => {
             const correctAnswer = input.getAttribute("data-answer");
@@ -142,9 +141,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Reset functionality
+    // Reset
     resetBtn.addEventListener("click", function (event) {
-        event.preventDefault(); // Prevent any default behavior
+        event.preventDefault();
 
         blankInputs.forEach((input) => {
             // Clear the input value
@@ -153,7 +152,6 @@ document.addEventListener("DOMContentLoaded", function () {
             // Remove all state classes
             input.classList.remove("correct", "incorrect");
 
-            // Optional: Add a brief highlight effect to show reset
             input.style.transition = "all 0.3s ease";
             input.style.backgroundColor = "rgba(255, 165, 31, 0.2)";
 
@@ -177,7 +175,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Optional: Clear states when user starts typing again
+    // Clear states when user starts typing again
     blankInputs.forEach((input) => {
         input.addEventListener("input", function () {
             this.classList.remove("correct", "incorrect");
@@ -193,7 +191,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     document.addEventListener("keydown", function (event) {
-        // Handle Enter key for check button
         if (event.key === "Enter") {
             // event.preventDefault();
             if (checkBtn && !checkBtn.disabled) {
@@ -202,7 +199,6 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        // Handle Delete key for reset button
         if (event.key === "Delete") {
             event.preventDefault();
             if (resetBtn && !resetBtn.disabled) {

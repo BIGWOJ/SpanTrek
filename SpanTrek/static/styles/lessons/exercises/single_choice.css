@@ -1,4 +1,3 @@
-/* Single Choice Exercise Styles */
 .exercise-container {
     display: flex;
     justify-content: center;
@@ -184,7 +183,6 @@
     box-shadow: 0 4px 15px rgba(255, 165, 31, 0.3);
 }
 
-/* Green hover effect when answer is correct */
 .check-btn-single[style*="rgb(76, 175, 80)"]:hover,
 .check-btn-single[style*="rgba(76, 175, 80"]:hover {
     background: rgba(76, 175, 80, 0.3) !important;
@@ -234,14 +232,12 @@
     transform: translateY(0);
 }
 
-/* Animations */
 @keyframes shake {
     0%, 100% { transform: translateX(0); }
     25% { transform: translateX(-5px); }
     75% { transform: translateX(5px); }
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .exercise-container {
         padding: 15px;

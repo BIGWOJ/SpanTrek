@@ -289,7 +289,6 @@ class Achievement(models.Model):
     icon = models.CharField(max_length=50)
     experience_award = models.IntegerField(default=0)
 
-    # Many-to-many relationship with User through UserAchievement
     users = models.ManyToManyField(User, through='UserAchievement', related_name='achievements')
 
     class Meta:
@@ -309,7 +308,8 @@ class UserAchievement(models.Model):
     achievement = models.ForeignKey(Achievement, on_delete=models.CASCADE, related_name='earned_by')
  
     class Meta:
-        unique_together = ('user', 'achievement')  # Prevent duplicate achievements
+        # Prevent duplicate achievements
+        unique_together = ('user', 'achievement')
 
     def __str__(self):
         return f"{self.user.username} - {self.achievement.name}"

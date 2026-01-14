@@ -21,7 +21,6 @@ class Command(BaseCommand):
             with open(sentences_json_data, 'r', encoding='utf-8') as f:
                 sentences_data = json.load(f)
 
-            # Track statistics
             created_count = 0
             skipped_count = 0
             updated_count = 0

@@ -10,12 +10,6 @@ from lessons.models import Audio, Vocabulary, Sentence
 def normalize_filename(text):
     """
     Convert Spanish characters to English equivalents for filenames
-    
-    Args:
-        text (str): The text to normalize
-        
-    Returns:
-        str: Normalized text suitable for filenames
     """
     # Dictionary mapping Spanish characters to English equivalents
     spanish_to_english = {
@@ -49,7 +43,7 @@ def normalize_filename(text):
     # Convert to lowercase
     normalized = normalized.lower()                    
     
-    # Remove Spanish articles (el, la, los, las, un, una, unos, unas) from the beginning
+    # Remove Spanish articles from the beginning
     articles = ['el_', 'la_', 'los_', 'las_', 'un_', 'una_', 'unos_', 'unas_']
     for article in articles:
         if normalized.startswith(article):
@@ -65,9 +59,6 @@ def normalize_filename(text):
 def create_audio_file(text, audio_type):
     """
     Create an MP3 file from text using GTTS - Google Text-to-Speech
-    
-    Args:
-        text (str): The text to convert to speech
     """
     # Create the TTS object
     tts = gTTS(text=text, lang='es', slow=False)
@@ -100,7 +91,7 @@ class Command(BaseCommand):
             return
     
         try:
-            # Get data from database instead of JSON files
+            # Get data from database
             if audio_from == 'vocabulary':
                 items = Vocabulary.objects.all()
                 self.stdout.write(self.style.SUCCESS(f'Found {items.count()} vocabulary items in database'))

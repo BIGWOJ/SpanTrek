@@ -135,9 +135,7 @@
     <div class="passports-section">
         <h2 class="section-title">Travel Passports</h2>
         <div class="passport-book">
-            <!-- Two-page passport book layout -->
             <div class="passport-spread">
-                <!-- Left page - User Profile -->
                 <div class="passport-page left-page">
                     <div class="passport-header">
                         <div class="passport-title">SPANISH LEARNING</div>
@@ -196,12 +194,10 @@
                     </div>
                 </div>
 
-                <!-- Right page - Country Visa Stickers -->
                 <div class="passport-page right-page">
                     <div class="page-title">VISAS & STAMPS</div>
 
                     <div class="visa-stickers-grid">
-                        <!-- Poland Visa Sticker -->
                         <div
                             class="visa-sticker {% if 'poland' in user.passports_earned %}earned{% else %}locked{% endif %}"
                         >
@@ -222,7 +218,6 @@
                             </div>
                         </div>
 
-                        <!-- Spain Visa Sticker -->
                         <div
                             class="visa-sticker {% if 'spain' in user.passports_earned %}earned{% else %}locked{% endif %}"
                         >
@@ -243,7 +238,6 @@
                             </div>
                         </div>
 
-                        <!-- Peru Visa Sticker -->
                         <div
                             class="visa-sticker {% if 'peru' in user.passports_earned %}earned{% else %}locked{% endif %}"
                         >
@@ -264,7 +258,6 @@
                             </div>
                         </div>
 
-                        <!-- Mexico Visa Sticker -->
                         <div
                             class="visa-sticker {% if 'mexico' in user.passports_earned %}earned{% else %}locked{% endif %}"
                         >
@@ -286,7 +279,6 @@
                         </div>
                     </div>
 
-                    <!-- Entry/Exit Stamps -->
                     <div class="entry-stamps">
                         <div class="passport-stamp entry">
                             <div class="stamp-border">
@@ -340,7 +332,7 @@
                 <button class="nav-btn" id="next-month">&rarr;</button>
             </div>
             <div class="calendar-grid" id="calendar-grid">
-                <!-- Calendar will be populated by JavaScript -->
+                <!-- Calendar will be rendered by JavaScript -->
             </div>
         </div>
     </div>
@@ -350,12 +342,10 @@
     <div class="settings-section">
         <h2 class="section-title">Account settings</h2>
 
-        <!-- Collapsed Settings View -->
         <div class="settings-collapsed" id="settings-collapsed">
             <button class="gear-btn" onclick="expandSettings()">⚙️</button>
         </div>
 
-        <!-- Expanded Settings View -->
         <div
             class="settings-expanded"
             id="settings-expanded"

@@ -117,20 +117,19 @@ def user_page(request, pk):
         if 'avatar' in request.FILES:
             avatar_file = request.FILES['avatar']
             
-            # Validate file type despite in HTML accept attribute (can be bypassed)
+            # Validate file despite HTML's  attribute (can be bypassed)
             valid_types = ['image/jpg', 'image/jpeg', 'image/png']
 
             if avatar_file.content_type not in valid_types:
                 messages.error(request, 'Please select a valid image file (JPG, PNG)')
                 return redirect('user_page', pk=user.id)
             
-            # Validate file size up to 5MB
+            # Up to 5MB
             max_size = 5 * 1024 * 1024
             if avatar_file.size > max_size:
                 messages.error(request, 'File size must be less than 5MB')
                 return redirect('user_page', pk=user.id)
                         
-            # If all validations passed, save the file
             user.avatar = avatar_file
             user.save()
             messages.success(request, 'Profile picture updated successfully')
@@ -265,7 +264,6 @@ def leaderboard_page(request, view_type):
     
     top_10_users = []
     leaderboard_users = []
-    country_leaders = []
     
     if view_type == 'top':
         leaderboard_users = User.objects.all().filter(experience__gt=0).order_by('-experience')[:10]
@@ -279,7 +277,6 @@ def leaderboard_page(request, view_type):
         'all_users_count': all_users_count,
         'top_10_users': top_10_users,
         'leaderboard_users': leaderboard_users,
-        'country_leaders': country_leaders,
         'view_type': view_type,
     }
     return render(request, 'base/leaderboard.html', context)
@@ -299,7 +296,7 @@ def get_user_level_name(level):
         return "Beginner Explorer"
 
 def get_surrounding_leaderboard_users(request, only_user_position=False):
-    # If user has no experience, they shouldn't be on leaderboard
+    # If user has no experience, won't be on leaderboard
     if request.user.experience == 0:
         if only_user_position:
             return None

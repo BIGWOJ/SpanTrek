@@ -1,4 +1,3 @@
-/* Country Complete Page Styles */
 .country-complete-container {
     min-height: 100vh;
     background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
@@ -8,7 +7,6 @@
     margin: 0 auto;
 }
 
-/* Hero Section */
 .country-hero-section {
     text-align: center;
     padding: 40px 20px;
@@ -70,7 +68,6 @@
     display: block;
 }
 
-/* Stats Section */
 .stats-section {
     background: rgba(255, 255, 255, 0.05);
     border-radius: 20px;
@@ -188,7 +185,6 @@
     line-height: 1.3;
 }
 
-/* Passport Section */
 .passport-section {
     margin-bottom: 40px;
 }
@@ -274,7 +270,6 @@
     color: #28a745 !important;
 }
 
-/* Next Steps Section */
 .next-steps-section {
     margin-bottom: 40px;
 }
@@ -329,7 +324,6 @@
     line-height: 1.4;
 }
 
-/* Animations */
 @keyframes rotate {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
@@ -360,7 +354,6 @@
     }
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .country-complete-container {
         padding: 10px;

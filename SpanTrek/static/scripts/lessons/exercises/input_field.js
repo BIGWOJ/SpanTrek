@@ -31,17 +31,14 @@ document.addEventListener("DOMContentLoaded", function () {
             correctAnswer.toLowerCase()
         );
 
-        console.log(normalizedUserAnswer);
-        console.log(normalizedCorrectAnswer);
-        console.log(normalizedCorrectAnswer === normalizedUserAnswer);
         if (normalizedUserAnswer === normalizedCorrectAnswer) {
             userInput.classList.add("correct");
             checkBtn.style.background = "rgba(76, 175, 80, 0.2)";
             checkBtn.style.borderColor = "#4caf50";
             checkBtn.style.color = "#4caf50";
             checkBtn.textContent = "Perfect!";
-            console.log("Correct answer!");
-            // Show the next button when exercise is completed successfully
+
+            // Show the next button only when exercise is completed
             const nextBtn =
                 document.getElementById("next-exercise-btn") ||
                 document.getElementById("complete-lesson-btn");
@@ -54,7 +51,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 }, 100);
             }
         } else {
-            console.log("Incorrect answer.");
             userInput.classList.add("incorrect");
             checkBtn.style.background = "rgba(244, 67, 54, 0.2)";
             checkBtn.style.borderColor = "#f44336";
@@ -71,12 +67,10 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Reset functionality
+    // Reset
     resetBtn.addEventListener("click", function () {
-        // Clear input
         userInput.value = "";
 
-        // Remove state classes
         userInput.classList.remove("correct", "incorrect");
 
         // Reset button
@@ -93,7 +87,6 @@ document.addEventListener("DOMContentLoaded", function () {
             nextBtn.style.display = "none";
         }
 
-        // Add brief highlight effect
         userInput.style.transition = "all 0.3s ease";
         userInput.style.backgroundColor = "rgba(255, 165, 31, 0.2)";
 
@@ -105,7 +98,7 @@ document.addEventListener("DOMContentLoaded", function () {
         userInput.focus();
     });
 
-    //Show answer functionality
+    // Show answer
     showAnswerBtn.addEventListener("click", function () {
         userInput.value = correctAnswer;
         userInput.classList.remove("incorrect");
@@ -129,7 +122,6 @@ document.addEventListener("DOMContentLoaded", function () {
     document.addEventListener("keydown", function (event) {
         const code = event.code;
 
-        // Handle Enter key (both main Enter and numpad Enter)
         if (event.key === "Enter" || code === "NumpadEnter") {
             event.preventDefault();
             if (checkBtn && !checkBtn.disabled) {
@@ -138,7 +130,6 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        // Handle Delete key (both main Delete and numpad Delete/Decimal)
         if (
             event.key === "Delete" ||
             code === "NumpadDelete" ||

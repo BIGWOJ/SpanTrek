@@ -1,2 +1,0 @@
-1. normalize.js -> zapewnić walidację dla dwuznacznych wyrazów np la mañana = morning/tomorrow, żeby morning i tomorrow wchodziło jako dobre
-2. sprawdzić dodawany exp jak wcześniej skończona lekcje/nie

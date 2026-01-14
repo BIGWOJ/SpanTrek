@@ -1,11 +1,8 @@
-// User Page JavaScript Functionality
-
 // Calendar functionality
 class ActivityCalendar {
     constructor() {
         this.currentDate = new Date();
         this.today = new Date();
-        // Use actual activity days from Django model instead of hardcoded values
         this.activeDays = window.userActivityDays || [];
         this.init();
     }
@@ -55,8 +52,8 @@ class ActivityCalendar {
 
         calendarGrid.innerHTML = "";
 
-        // Add day headers
-        const dayHeaders = ["S", "M", "T", "W", "T", "F", "S"];
+        // Day headers
+        const dayHeaders = ["M", "T", "W", "T", "F", "S", "S"];
         dayHeaders.forEach((day) => {
             const dayHeader = document.createElement("div");
             dayHeader.className = "calendar-day-header";
@@ -64,6 +61,7 @@ class ActivityCalendar {
             dayHeader.style.fontWeight = "bold";
             dayHeader.style.color = "#666";
             dayHeader.style.fontSize = "0.8rem";
+            dayHeader.style.textAlign = "center";
             calendarGrid.appendChild(dayHeader);
         });
 
@@ -78,7 +76,7 @@ class ActivityCalendar {
             this.currentDate.getMonth() + 1,
             0
         );
-        const startDate = firstDay.getDay();
+        const startDate = (firstDay.getDay() + 6) % 7;
         const daysInMonth = lastDay.getDate();
 
         // Add empty cells for days before month starts
@@ -104,7 +102,6 @@ class ActivityCalendar {
                 dayElement.classList.add("today");
             }
 
-            // Check if this day has activity using DD-MM-YYYY date format
             const dayDateISO = this.formatDateToISO(dayDate);
             if (this.activeDays.includes(dayDateISO)) {
                 dayElement.classList.add("active");
@@ -131,19 +128,17 @@ class ActivityCalendar {
     }
 }
 
+// Expand settings section
 function expandSettings() {
     const collapsedDiv = document.getElementById("settings-collapsed");
     const expandedDiv = document.getElementById("settings-expanded");
 
-    // Hide collapsed view
     collapsedDiv.style.display = "none";
 
-    // Show expanded view with smooth animation
     expandedDiv.style.display = "block";
     expandedDiv.style.opacity = "0";
     expandedDiv.style.transform = "translateY(20px)";
 
-    // Force reflow and then animate
     expandedDiv.offsetHeight;
 
     expandedDiv.style.transition = "opacity 0.4s ease, transform 0.4s ease";
@@ -156,134 +151,20 @@ function collapseSettings() {
     const collapsedDiv = document.getElementById("settings-collapsed");
     const expandedDiv = document.getElementById("settings-expanded");
 
-    // Add smooth collapse animation
     expandedDiv.style.transition = "opacity 0.4s ease, transform 0.4s ease";
     expandedDiv.style.opacity = "0";
     expandedDiv.style.transform = "translateY(-20px)";
 
-    // Wait for animation to complete before hiding
     setTimeout(() => {
         expandedDiv.style.display = "none";
         collapsedDiv.style.display = "flex";
 
-        // Reset transform and opacity for next expand
         expandedDiv.style.transform = "";
         expandedDiv.style.opacity = "";
         expandedDiv.style.transition = "";
     }, 400);
 
-    // Reset the form when collapsing
     const form = document.querySelector(".profile-form");
-}
-
-// Settings functionality
-function toggleEdit(section) {
-    const content = document.getElementById(`${section}-content`);
-    const editBtn = content.parentElement.querySelector(".edit-btn");
-
-    if (editBtn.textContent === "Edit") {
-        enterEditMode(content, editBtn);
-    } else {
-        saveChanges(content, editBtn);
-    }
-}
-
-function enterEditMode(content, button) {
-    button.textContent = "Save";
-    button.style.background = "#28a745";
-
-    const rows = content.querySelectorAll(".info-row");
-    rows.forEach((row) => {
-        const span = row.querySelector("span");
-        if (span && !row.querySelector("input")) {
-            const currentValue = span.textContent;
-            const input = document.createElement("input");
-            input.type = "text";
-            input.value = currentValue;
-            input.style.border = "1px solid #ddd";
-            input.style.padding = "5px";
-            input.style.borderRadius = "4px";
-            input.style.background = "#fff";
-            input.style.color = "#1a1a1a";
-
-            span.replaceWith(input);
-        }
-    });
-}
-
-function saveChanges(content, button) {
-    button.textContent = "Edit";
-    button.style.background = "#ffa51f";
-
-    const rows = content.querySelectorAll(".info-row");
-    rows.forEach((row) => {
-        const input = row.querySelector("input");
-        if (input) {
-            const span = document.createElement("span");
-            span.textContent = input.value;
-            span.style.color = "#1a1a1a";
-            span.style.fontWeight = "500";
-
-            input.replaceWith(span);
-        }
-    });
-
-    // Show success message
-    showNotification("Settings saved successfully!", "success");
-}
-
-// Notification system
-function showNotification(message, type = "info") {
-    const notification = document.createElement("div");
-    notification.className = `notification ${type}`;
-    notification.textContent = message;
-
-    // Style the notification
-    Object.assign(notification.style, {
-        position: "fixed",
-        top: "20px",
-        right: "20px",
-        padding: "15px 20px",
-        borderRadius: "8px",
-        color: "#fff",
-        fontWeight: "bold",
-        zIndex: "9999",
-        transform: "translateX(100%)",
-        transition: "transform 0.3s ease",
-        minWidth: "250px",
-        textAlign: "center",
-    });
-
-    // Set background color based on type
-    switch (type) {
-        case "success":
-            notification.style.background = "#28a745";
-            break;
-        case "error":
-            notification.style.background = "#dc3545";
-            break;
-        case "warning":
-            notification.style.background = "#ffc107";
-            notification.style.color = "#1a1a1a";
-            break;
-        default:
-            notification.style.background = "#ffa51f";
-    }
-
-    document.body.appendChild(notification);
-
-    // Animate in
-    setTimeout(() => {
-        notification.style.transform = "translateX(0)";
-    }, 100);
-
-    // Auto remove after 3 seconds
-    setTimeout(() => {
-        notification.style.transform = "translateX(100%)";
-        setTimeout(() => {
-            document.body.removeChild(notification);
-        }, 300);
-    }, 3000);
 }
 
 // Stats animation
@@ -324,7 +205,6 @@ function animateValue(element, start, end, duration) {
 }
 
 // Achievement hover effects
-// To ensure compatibility with the calendar, store activity_days as strings in DD-MM-YYYY format: "DD-MM-YYYY" (e.g., "10-06-2024").
 function initAchievements() {
     const achievementCards = document.querySelectorAll(".achievement-card");
 
@@ -348,53 +228,12 @@ function initAchievements() {
 function animateProgressBars() {
     const progressBars = document.querySelectorAll(".progress-fill");
     progressBars.forEach((bar) => {
-        // Get the target width from the inline style set by Django
         const targetWidth = bar.style.width;
 
-        // Start from 0% and animate to target
         bar.style.width = "0%";
         setTimeout(() => {
             bar.style.width = targetWidth;
         }, 500);
-    });
-}
-
-// Toggle switch functionality
-function initToggleSwitches() {
-    const toggleSwitches = document.querySelectorAll(".toggle-switch input");
-
-    toggleSwitches.forEach((toggle) => {
-        toggle.addEventListener("change", (e) => {
-            const setting = e.target.id.replace("-", " ");
-            const status = e.target.checked ? "enabled" : "disabled";
-
-            showNotification(
-                `${
-                    setting.charAt(0).toUpperCase() + setting.slice(1)
-                } ${status}`,
-                "info"
-            );
-        });
-    });
-}
-
-// Keyboard shortcuts
-function initKeyboardShortcuts() {
-    document.addEventListener("keydown", (e) => {
-        // Alt + H - Go to home
-        if (e.altKey && e.key === "h") {
-            e.preventDefault();
-            window.location.href = "/";
-        }
-
-        // Alt + S - Focus on first settings input
-        if (e.altKey && e.key === "s") {
-            e.preventDefault();
-            const firstInput = document.querySelector(".settings-card input");
-            if (firstInput) {
-                firstInput.focus();
-            }
-        }
     });
 }
 
@@ -408,7 +247,7 @@ function initAvatarUpload() {
             const file = e.target.files[0];
 
             if (file) {
-                // Create preview (validation will be done on server-side)
+                // Preview
                 const reader = new FileReader();
                 reader.onload = function (e) {
                     avatarPreview.src = e.target.result;
@@ -451,22 +290,10 @@ function initAvatarUpload() {
 
 // Initialize all functionality when page loads
 document.addEventListener("DOMContentLoaded", () => {
-    // Initialize calendar
     new ActivityCalendar();
 
-    // Initialize animations and interactions
     animateStats();
     animateProgressBars();
     initAchievements();
-    initToggleSwitches();
-    initKeyboardShortcuts();
     initAvatarUpload();
 });
-
-// Export functions for potential external use
-window.UserPageFunctions = {
-    toggleEdit,
-    showNotification,
-    ActivityCalendar,
-    initAvatarUpload,
-};
